@@ -130,19 +130,63 @@ export async function connectPostgres(options = {}) {
     databaseUrl.includes('sslmode=require') ||
     env.nodeEnv === 'production';
 
-  activePool = new Pool({
-    connectionString: databaseUrl,
-    max: options.maxPoolSize || 15,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 10000,
-    ...(needsSsl ? { ssl: { rejectUnauthorized: false } } : {}),
-  });
+  activePool = new Pool(buildPgPoolConfig(databaseUrl, { ...options, needsSsl }));
+  attachPoolErrorListener(activePool);
 
   // Verify live connection immediately without exposing connection URI
-  await activePool.query('SELECT 1');
+  try {
+    await activePool.query('SELECT 1');
+  } catch (err) {
+    const failedPool = activePool;
+    activePool = null;
+    await failedPool.end().catch(() => {});
+    throw new Error(`PostgreSQL connection failed: ${sanitizePgErrorMessage(err?.message)}`);
+  }
+
   adapter = createPoolAdapter(activePool);
   activeMode = 'pg';
   return { mode: activeMode, pool: activePool };
+}
+
+export function sanitizePgErrorMessage(message) {
+  return String(message || 'Unknown PostgreSQL error').replace(
+    /postgres(?:ql)?:\/\/[^\s'"]+/gi,
+    'postgresql://[REDACTED]'
+  );
+}
+
+export function buildPgPoolConfig(databaseUrl, options = {}) {
+  const needsSsl =
+    options.needsSsl ??
+    (databaseUrl.includes('supabase.co') ||
+      databaseUrl.includes('supabase.com') ||
+      databaseUrl.includes('sslmode=require') ||
+      env.nodeEnv === 'production');
+
+  return {
+    connectionString: databaseUrl,
+    max: options.maxPoolSize || 15,
+    idleTimeoutMillis: options.idleTimeoutMillis ?? 20000,
+    connectionTimeoutMillis: options.connectionTimeoutMillis ?? 10000,
+    keepAlive: true,
+    keepAliveInitialDelayMillis: 10000,
+    ...(needsSsl ? { ssl: { rejectUnauthorized: false } } : {}),
+  };
+}
+
+export function attachPoolErrorListener(pool, logger = console) {
+  if (!pool || typeof pool.on !== 'function') return pool;
+  pool.on('error', (err) => {
+    logger.error(
+      JSON.stringify({
+        level: 'error',
+        event: 'pg_pool_idle_client_error',
+        code: err?.code || null,
+        message: sanitizePgErrorMessage(err?.message),
+      })
+    );
+  });
+  return pool;
 }
 
 export async function runPostgresMigrations(migrationsDir = DEFAULT_MIGRATIONS_DIR) {

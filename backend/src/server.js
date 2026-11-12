@@ -4,6 +4,7 @@ import { connectPostgres, disconnectPostgres, runPostgresMigrations } from './co
 import { env } from './config/env.js';
 import { seedDemoDataIfEmpty } from './seed/seedData.js';
 import { attachSocketServer } from './socket/index.js';
+import { createGracefulShutdown } from './utils/shutdown.js';
 
 async function startServer() {
   try {
@@ -20,20 +21,29 @@ async function startServer() {
 
     const app = createApp();
     const httpServer = http.createServer(app);
-    attachSocketServer(httpServer);
+    const io = attachSocketServer(httpServer);
+
+    httpServer.on('error', (err) => {
+      console.error('[KAAFILA API] HTTP server error:', err.message);
+      void disconnectPostgres().finally(() => process.exit(1));
+    });
 
     httpServer.listen(env.port, () => {
       console.log(`[KAAFILA API + Socket.IO] Running on http://localhost:${env.port} (${env.nodeEnv})`);
     });
 
-    const shutdown = async () => {
-      httpServer.close(async () => {
-        await disconnectPostgres();
-        process.exit(0);
-      });
-    };
-    process.once('SIGTERM', shutdown);
-    process.once('SIGINT', shutdown);
+    const shutdown = createGracefulShutdown({
+      httpServer,
+      io,
+      disconnectDb: disconnectPostgres,
+      timeoutMs: 10000,
+    });
+    process.on('SIGTERM', () => {
+      void shutdown('SIGTERM');
+    });
+    process.on('SIGINT', () => {
+      void shutdown('SIGINT');
+    });
   } catch (err) {
     console.error('[KAAFILA API] Failed to start:', err.message);
     process.exit(1);

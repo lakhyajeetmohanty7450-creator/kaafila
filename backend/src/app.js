@@ -23,6 +23,8 @@ import leaderboardRoutes from './routes/leaderboardRoutes.js';
 export function createApp() {
   const app = express();
 
+  app.set('trust proxy', env.trustProxy);
+
   app.use(
     helmet({
       crossOriginResourcePolicy: { policy: 'cross-origin' },
