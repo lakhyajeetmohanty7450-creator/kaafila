@@ -83,9 +83,9 @@ export default function OrganisationsPage() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="flex flex-col justify-between gap-6 border-b border-white/10 pb-8 md:flex-row md:items-end">
+      <div className="flex flex-col justify-between gap-6 border-b border-kaafila-border pb-8 md:flex-row md:items-end">
         <div>
-          <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-yellow">
+          <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-accent">
             KAAFILA Marketplace
           </span>
           <h1 className="mt-1 font-display text-4xl font-bold uppercase text-kaafila-text sm:text-5xl">
@@ -99,7 +99,7 @@ export default function OrganisationsPage() {
 
         <Link
           to="/register?role=organisation"
-          className="inline-flex items-center gap-2 self-start rounded-xl border border-kaafila-yellow/50 bg-kaafila-yellow/10 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow hover:text-kaafila-bg transition"
+          className="inline-flex items-center gap-2 self-start rounded-xl border border-kaafila-primary/50 bg-kaafila-primary/10 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary hover:text-kaafila-dark transition"
         >
           <Building2 className="h-4 w-4" />
           <span>List Your Organisation</span>
@@ -107,16 +107,16 @@ export default function OrganisationsPage() {
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="mt-8 rounded-2xl border border-kaafila-yellow/25 bg-kaafila-surface p-4 sm:p-5">
+      <div className="mt-8 rounded-2xl border border-kaafila-primary/25 bg-kaafila-surface p-4 sm:p-5">
         <div className="grid gap-4 lg:grid-cols-12">
           <div className="relative lg:col-span-5">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-yellow" />
+            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-accent" />
             <input
               type="text"
               value={search}
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="Search by organisation, Leh, Manali, Spiti..."
-              className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-10 pr-4 text-sm text-kaafila-text placeholder:text-kaafila-muted focus:border-kaafila-yellow focus:outline-none"
+              className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-10 pr-4 text-sm text-kaafila-text placeholder:text-kaafila-muted focus:border-kaafila-primary focus:outline-none"
             />
           </div>
 
@@ -128,8 +128,8 @@ export default function OrganisationsPage() {
                 onClick={() => handleRegionChange(item)}
                 className={`rounded-lg px-3 py-2 text-xs font-semibold transition ${
                   region === item
-                    ? 'bg-kaafila-yellow text-kaafila-bg'
-                    : 'border border-white/10 bg-kaafila-bg text-kaafila-muted hover:border-kaafila-yellow/40 hover:text-kaafila-text'
+                    ? 'bg-kaafila-primary text-kaafila-dark'
+                    : 'border border-kaafila-border bg-kaafila-bg text-kaafila-muted hover:border-kaafila-primary/40 hover:text-kaafila-text'
                 }`}
               >
                 {item === 'all' ? 'All Regions' : item}
@@ -142,7 +142,7 @@ export default function OrganisationsPage() {
               value={sort}
               onChange={(e) => setSort(e.target.value)}
               aria-label="Sort organisations"
-              className="rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2.5 text-xs font-medium text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+              className="rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2.5 text-xs font-medium text-kaafila-text focus:border-kaafila-primary focus:outline-none"
             >
               <option value="featured">Sort: Featured</option>
               <option value="rides">Most Expeditions</option>
@@ -152,14 +152,14 @@ export default function OrganisationsPage() {
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-white/10 pt-3">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-kaafila-border pt-3">
           <button
             type="button"
             onClick={() => setVerifiedOnly((v) => !v)}
             className={`inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition ${
               verifiedOnly
-                ? 'border-kaafila-yellow bg-kaafila-yellow/15 text-kaafila-yellow'
-                : 'border-white/10 bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
+                ? 'border-kaafila-primary bg-kaafila-primary/15 text-kaafila-accent'
+                : 'border-kaafila-border bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
             }`}
           >
             <BadgeCheck className="h-4 w-4" />
@@ -167,7 +167,7 @@ export default function OrganisationsPage() {
           </button>
 
           <span className="flex items-center gap-1.5 font-mono text-xs text-kaafila-muted">
-            <SlidersHorizontal className="h-3.5 w-3.5 text-kaafila-yellow" />
+            <SlidersHorizontal className="h-3.5 w-3.5 text-kaafila-accent" />
             {organisations.length} {organisations.length === 1 ? 'organisation' : 'organisations'} shown
           </span>
         </div>
@@ -178,17 +178,17 @@ export default function OrganisationsPage() {
       </div>
 
       {error && (
-        <div className="mt-6 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">{error}</div>
+        <div className="mt-6 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-700">{error}</div>
       )}
 
       {loading ? (
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="h-96 animate-pulse rounded-2xl border border-white/10 bg-kaafila-surface" />
+            <div key={n} className="h-96 animate-pulse rounded-2xl border border-kaafila-border bg-kaafila-surface" />
           ))}
         </div>
       ) : organisations.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-white/10 bg-kaafila-surface p-12 text-center">
+        <div className="mt-10 rounded-2xl border border-kaafila-border bg-kaafila-surface p-12 text-center">
           <p className="font-display text-2xl text-kaafila-text">No matching touring organisations found</p>
           <p className="mt-2 text-sm text-kaafila-muted">
             Try clearing your search filter or exploring all Himalayan regions.
@@ -196,7 +196,7 @@ export default function OrganisationsPage() {
           <button
             type="button"
             onClick={handleResetFilters}
-            className="mt-5 rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+            className="mt-5 rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
           >
             Reset Filters
           </button>

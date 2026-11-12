@@ -63,7 +63,7 @@ export default function RiderProfilePage() {
         <p className="mt-2 text-sm text-kaafila-muted">{error}</p>
         <Link
           to="/community/riders"
-          className="mt-6 inline-block rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase text-kaafila-bg"
+          className="mt-6 inline-block rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase text-kaafila-dark"
         >
           Browse Riders
         </Link>
@@ -138,23 +138,23 @@ export default function RiderProfilePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="rounded-3xl border border-kaafila-yellow/30 bg-kaafila-surface p-6 shadow-card sm:p-8">
+      <div className="rounded-3xl border border-kaafila-primary/30 bg-kaafila-surface p-6 shadow-card sm:p-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-5">
-            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-yellow bg-kaafila-bg">
+            <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-primary bg-kaafila-bg">
               {rider.avatarUrl ? (
                 <img src={rider.avatarUrl} alt={rider.fullName} className="h-full w-full object-cover" />
               ) : (
-                <span className="font-display text-3xl font-bold text-kaafila-yellow">
+                <span className="font-display text-3xl font-bold text-kaafila-accent">
                   {rider.fullName?.slice(0, 1).toUpperCase()}
                 </span>
               )}
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-xs text-kaafila-yellow">@{rider.handle}</span>
+                <span className="font-mono text-xs text-kaafila-accent">@{rider.handle}</span>
                 {rider.isDemo && (
-                  <span className="rounded bg-kaafila-earth/70 px-2 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
+                  <span className="rounded bg-kaafila-secondary/70 px-2 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
                     Demo Rider
                   </span>
                 )}
@@ -164,17 +164,17 @@ export default function RiderProfilePage() {
               </h1>
               <div className="mt-2 flex flex-wrap gap-4 text-xs text-kaafila-muted">
                 <span className="inline-flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5 text-kaafila-yellow" />
+                  <MapPin className="h-3.5 w-3.5 text-kaafila-accent" />
                   {rider.homeCity || 'India'}
                 </span>
                 {rider.primaryMotorcycle && (
                   <span className="inline-flex items-center gap-1">
-                    <Bike className="h-3.5 w-3.5 text-kaafila-yellow" />
+                    <Bike className="h-3.5 w-3.5 text-kaafila-accent" />
                     {rider.primaryMotorcycle}
                   </span>
                 )}
                 <span className="inline-flex items-center gap-1 capitalize">
-                  <Mountain className="h-3.5 w-3.5 text-kaafila-yellow" />
+                  <Mountain className="h-3.5 w-3.5 text-kaafila-accent" />
                   {String(rider.ridingExperience || 'beginner').replace('_', ' ')}
                 </span>
               </div>
@@ -182,11 +182,11 @@ export default function RiderProfilePage() {
           </div>
 
           <div className="flex flex-col items-stretch gap-3 sm:items-end">
-            <div className="rounded-2xl border border-kaafila-yellow/40 bg-kaafila-bg px-5 py-3 text-center">
+            <div className="rounded-2xl border border-kaafila-primary/40 bg-kaafila-bg px-5 py-3 text-center">
               <span className="block font-mono text-[10px] uppercase tracking-wider text-kaafila-muted">
                 Verified Rank
               </span>
-              <span className="mt-1 inline-flex items-center gap-1.5 font-display text-2xl font-bold text-kaafila-yellow">
+              <span className="mt-1 inline-flex items-center gap-1.5 font-display text-2xl font-bold text-kaafila-accent">
                 <Award className="h-5 w-5" />
                 {rider.rank}
               </span>
@@ -199,7 +199,7 @@ export default function RiderProfilePage() {
                     type="button"
                     disabled={actionBusy}
                     onClick={handleMessage}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                   >
                     <MessageSquare className="h-4 w-4" />
                     Message Rider
@@ -209,7 +209,7 @@ export default function RiderProfilePage() {
                     type="button"
                     disabled={actionBusy}
                     onClick={handleCancel}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-4 py-2 text-xs font-semibold text-kaafila-yellow"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-primary/40 bg-kaafila-primary/10 px-4 py-2 text-xs font-semibold text-kaafila-accent"
                   >
                     <Clock className="h-4 w-4" />
                     Request Sent (Cancel)
@@ -219,7 +219,7 @@ export default function RiderProfilePage() {
                     type="button"
                     disabled={actionBusy}
                     onClick={handleAccept}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white"
                   >
                     <UserCheck className="h-4 w-4" />
                     Accept Request
@@ -229,7 +229,7 @@ export default function RiderProfilePage() {
                     type="button"
                     disabled={actionBusy}
                     onClick={handleConnect}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                   >
                     <UserPlus className="h-4 w-4" />
                     Connect
@@ -240,26 +240,26 @@ export default function RiderProfilePage() {
           </div>
         </div>
 
-        {rider.bio && <p className="mt-6 border-t border-white/10 pt-5 text-sm text-kaafila-muted">{rider.bio}</p>}
+        {rider.bio && <p className="mt-6 border-t border-kaafila-border pt-5 text-sm text-kaafila-muted">{rider.bio}</p>}
 
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+          <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
             <span className="text-xs uppercase text-kaafila-muted">Verified Distance</span>
-            <p className="mt-1 font-mono text-2xl font-bold text-kaafila-yellow">
+            <p className="mt-1 font-mono text-2xl font-bold text-kaafila-accent">
               {Number(rider.verifiedKilometres || 0).toLocaleString('en-IN')} km
             </p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+          <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
             <span className="text-xs uppercase text-kaafila-muted">Completed Expeditions</span>
             <p className="mt-1 font-mono text-2xl font-bold text-kaafila-text">
               {rider.completedExpeditions || 0}
             </p>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+          <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
             <span className="text-xs uppercase text-kaafila-muted">Next Rank Progress</span>
-            <div className="mt-2 h-2 overflow-hidden rounded-full bg-white/10">
+            <div className="mt-2 h-2 overflow-hidden rounded-full bg-kaafila-elevated">
               <div
-                className="h-full bg-kaafila-yellow transition-all"
+                className="h-full bg-kaafila-primary transition-all"
                 style={{ width: `${tierProgress?.kmProgressPercent || 0}%` }}
               />
             </div>
@@ -276,7 +276,7 @@ export default function RiderProfilePage() {
             {rider.badges.map((badge) => (
               <span
                 key={badge.code || badge.title || badge.label}
-                className="inline-flex items-center gap-1.5 rounded-full border border-kaafila-yellow/35 bg-kaafila-yellow/10 px-3 py-1 text-xs font-semibold text-kaafila-yellow"
+                className="inline-flex items-center gap-1.5 rounded-full border border-kaafila-primary/35 bg-kaafila-primary/10 px-3 py-1 text-xs font-semibold text-kaafila-accent"
               >
                 <ShieldCheck className="h-3.5 w-3.5" />
                 {badge.title || badge.label}
@@ -298,13 +298,13 @@ export default function RiderProfilePage() {
             {publicRouteSummaries.slice(0, 2).map((summary) => (
               <div
                 key={summary._id}
-                className="rounded-2xl border border-white/10 bg-kaafila-surface p-4"
+                className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-4"
               >
                 <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs">
                   <span className="font-display text-lg font-bold text-kaafila-text">
                     {summary.title}
                   </span>
-                  <span className="font-mono text-kaafila-yellow">
+                  <span className="font-mono text-kaafila-accent">
                     {Number(summary.verifiedDistanceKm || 0).toFixed(1)} km verified
                   </span>
                 </div>
@@ -329,7 +329,7 @@ export default function RiderProfilePage() {
           Verified Expedition History
         </h2>
         {expeditions.length === 0 ? (
-          <div className="mt-4 rounded-2xl border border-white/10 bg-kaafila-surface p-8 text-center text-sm text-kaafila-muted">
+          <div className="mt-4 rounded-2xl border border-kaafila-border bg-kaafila-surface p-8 text-center text-sm text-kaafila-muted">
             No confirmed or completed expeditions recorded on KAAFILA yet.
           </div>
         ) : (
@@ -338,7 +338,7 @@ export default function RiderProfilePage() {
               <Link
                 key={entry._id}
                 to={`/rides/${entry.ride.slug}`}
-                className="flex items-center gap-4 rounded-2xl border border-white/10 bg-kaafila-surface p-4 hover:border-kaafila-yellow/50 transition"
+                className="flex items-center gap-4 rounded-2xl border border-kaafila-border bg-kaafila-surface p-4 hover:border-kaafila-primary/50 transition"
               >
                 <img
                   src={entry.ride.coverImageUrl || entry.ride.bannerImageUrl || '/images/expedition-ladakh.png'}
@@ -350,7 +350,7 @@ export default function RiderProfilePage() {
                     {entry.ride.title}
                   </p>
                   <p className="text-xs text-kaafila-muted">{entry.ride.region}</p>
-                  <span className="mt-1 inline-flex items-center gap-1 font-mono text-[11px] text-kaafila-yellow">
+                  <span className="mt-1 inline-flex items-center gap-1 font-mono text-[11px] text-kaafila-accent">
                     <Calendar className="h-3 w-3" />
                     {entry.ride.startDate ? new Date(entry.ride.startDate).toLocaleDateString() : 'Completed'}
                   </span>

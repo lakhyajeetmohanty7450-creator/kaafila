@@ -425,32 +425,32 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
   return (
     <div className="min-h-[calc(100vh-80px)] bg-kaafila-bg pb-16">
       {/* Organisation Command Header — distinct horizontal operator bar */}
-      <div className="border-b border-kaafila-earth/40 bg-gradient-to-r from-kaafila-surface via-kaafila-bg to-kaafila-surface">
+      <div className="border-b border-kaafila-secondary/40 bg-gradient-to-r from-kaafila-surface via-kaafila-bg to-kaafila-surface">
         <div className="mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-4">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-yellow bg-kaafila-surface">
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-primary bg-kaafila-surface">
                 {org?.logoUrl ? (
                   <img src={org.logoUrl} alt={org.name} className="h-full w-full object-cover" />
                 ) : (
-                  <Building2 className="h-6 w-6 text-kaafila-yellow" />
+                  <Building2 className="h-6 w-6 text-kaafila-accent" />
                 )}
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-kaafila-yellow">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-kaafila-accent">
                     Organisation Command Center
                   </span>
                   {org?.isDemo ? (
-                    <span className="rounded-full border border-kaafila-earth bg-kaafila-earth/70 px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
+                    <span className="rounded-full border border-kaafila-secondary bg-kaafila-secondary/70 px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
                       Demo Listing
                     </span>
                   ) : org?.isVerified ? (
-                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] uppercase text-emerald-300">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] uppercase text-emerald-700">
                       <BadgeCheck className="h-3.5 w-3.5" /> Verified
                     </span>
                   ) : (
-                    <span className="rounded-full border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-yellow">
+                    <span className="rounded-full border border-kaafila-primary/40 bg-kaafila-primary/10 px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-accent">
                       Verification Pending
                     </span>
                   )}
@@ -465,7 +465,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
               {org?.slug && (
                 <Link
                   to={`/organisations/${org.slug}`}
-                  className="hidden items-center gap-1.5 rounded-xl border border-kaafila-yellow/35 px-3.5 py-2 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10 sm:inline-flex"
+                  className="hidden items-center gap-1.5 rounded-xl border border-kaafila-primary/35 px-3.5 py-2 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/10 sm:inline-flex"
                 >
                   <span>Public Marketplace Page</span>
                   <ExternalLink className="h-3.5 w-3.5" />
@@ -474,7 +474,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="hidden items-center gap-1.5 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10 lg:inline-flex"
+                className="hidden items-center gap-1.5 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/10 lg:inline-flex"
               >
                 <LogOut className="h-3.5 w-3.5" />
                 <span>Logout</span>
@@ -482,7 +482,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
               <button
                 type="button"
                 onClick={() => setMobileNavOpen((prev) => !prev)}
-                className="rounded-xl border border-kaafila-yellow/30 p-2 text-kaafila-text lg:hidden"
+                className="rounded-xl border border-kaafila-primary/30 p-2 text-kaafila-text lg:hidden"
                 aria-label="Toggle organisation menu"
               >
                 {mobileNavOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -512,8 +512,8 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                   }}
                   className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold uppercase tracking-wider transition ${
                     active
-                      ? 'bg-kaafila-yellow text-kaafila-bg shadow-amber'
-                      : 'border border-white/10 bg-kaafila-bg/70 text-kaafila-text/80 hover:border-kaafila-yellow/40 hover:text-kaafila-yellow'
+                      ? 'bg-kaafila-primary text-kaafila-dark shadow-blue'
+                      : 'border border-kaafila-border bg-kaafila-bg/70 text-kaafila-text/80 hover:border-kaafila-primary/40 hover:text-kaafila-accent'
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -524,7 +524,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
             <button
               type="button"
               onClick={handleLogout}
-              className="inline-flex items-center gap-2 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-red-300 lg:hidden"
+              className="inline-flex items-center gap-2 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-red-700 lg:hidden"
             >
               <LogOut className="h-3.5 w-3.5" />
               <span>Logout</span>
@@ -546,11 +546,11 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
           </div>
         ) : error ? (
           <div className="rounded-3xl border border-red-500/35 bg-kaafila-surface p-8 text-center">
-            <p className="text-sm text-red-300">{error}</p>
+            <p className="text-sm text-red-700">{error}</p>
             <button
               type="button"
               onClick={loadDashboard}
-              className="mt-4 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase text-kaafila-bg"
+              className="mt-4 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase text-kaafila-dark"
             >
               Retry
             </button>
@@ -591,13 +591,13 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     return (
                       <div
                         key={card.label}
-                        className="rounded-2xl border border-kaafila-earth/40 bg-kaafila-surface p-5 shadow-card"
+                        className="rounded-2xl border border-kaafila-secondary/40 bg-kaafila-surface p-5 shadow-card"
                       >
                         <div className="flex items-center justify-between">
                           <span className="text-xs font-semibold uppercase tracking-wider text-kaafila-muted">
                             {card.label}
                           </span>
-                          <Icon className="h-4 w-4 text-kaafila-yellow" />
+                          <Icon className="h-4 w-4 text-kaafila-accent" />
                         </div>
                         <p className="mt-2 font-mono text-3xl font-bold text-kaafila-text">{card.value}</p>
                         <p className="mt-1 text-xs text-kaafila-muted">{card.sub}</p>
@@ -607,7 +607,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                 </section>
 
                 <div className="grid gap-6 lg:grid-cols-12">
-                  <section className="rounded-3xl border border-white/10 bg-kaafila-surface p-6 lg:col-span-7">
+                  <section className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6 lg:col-span-7">
                     <div className="flex items-center justify-between gap-3">
                       <h2 className="font-display text-2xl font-bold uppercase text-kaafila-text">
                         Your Expeditions
@@ -615,7 +615,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       <Link
                         to="/dashboard/organisation/create"
                         onClick={handleResetCreateForm}
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-3.5 py-2 text-xs font-bold uppercase text-kaafila-bg"
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-3.5 py-2 text-xs font-bold uppercase text-kaafila-dark"
                       >
                         <Plus className="h-3.5 w-3.5" />
                         <span>New Expedition</span>
@@ -623,7 +623,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     </div>
 
                     {expeditions.length === 0 ? (
-                      <div className="mt-5 rounded-2xl border border-dashed border-white/15 bg-kaafila-bg p-8 text-center">
+                      <div className="mt-5 rounded-2xl border border-dashed border-kaafila-border bg-kaafila-bg p-8 text-center">
                         <p className="text-sm text-kaafila-muted">
                           No expeditions published yet. Create your first Himalayan ride!
                         </p>
@@ -633,11 +633,11 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         {expeditions.slice(0, 5).map((ride) => (
                           <div
                             key={ride._id}
-                            className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4"
+                            className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4"
                           >
                             <div>
                               <div className="flex items-center gap-2">
-                                <span className="rounded bg-kaafila-yellow/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-kaafila-yellow">
+                                <span className="rounded bg-kaafila-primary/15 px-2 py-0.5 font-mono text-[10px] font-bold uppercase text-kaafila-accent">
                                   {ride.status}
                                 </span>
                                 <span className="font-mono text-[11px] text-kaafila-muted">{ride.region}</span>
@@ -652,7 +652,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             <button
                               type="button"
                               onClick={() => startEditRide(ride)}
-                              className="rounded-xl border border-white/15 px-3 py-1.5 text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow"
+                              className="rounded-xl border border-kaafila-border px-3 py-1.5 text-xs font-semibold text-kaafila-text hover:border-kaafila-primary hover:text-kaafila-accent"
                             >
                               Edit
                             </button>
@@ -662,9 +662,9 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     )}
                   </section>
 
-                  <section className="rounded-3xl border border-white/10 bg-kaafila-surface p-6 lg:col-span-5">
+                  <section className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6 lg:col-span-5">
                     <div className="flex items-center gap-2">
-                      <Activity className="h-5 w-5 text-kaafila-yellow" />
+                      <Activity className="h-5 w-5 text-kaafila-accent" />
                       <h2 className="font-display text-2xl font-bold uppercase text-kaafila-text">
                         Recent Activity
                       </h2>
@@ -674,7 +674,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     ) : (
                       <ul className="mt-5 space-y-3">
                         {recentActivity.map((act) => (
-                          <li key={act.id} className="rounded-xl border border-white/10 bg-kaafila-bg p-3.5">
+                          <li key={act.id} className="rounded-xl border border-kaafila-border bg-kaafila-bg p-3.5">
                             <p className="text-sm font-semibold text-kaafila-text">{act.title}</p>
                             <p className="mt-1 text-xs text-kaafila-muted">
                               {act.subtitle} ·{' '}
@@ -695,9 +695,9 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
 
             {/* ORGANISATION PROFILE MANAGEMENT */}
             {section === 'profile' && orgForm && (
-              <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                <div className="border-b border-white/10 pb-5">
-                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+              <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                <div className="border-b border-kaafila-border pb-5">
+                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                     Public Marketplace Identity
                   </span>
                   <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -735,7 +735,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         minLength={2}
                         value={orgForm.name}
                         onChange={(e) => setOrgForm((p) => ({ ...p, name: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -746,7 +746,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         type="tel"
                         value={orgForm.contactNumber}
                         onChange={(e) => setOrgForm((p) => ({ ...p, contactNumber: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -758,7 +758,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={orgForm.officialWebsite}
                         onChange={(e) => setOrgForm((p) => ({ ...p, officialWebsite: e.target.value }))}
                         placeholder="https://..."
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -771,7 +771,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={orgForm.bookingUrl}
                         onChange={(e) => setOrgForm((p) => ({ ...p, bookingUrl: e.target.value }))}
                         placeholder="https://..."
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                   </div>
@@ -786,7 +786,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={orgForm.city}
                         onChange={(e) => setOrgForm((p) => ({ ...p, city: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -798,7 +798,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={orgForm.state}
                         onChange={(e) => setOrgForm((p) => ({ ...p, state: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -810,7 +810,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={orgForm.region}
                         onChange={(e) => setOrgForm((p) => ({ ...p, region: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                   </div>
@@ -825,7 +825,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       maxLength={280}
                       value={orgForm.shortDescription}
                       onChange={(e) => setOrgForm((p) => ({ ...p, shortDescription: e.target.value }))}
-                      className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                      className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                     />
                   </div>
 
@@ -837,21 +837,21 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       rows={4}
                       value={orgForm.about}
                       onChange={(e) => setOrgForm((p) => ({ ...p, about: e.target.value }))}
-                      className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                      className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                     />
                   </div>
 
                   {/* Facilities Grid */}
                   <div className="grid gap-5 md:grid-cols-2">
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
-                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-yellow">
+                    <div className="space-y-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
+                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-accent">
                         <input
                           type="checkbox"
                           checked={orgForm.accommodationAvailable}
                           onChange={(e) =>
                             setOrgForm((p) => ({ ...p, accommodationAvailable: e.target.checked }))
                           }
-                          className="accent-kaafila-yellow"
+                          className="accent-kaafila-primary"
                         />
                         Accommodation Facilities
                       </label>
@@ -862,7 +862,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         onChange={(e) =>
                           setOrgForm((p) => ({ ...p, accommodationSummary: e.target.value }))
                         }
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                       <input
                         type="text"
@@ -871,17 +871,17 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         onChange={(e) =>
                           setOrgForm((p) => ({ ...p, accommodationTypesText: e.target.value }))
                         }
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                     </div>
 
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
-                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-yellow">
+                    <div className="space-y-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
+                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-accent">
                         <input
                           type="checkbox"
                           checked={orgForm.foodAvailable}
                           onChange={(e) => setOrgForm((p) => ({ ...p, foodAvailable: e.target.checked }))}
-                          className="accent-kaafila-yellow"
+                          className="accent-kaafila-primary"
                         />
                         Food &amp; Meals
                       </label>
@@ -890,26 +890,26 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         placeholder="Food summary..."
                         value={orgForm.foodSummary}
                         onChange={(e) => setOrgForm((p) => ({ ...p, foodSummary: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                       <input
                         type="text"
                         placeholder="Dietary options (comma-separated)"
                         value={orgForm.foodDietaryText}
                         onChange={(e) => setOrgForm((p) => ({ ...p, foodDietaryText: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                     </div>
 
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
-                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-yellow">
+                    <div className="space-y-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
+                      <label className="flex items-center gap-2 text-xs font-bold uppercase text-kaafila-accent">
                         <input
                           type="checkbox"
                           checked={orgForm.bikeRentalAvailable}
                           onChange={(e) =>
                             setOrgForm((p) => ({ ...p, bikeRentalAvailable: e.target.checked }))
                           }
-                          className="accent-kaafila-yellow"
+                          className="accent-kaafila-primary"
                         />
                         Bike Rental Fleet
                       </label>
@@ -920,19 +920,19 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         onChange={(e) =>
                           setOrgForm((p) => ({ ...p, bikeRentalSummary: e.target.value }))
                         }
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                       <input
                         type="text"
                         placeholder="Fleet models (comma-separated, e.g. Himalayan 450, Scram 411)"
                         value={orgForm.bikeFleetText}
                         onChange={(e) => setOrgForm((p) => ({ ...p, bikeFleetText: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                     </div>
 
-                    <div className="space-y-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
-                      <span className="block text-xs font-bold uppercase text-kaafila-yellow">
+                    <div className="space-y-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
+                      <span className="block text-xs font-bold uppercase text-kaafila-accent">
                         Emergency &amp; Medical Support
                       </span>
                       <div className="grid grid-cols-2 gap-2 text-xs text-kaafila-text">
@@ -949,7 +949,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                               onChange={(e) =>
                                 setOrgForm((p) => ({ ...p, [flag.key]: e.target.checked }))
                               }
-                              className="accent-kaafila-yellow"
+                              className="accent-kaafila-primary"
                             />
                             <span>{flag.label}</span>
                           </label>
@@ -960,7 +960,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         placeholder="Emergency protocol summary..."
                         value={orgForm.medicalSummary}
                         onChange={(e) => setOrgForm((p) => ({ ...p, medicalSummary: e.target.value }))}
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 text-xs text-kaafila-text"
                       />
                     </div>
                   </div>
@@ -969,7 +969,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     <button
                       type="submit"
                       disabled={savingOrg}
-                      className="rounded-xl bg-kaafila-yellow px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                      className="rounded-xl bg-kaafila-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                     >
                       {savingOrg ? 'Saving Profile...' : 'Save Organisation Profile'}
                     </button>
@@ -981,9 +981,9 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
             {/* MANAGE EXPEDITIONS SECTION */}
             {section === 'rides' && (
               <section className="space-y-5">
-                <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6">
+                <div className="flex flex-wrap items-center justify-between gap-4 rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6">
                   <div>
-                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                       Expedition Inventory
                     </span>
                     <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -993,7 +993,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                   <Link
                     to="/dashboard/organisation/create"
                     onClick={handleResetCreateForm}
-                    className="inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+                    className="inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
                   >
                     <Plus className="h-4 w-4" />
                     <span>Create Expedition</span>
@@ -1001,12 +1001,12 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                 </div>
 
                 {expeditions.length === 0 ? (
-                  <div className="rounded-3xl border border-white/10 bg-kaafila-surface p-10 text-center">
+                  <div className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
                     <p className="text-sm text-kaafila-muted">You have not created any expeditions yet.</p>
                     <Link
                       to="/dashboard/organisation/create"
                       onClick={handleResetCreateForm}
-                      className="mt-4 inline-block rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase text-kaafila-bg"
+                      className="mt-4 inline-block rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase text-kaafila-dark"
                     >
                       Create Your First Expedition
                     </Link>
@@ -1016,7 +1016,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     {expeditions.map((ride) => (
                       <article
                         key={ride._id}
-                        className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-kaafila-surface p-5 sm:flex-row"
+                        className="flex flex-col gap-5 rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 sm:flex-row"
                       >
                         <img
                           src={ride.coverImageUrl || '/images/expedition-ladakh.png'}
@@ -1026,7 +1026,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         <div className="flex flex-1 flex-col justify-between">
                           <div>
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="rounded bg-kaafila-yellow/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase text-kaafila-yellow">
+                              <span className="rounded bg-kaafila-primary/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase text-kaafila-accent">
                                 {ride.status}
                               </span>
                               <span className="font-mono text-xs text-kaafila-muted">
@@ -1051,7 +1051,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             {ride.status !== 'draft' && (
                               <Link
                                 to={`/rides/${ride.slug}`}
-                                className="rounded-xl border border-white/15 px-3.5 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow"
+                                className="rounded-xl border border-kaafila-border px-3.5 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-primary hover:text-kaafila-accent"
                               >
                                 View Listing
                               </Link>
@@ -1059,7 +1059,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             <button
                               type="button"
                               onClick={() => startEditRide(ride)}
-                              className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-yellow/40 px-3.5 py-2 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                              className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-primary/40 px-3.5 py-2 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/10"
                             >
                               <Edit3 className="h-3.5 w-3.5" />
                               <span>Edit</span>
@@ -1067,7 +1067,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             <button
                               type="button"
                               onClick={() => setDeleteTarget(ride)}
-                              className="inline-flex items-center gap-1.5 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10"
+                              className="inline-flex items-center gap-1.5 rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/10"
                             >
                               <Trash2 className="h-3.5 w-3.5" />
                               <span>Delete</span>
@@ -1083,10 +1083,10 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
 
             {/* CREATE / EDIT EXPEDITION SECTION */}
             {section === 'create' && (
-              <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-5">
+              <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-kaafila-border pb-5">
                   <div>
-                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                       {editingRideId ? 'Update Expedition' : 'Launch New Route'}
                     </span>
                     <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1097,7 +1097,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     <button
                       type="button"
                       onClick={handleResetCreateForm}
-                      className="rounded-xl border border-white/15 px-3.5 py-2 text-xs font-semibold text-kaafila-muted hover:text-kaafila-text"
+                      className="rounded-xl border border-kaafila-border px-3.5 py-2 text-xs font-semibold text-kaafila-muted hover:text-kaafila-text"
                     >
                       Switch to Create New
                     </button>
@@ -1123,7 +1123,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={rideForm.title}
                         onChange={(e) => setRideForm((p) => ({ ...p, title: e.target.value }))}
                         placeholder="e.g., Zanskar Autumn Pass Crossing"
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -1136,7 +1136,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={rideForm.region}
                         onChange={(e) => setRideForm((p) => ({ ...p, region: e.target.value }))}
                         placeholder="e.g., Ladakh, Spiti Valley"
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                   </div>
@@ -1150,7 +1150,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       value={rideForm.tagline}
                       onChange={(e) => setRideForm((p) => ({ ...p, tagline: e.target.value }))}
                       placeholder="Concise one-line expedition hook"
-                      className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                      className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                     />
                   </div>
 
@@ -1163,7 +1163,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       value={rideForm.description}
                       onChange={(e) => setRideForm((p) => ({ ...p, description: e.target.value }))}
                       placeholder="Describe terrain, acclimatisation schedule, and riding experience..."
-                      className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                      className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                     />
                   </div>
 
@@ -1178,7 +1178,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={rideForm.startLocation}
                         onChange={(e) => setRideForm((p) => ({ ...p, startLocation: e.target.value }))}
                         placeholder="Manali"
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -1191,7 +1191,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={rideForm.endLocation}
                         onChange={(e) => setRideForm((p) => ({ ...p, endLocation: e.target.value }))}
                         placeholder="Leh"
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -1203,7 +1203,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={rideForm.startDate}
                         onChange={(e) => setRideForm((p) => ({ ...p, startDate: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                     <div>
@@ -1215,7 +1215,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={rideForm.endDate}
                         onChange={(e) => setRideForm((p) => ({ ...p, endDate: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
                   </div>
@@ -1231,7 +1231,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={rideForm.durationDays}
                         onChange={(e) => setRideForm((p) => ({ ...p, durationDays: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       />
                     </div>
                     <div>
@@ -1243,7 +1243,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         min={1}
                         value={rideForm.distanceKm}
                         onChange={(e) => setRideForm((p) => ({ ...p, distanceKm: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       />
                     </div>
                     <div>
@@ -1255,7 +1255,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         min={0}
                         value={rideForm.maxAltitudeMeters}
                         onChange={(e) => setRideForm((p) => ({ ...p, maxAltitudeMeters: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       />
                     </div>
                     <div>
@@ -1268,7 +1268,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={rideForm.priceInr}
                         onChange={(e) => setRideForm((p) => ({ ...p, priceInr: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       />
                     </div>
                     <div>
@@ -1281,7 +1281,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         required
                         value={rideForm.maxRiders}
                         onChange={(e) => setRideForm((p) => ({ ...p, maxRiders: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       />
                     </div>
                     <div>
@@ -1291,7 +1291,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       <select
                         value={rideForm.status}
                         onChange={(e) => setRideForm((p) => ({ ...p, status: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-sm text-kaafila-text"
                       >
                         <option value="published">Published</option>
                         <option value="draft">Draft (Private)</option>
@@ -1311,7 +1311,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       <select
                         value={rideForm.difficulty}
                         onChange={(e) => setRideForm((p) => ({ ...p, difficulty: e.target.value }))}
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text"
                       >
                         <option value="moderate">Moderate</option>
                         <option value="challenging">Challenging</option>
@@ -1327,7 +1327,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         value={rideForm.bookingUrl}
                         onChange={(e) => setRideForm((p) => ({ ...p, bookingUrl: e.target.value }))}
                         placeholder="https://... (defaults to org booking URL)"
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text"
                       />
                     </div>
                     <div className="flex items-end pb-2">
@@ -1338,7 +1338,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                           onChange={(e) =>
                             setRideForm((p) => ({ ...p, bikeRentalAvailable: e.target.checked }))
                           }
-                          className="accent-kaafila-yellow"
+                          className="accent-kaafila-primary"
                         />
                         Bike Rental Available on This Ride
                       </label>
@@ -1354,14 +1354,14 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       value={rideForm.facilitiesSummary}
                       onChange={(e) => setRideForm((p) => ({ ...p, facilitiesSummary: e.target.value }))}
                       placeholder="e.g., Heated camps, MAP meals, 4x4 sweep truck with oxygen & mechanic"
-                      className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text"
+                      className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text"
                     />
                   </div>
 
                   {/* Day-by-day Itinerary Builder */}
-                  <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-5">
+                  <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-5">
                     <div className="flex items-center justify-between gap-2">
-                      <h3 className="font-display text-lg font-bold uppercase text-kaafila-yellow">
+                      <h3 className="font-display text-lg font-bold uppercase text-kaafila-accent">
                         Day-by-Day Itinerary
                       </h3>
                       <button
@@ -1381,7 +1381,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             ],
                           }))
                         }
-                        className="inline-flex items-center gap-1 rounded-lg border border-kaafila-yellow/40 px-3 py-1.5 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                        className="inline-flex items-center gap-1 rounded-lg border border-kaafila-primary/40 px-3 py-1.5 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/10"
                       >
                         <Plus className="h-3.5 w-3.5" /> Add Day
                       </button>
@@ -1391,7 +1391,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       {rideForm.itinerary.map((day, idx) => (
                         <div
                           key={idx}
-                          className="grid gap-3 rounded-xl border border-white/10 bg-kaafila-surface p-3.5 sm:grid-cols-12"
+                          className="grid gap-3 rounded-xl border border-kaafila-border bg-kaafila-surface p-3.5 sm:grid-cols-12"
                         >
                           <div className="sm:col-span-4">
                             <input
@@ -1403,7 +1403,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                 next[idx] = { ...next[idx], title: e.target.value, day: idx + 1 };
                                 setRideForm((p) => ({ ...p, itinerary: next }));
                               }}
-                              className="w-full rounded-lg border border-white/10 bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text"
+                              className="w-full rounded-lg border border-kaafila-border bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text"
                             />
                           </div>
                           <div className="sm:col-span-5">
@@ -1416,7 +1416,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                 next[idx] = { ...next[idx], description: e.target.value };
                                 setRideForm((p) => ({ ...p, itinerary: next }));
                               }}
-                              className="w-full rounded-lg border border-white/10 bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text"
+                              className="w-full rounded-lg border border-kaafila-border bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text"
                             />
                           </div>
                           <div className="flex items-center gap-2 sm:col-span-3">
@@ -1429,7 +1429,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                 next[idx] = { ...next[idx], altitudeMeters: e.target.value };
                                 setRideForm((p) => ({ ...p, itinerary: next }));
                               }}
-                              className="w-full rounded-lg border border-white/10 bg-kaafila-bg px-2.5 py-2 text-xs text-kaafila-text"
+                              className="w-full rounded-lg border border-kaafila-border bg-kaafila-bg px-2.5 py-2 text-xs text-kaafila-text"
                             />
                             {rideForm.itinerary.length > 1 && (
                               <button
@@ -1442,7 +1442,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                       .map((d, i) => ({ ...d, day: i + 1 })),
                                   }))
                                 }
-                                className="rounded-lg border border-red-500/30 p-2 text-red-300 hover:bg-red-500/10"
+                                className="rounded-lg border border-red-500/30 p-2 text-red-700 hover:bg-red-500/10"
                                 aria-label="Remove itinerary day"
                               >
                                 <Trash2 className="h-3.5 w-3.5" />
@@ -1457,14 +1457,14 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                   <div className="flex justify-end gap-3">
                     <Link
                       to="/dashboard/organisation/rides"
-                      className="rounded-xl border border-white/15 px-5 py-3 text-xs font-semibold uppercase text-kaafila-text"
+                      className="rounded-xl border border-kaafila-border px-5 py-3 text-xs font-semibold uppercase text-kaafila-text"
                     >
                       Cancel
                     </Link>
                     <button
                       type="submit"
                       disabled={savingRide}
-                      className="rounded-xl bg-kaafila-yellow px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover disabled:opacity-50"
+                      className="rounded-xl bg-kaafila-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover disabled:opacity-50"
                     >
                       {savingRide
                         ? 'Saving...'
@@ -1480,10 +1480,10 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
             {/* MANAGE RIDERS SECTION */}
             {section === 'riders' && (
               <section className="space-y-5">
-                <div className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6">
+                <div className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6">
                   <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <div>
-                      <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                      <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                         Participant Roster
                       </span>
                       <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1498,7 +1498,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                           setRidersFilterRide(e.target.value);
                           setRidersPage(1);
                         }}
-                        className="rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text"
+                        className="rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text"
                       >
                         <option value="">All Expeditions</option>
                         {expeditions.map((r) => (
@@ -1514,7 +1514,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                           setRidersFilterStatus(e.target.value);
                           setRidersPage(1);
                         }}
-                        className="rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text"
+                        className="rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text"
                       >
                         <option value="all">All Statuses</option>
                         <option value="interested">Interested</option>
@@ -1525,8 +1525,8 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     </div>
                   </div>
 
-                  <p className="mt-4 rounded-xl border border-kaafila-yellow/20 bg-kaafila-bg px-4 py-2.5 text-xs text-kaafila-muted">
-                    <Lock className="mr-1.5 inline h-3.5 w-3.5 text-kaafila-yellow" />
+                  <p className="mt-4 rounded-xl border border-kaafila-primary/20 bg-kaafila-bg px-4 py-2.5 text-xs text-kaafila-muted">
+                    <Lock className="mr-1.5 inline h-3.5 w-3.5 text-kaafila-accent" />
                     Rider phone, email, and emergency contacts remain private unless participation is{' '}
                     <strong>confirmed</strong>/<strong>completed</strong> and the rider explicitly opted in to share contact details.
                   </p>
@@ -1535,7 +1535,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                 {ridersLoading ? (
                   <div className="h-48 animate-pulse rounded-2xl bg-kaafila-surface" />
                 ) : ridersList.length === 0 ? (
-                  <div className="rounded-3xl border border-white/10 bg-kaafila-surface p-10 text-center text-sm text-kaafila-muted">
+                  <div className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-10 text-center text-sm text-kaafila-muted">
                     No riders have registered interest for the selected filter yet.
                   </div>
                 ) : (
@@ -1543,10 +1543,10 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                     {ridersList.map((member) => (
                       <div
                         key={member._id}
-                        className="flex flex-col justify-between gap-4 rounded-2xl border border-white/10 bg-kaafila-surface p-5 lg:flex-row lg:items-center"
+                        className="flex flex-col justify-between gap-4 rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 lg:flex-row lg:items-center"
                       >
                         <div className="flex items-start gap-4">
-                          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-kaafila-yellow/35 bg-kaafila-bg">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-kaafila-primary/35 bg-kaafila-bg">
                             {member.user?.avatarUrl ? (
                               <img
                                 src={member.user.avatarUrl}
@@ -1554,7 +1554,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                 className="h-full w-full object-cover"
                               />
                             ) : (
-                              <span className="font-display text-lg font-bold text-kaafila-yellow">
+                              <span className="font-display text-lg font-bold text-kaafila-accent">
                                 {member.user?.fullName?.slice(0, 1).toUpperCase() || 'R'}
                               </span>
                             )}
@@ -1567,7 +1567,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                               {member.riderProfile?.handle && (
                                 <Link
                                   to={`/riders/${member.riderProfile.handle}`}
-                                  className="font-mono text-xs text-kaafila-yellow hover:underline"
+                                  className="font-mono text-xs text-kaafila-accent hover:underline"
                                 >
                                   @{member.riderProfile.handle}
                                 </Link>
@@ -1581,7 +1581,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
 
                             <div className="mt-2">
                               {member.contactAuthorized ? (
-                                <p className="font-mono text-xs text-emerald-300">
+                                <p className="font-mono text-xs text-emerald-700">
                                   Authorized Contact: {member.user?.email}
                                   {member.user?.phoneNumber ? ` · ${member.user.phoneNumber}` : ''}
                                   {member.riderProfile?.emergencyContact?.phone
@@ -1590,7 +1590,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                 </p>
                               ) : (
                                 <span className="inline-flex items-center gap-1 font-mono text-[11px] text-kaafila-muted">
-                                  <ShieldAlert className="h-3.5 w-3.5 text-kaafila-yellow" />
+                                  <ShieldAlert className="h-3.5 w-3.5 text-kaafila-accent" />
                                   Contact details private (requires confirmed status + rider opt-in)
                                 </span>
                               )}
@@ -1599,7 +1599,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-2">
-                          <span className="rounded-lg bg-kaafila-bg px-3 py-1.5 font-mono text-xs uppercase text-kaafila-yellow">
+                          <span className="rounded-lg bg-kaafila-bg px-3 py-1.5 font-mono text-xs uppercase text-kaafila-accent">
                             {member.status}
                           </span>
                           <select
@@ -1608,7 +1608,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             onChange={(e) =>
                               handleUpdateParticipantStatus(member.ride._id, member._id, e.target.value)
                             }
-                            className="rounded-xl border border-kaafila-yellow/35 bg-kaafila-bg px-3 py-1.5 text-xs font-semibold text-kaafila-text"
+                            className="rounded-xl border border-kaafila-primary/35 bg-kaafila-bg px-3 py-1.5 text-xs font-semibold text-kaafila-text"
                           >
                             <option value="interested">Interested</option>
                             <option value="confirmed">Confirmed</option>
@@ -1625,7 +1625,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                           type="button"
                           disabled={ridersPage <= 1}
                           onClick={() => setRidersPage((p) => Math.max(1, p - 1))}
-                          className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
+                          className="rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
                         >
                           Previous
                         </button>
@@ -1636,7 +1636,7 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                           type="button"
                           disabled={ridersPage >= ridersTotalPages}
                           onClick={() => setRidersPage((p) => Math.min(ridersTotalPages, p + 1))}
-                          className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
+                          className="rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
                         >
                           Next
                         </button>
@@ -1650,8 +1650,8 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
             {/* ANALYTICS SECTION (MongoDB Aggregations Only) */}
             {section === 'analytics' && (
               <section className="space-y-6">
-                <div className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6">
-                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                <div className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6">
+                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                     Genuine Database Aggregations
                   </span>
                   <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1687,17 +1687,17 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                       ].map((metric) => (
                         <div
                           key={metric.label}
-                          className="rounded-2xl border border-white/10 bg-kaafila-surface p-5"
+                          className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5"
                         >
                           <span className="text-xs uppercase text-kaafila-muted">{metric.label}</span>
-                          <p className="mt-2 font-mono text-3xl font-bold text-kaafila-yellow">
+                          <p className="mt-2 font-mono text-3xl font-bold text-kaafila-accent">
                             {metric.value}
                           </p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="rounded-3xl border border-white/10 bg-kaafila-surface p-6">
+                    <div className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6">
                       <h3 className="font-display text-2xl font-bold uppercase text-kaafila-text">
                         Expedition-Wise Participation
                       </h3>
@@ -1713,14 +1713,14 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                             return (
                               <div
                                 key={row._id}
-                                className="rounded-2xl border border-white/10 bg-kaafila-bg p-4"
+                                className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-4"
                               >
                                 <div className="flex flex-wrap items-center justify-between gap-2">
                                   <div>
                                     <span className="font-display text-lg font-bold text-kaafila-text">
                                       {row.title}
                                     </span>
-                                    <span className="ml-2 rounded bg-kaafila-surface px-2 py-0.5 font-mono text-[10px] uppercase text-kaafila-yellow">
+                                    <span className="ml-2 rounded bg-kaafila-surface px-2 py-0.5 font-mono text-[10px] uppercase text-kaafila-accent">
                                       {row.status}
                                     </span>
                                   </div>
@@ -1729,9 +1729,9 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                                     interested · {row.cancelledCount} cancelled (Cap {row.maxRiders})
                                   </span>
                                 </div>
-                                <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/10">
+                                <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-kaafila-elevated">
                                   <div
-                                    className="h-full bg-kaafila-yellow transition-all"
+                                    className="h-full bg-kaafila-primary transition-all"
                                     style={{ width: `${fillPct}%` }}
                                   />
                                 </div>
@@ -1753,8 +1753,8 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
 
             {/* ACCOUNT SETTINGS SECTION */}
             {section === 'settings' && (
-              <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+              <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                   Operator Account &amp; Verification
                 </span>
                 <h2 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1762,17 +1762,17 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                 </h2>
 
                 <div className="mt-6 space-y-4">
-                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                     <div>
                       <p className="text-xs uppercase text-kaafila-muted">Official Account Email</p>
                       <p className="mt-1 font-mono text-sm text-kaafila-text">{user.email}</p>
                     </div>
-                    <span className="rounded-full border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-1 font-mono text-xs uppercase text-kaafila-yellow">
+                    <span className="rounded-full border border-kaafila-primary/40 bg-kaafila-primary/10 px-3 py-1 font-mono text-xs uppercase text-kaafila-accent">
                       Role: {user.role}
                     </span>
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                  <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                     <div>
                       <p className="text-xs uppercase text-kaafila-muted">Verification Status</p>
                       <p className="mt-1 text-sm text-kaafila-text capitalize">
@@ -1785,14 +1785,14 @@ export default function OrganisationDashboardPage({ section = 'overview' }) {
                   </div>
 
                   {org?.slug && (
-                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                       <div>
                         <p className="text-xs uppercase text-kaafila-muted">Public Marketplace Slug</p>
                         <p className="mt-1 font-mono text-sm text-kaafila-text">/organisations/{org.slug}</p>
                       </div>
                       <Link
                         to={`/organisations/${org.slug}`}
-                        className="rounded-xl border border-kaafila-yellow/40 px-4 py-2 text-xs font-bold uppercase text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                        className="rounded-xl border border-kaafila-primary/40 px-4 py-2 text-xs font-bold uppercase text-kaafila-accent hover:bg-kaafila-primary/10"
                       >
                         Open Public Page
                       </Link>

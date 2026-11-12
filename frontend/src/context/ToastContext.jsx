@@ -32,10 +32,10 @@ export function ToastProvider({ children }) {
         {toasts.map((toast) => {
           const styles =
             toast.type === 'error'
-              ? 'border-red-500/40 bg-kaafila-surface text-red-200'
+              ? 'border-red-500/40 bg-kaafila-surface text-red-700'
               : toast.type === 'info'
-                ? 'border-kaafila-yellow/40 bg-kaafila-surface text-kaafila-text'
-                : 'border-emerald-500/40 bg-kaafila-surface text-emerald-200';
+                ? 'border-kaafila-primary/40 bg-kaafila-surface text-kaafila-text'
+                : 'border-emerald-500/40 bg-kaafila-surface text-emerald-700';
           const Icon =
             toast.type === 'error' ? AlertCircle : toast.type === 'info' ? Info : CheckCircle2;
 
@@ -44,7 +44,7 @@ export function ToastProvider({ children }) {
               key={toast.id}
               className={`pointer-events-auto flex items-start gap-3 rounded-xl border px-4 py-3 text-sm shadow-card backdrop-blur-md ${styles}`}
             >
-              <Icon className="mt-0.5 h-4 w-4 shrink-0 text-kaafila-yellow" />
+              <Icon className="mt-0.5 h-4 w-4 shrink-0 text-kaafila-accent" />
               <p className="flex-1 leading-snug">{toast.message}</p>
               <button
                 type="button"

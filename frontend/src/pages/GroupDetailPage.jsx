@@ -448,7 +448,7 @@ export default function GroupDetailPage() {
           </p>
           <Link
             to="/community/groups"
-            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+            className="mt-6 inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
           >
             Back to KAAFILA Groups
           </Link>
@@ -465,7 +465,7 @@ export default function GroupDetailPage() {
   return (
     <div className="min-h-screen bg-kaafila-bg pb-20">
       {/* Group Cover Header */}
-      <section className="relative overflow-hidden border-b border-kaafila-yellow/20 bg-kaafila-surface">
+      <section className="relative overflow-hidden border-b border-kaafila-primary/20 bg-kaafila-surface">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-25"
           style={{
@@ -477,7 +477,7 @@ export default function GroupDetailPage() {
         <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           <Link
             to="/community/groups"
-            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-kaafila-yellow hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-kaafila-accent hover:underline"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
             All KAAFILA Groups
@@ -486,7 +486,7 @@ export default function GroupDetailPage() {
           <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-full border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-kaafila-yellow">
+                <span className="inline-flex items-center gap-1 rounded-full border border-kaafila-primary/40 bg-kaafila-primary/10 px-3 py-0.5 text-xs font-semibold uppercase tracking-wider text-kaafila-accent">
                   {group.privacy === 'private' ? (
                     <Lock className="h-3 w-3" />
                   ) : group.privacy === 'invite_only' ? (
@@ -498,7 +498,7 @@ export default function GroupDetailPage() {
                 </span>
 
                 {group.isDemo && (
-                  <span className="rounded-full border border-amber-400/40 bg-amber-400/10 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-amber-300">
+                  <span className="rounded-full border border-kaafila-accent/40 bg-kaafila-primary/15 px-3 py-0.5 text-[11px] font-bold uppercase tracking-wider text-kaafila-accent">
                     Demo Group
                   </span>
                 )}
@@ -515,24 +515,24 @@ export default function GroupDetailPage() {
               <div className="mt-4 flex flex-wrap gap-4 text-xs text-kaafila-muted">
                 {group.destination && (
                   <span className="inline-flex items-center gap-1.5 text-kaafila-text">
-                    <MapPin className="h-4 w-4 text-kaafila-yellow" />
+                    <MapPin className="h-4 w-4 text-kaafila-accent" />
                     {group.destination}
                   </span>
                 )}
                 <span className="inline-flex items-center gap-1.5 text-kaafila-text">
-                  <Users className="h-4 w-4 text-kaafila-yellow" />
+                  <Users className="h-4 w-4 text-kaafila-accent" />
                   {group.memberCount} / {group.maxMembers} Members
                 </span>
                 {group.startDate && (
                   <span className="inline-flex items-center gap-1.5 text-kaafila-text">
-                    <Calendar className="h-4 w-4 text-kaafila-yellow" />
+                    <Calendar className="h-4 w-4 text-kaafila-accent" />
                     {new Date(group.startDate).toLocaleDateString()}
                   </span>
                 )}
                 {group.organisation && (
                   <Link
                     to={`/organisations/${group.organisation.slug}`}
-                    className="text-kaafila-yellow hover:underline"
+                    className="text-kaafila-accent hover:underline"
                   >
                     Hosted with {group.organisation.name}
                   </Link>
@@ -545,14 +545,14 @@ export default function GroupDetailPage() {
                 <button
                   type="button"
                   onClick={() => setConfirmLeave(true)}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-red-500/35 bg-red-500/10 px-4 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/20 transition"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-red-500/35 bg-red-500/10 px-4 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/20 transition"
                 >
                   <LogOut className="h-3.5 w-3.5" />
                   Leave Group
                 </button>
               )}
               {!accessGranted && group.myMembership?.status === 'pending_request' ? (
-                <span className="rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-4 py-2 text-xs font-semibold text-kaafila-yellow">
+                <span className="rounded-xl border border-kaafila-primary/40 bg-kaafila-primary/10 px-4 py-2 text-xs font-semibold text-kaafila-accent">
                   Join Request Pending Approval
                 </span>
               ) : !accessGranted ? (
@@ -560,7 +560,7 @@ export default function GroupDetailPage() {
                   type="button"
                   disabled={busyAction}
                   onClick={handleJoinOrRequest}
-                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                 >
                   {busyAction ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                   {group.myMembership?.status === 'invited'
@@ -578,8 +578,8 @@ export default function GroupDetailPage() {
       {/* Body */}
       <div className="mx-auto mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
         {!accessGranted ? (
-          <div className="mx-auto max-w-2xl rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-8 text-center">
-            <Lock className="mx-auto h-10 w-10 text-kaafila-yellow" />
+          <div className="mx-auto max-w-2xl rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-8 text-center">
+            <Lock className="mx-auto h-10 w-10 text-kaafila-accent" />
             <h2 className="mt-4 font-display text-2xl font-bold text-kaafila-text">
               Members-Only Space
             </h2>
@@ -595,7 +595,7 @@ export default function GroupDetailPage() {
                 type="button"
                 disabled={busyAction}
                 onClick={handleJoinOrRequest}
-                className="mt-6 rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+                className="mt-6 rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
               >
                 {group.myMembership?.status === 'invited'
                   ? 'Accept Invitation'
@@ -608,15 +608,15 @@ export default function GroupDetailPage() {
         ) : (
           <>
             {/* Navigation Tabs */}
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 pb-3">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-kaafila-border pb-3">
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() => setActiveTab('chat')}
                   className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                     activeTab === 'chat'
-                      ? 'bg-kaafila-yellow text-kaafila-bg'
-                      : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark'
+                      : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   <MessageSquare className="h-4 w-4" />
@@ -628,8 +628,8 @@ export default function GroupDetailPage() {
                   onClick={() => setActiveTab('announcements')}
                   className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                     activeTab === 'announcements'
-                      ? 'bg-kaafila-yellow text-kaafila-bg'
-                      : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark'
+                      : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   <Megaphone className="h-4 w-4" />
@@ -641,8 +641,8 @@ export default function GroupDetailPage() {
                   onClick={() => setActiveTab('members')}
                   className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                     activeTab === 'members'
-                      ? 'bg-kaafila-yellow text-kaafila-bg'
-                      : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark'
+                      : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   <Users className="h-4 w-4" />
@@ -659,8 +659,8 @@ export default function GroupDetailPage() {
                   onClick={() => setActiveTab('live_map')}
                   className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                     activeTab === 'live_map'
-                      ? 'bg-kaafila-yellow text-kaafila-bg'
-                      : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark'
+                      : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   <Navigation className="h-4 w-4" />
@@ -684,9 +684,9 @@ export default function GroupDetailPage() {
                   />
                 </div>
                 <aside className="space-y-4 lg:col-span-4">
-                  <div className="rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-5">
+                  <div className="rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-5">
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase text-kaafila-yellow">
+                      <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase text-kaafila-accent">
                         <Radio className="h-3.5 w-3.5" />
                         Opt-In Convoy Sharing
                       </span>
@@ -698,7 +698,7 @@ export default function GroupDetailPage() {
                     {user?.role === 'rider' && (
                       <Link
                         to="/dashboard/rider/tracking"
-                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase text-kaafila-bg hover:bg-kaafila-yellowHover transition"
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase text-kaafila-dark hover:bg-kaafila-primary-hover transition"
                       >
                         <Navigation className="h-4 w-4" />
                         Open GPS Tracker &amp; Sharing Toggle
@@ -706,7 +706,7 @@ export default function GroupDetailPage() {
                     )}
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-kaafila-surface p-5">
+                  <div className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5">
                     <h3 className="font-display text-lg font-bold uppercase text-kaafila-text">
                       Active Shared Riders
                     </h3>
@@ -717,7 +717,7 @@ export default function GroupDetailPage() {
                         {liveRiders.map((r) => (
                           <div
                             key={r.userId}
-                            className="flex items-center justify-between rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-xs"
+                            className="flex items-center justify-between rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-xs"
                           >
                             <span className="font-semibold text-kaafila-text">{r.fullName}</span>
                             <span className="font-mono text-[11px] text-emerald-400">
@@ -735,13 +735,13 @@ export default function GroupDetailPage() {
             {/* CHAT TAB */}
             {activeTab === 'chat' && (
               <div className="mt-6 grid gap-6 lg:grid-cols-12">
-                <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-kaafila-surface lg:col-span-8">
+                <div className="flex flex-col overflow-hidden rounded-2xl border border-kaafila-border bg-kaafila-surface lg:col-span-8">
                   {/* Pinned announcement banner */}
                   {announcements.find((a) => a.isPinned) && (
-                    <div className="flex items-start gap-2.5 border-b border-kaafila-yellow/25 bg-kaafila-yellow/10 px-4 py-3 text-xs">
-                      <Pin className="mt-0.5 h-4 w-4 shrink-0 text-kaafila-yellow" />
+                    <div className="flex items-start gap-2.5 border-b border-kaafila-primary/25 bg-kaafila-primary/10 px-4 py-3 text-xs">
+                      <Pin className="mt-0.5 h-4 w-4 shrink-0 text-kaafila-accent" />
                       <div className="min-w-0 flex-1">
-                        <span className="font-bold text-kaafila-yellow">
+                        <span className="font-bold text-kaafila-accent">
                           {announcements.find((a) => a.isPinned).title || 'Pinned Briefing'}:{' '}
                         </span>
                         <span className="text-kaafila-text">
@@ -758,7 +758,7 @@ export default function GroupDetailPage() {
                           type="button"
                           disabled={loadingMsgs}
                           onClick={() => loadGroupMessages(groupId, msgPage + 1, true)}
-                          className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-kaafila-bg px-3.5 py-1 text-xs text-kaafila-muted hover:text-kaafila-yellow"
+                          className="inline-flex items-center gap-1 rounded-full border border-kaafila-border bg-kaafila-bg px-3.5 py-1 text-xs text-kaafila-muted hover:text-kaafila-accent"
                         >
                           <ChevronUp className="h-3.5 w-3.5" />
                           Load Earlier Chat
@@ -779,15 +779,15 @@ export default function GroupDetailPage() {
                             className={`flex flex-col ${mine ? 'items-end' : 'items-start'}`}
                           >
                             {!mine && (
-                              <span className="mb-1 ml-1 text-[11px] font-semibold text-kaafila-yellow">
+                              <span className="mb-1 ml-1 text-[11px] font-semibold text-kaafila-accent">
                                 {msg.sender?.fullName || 'Rider'}
                               </span>
                             )}
                             <div
                               className={`max-w-[82%] rounded-2xl px-4 py-2.5 text-sm ${
                                 mine
-                                  ? 'bg-kaafila-yellow text-kaafila-bg rounded-br-sm'
-                                  : 'border border-white/10 bg-kaafila-bg text-kaafila-text rounded-bl-sm'
+                                  ? 'bg-kaafila-primary text-kaafila-dark rounded-br-sm'
+                                  : 'border border-kaafila-border bg-kaafila-bg text-kaafila-text rounded-bl-sm'
                               }`}
                             >
                               <p className="whitespace-pre-wrap break-words leading-relaxed">
@@ -795,7 +795,7 @@ export default function GroupDetailPage() {
                               </p>
                               <p
                                 className={`mt-1 text-right text-[10px] ${
-                                  mine ? 'text-kaafila-bg/75' : 'text-kaafila-muted'
+                                  mine ? 'text-white/75' : 'text-kaafila-muted'
                                 }`}
                               >
                                 {new Date(msg.createdAt).toLocaleTimeString([], {
@@ -810,7 +810,7 @@ export default function GroupDetailPage() {
                     )}
 
                     {typingNames.length > 0 && (
-                      <p className="text-xs italic text-kaafila-yellow">
+                      <p className="text-xs italic text-kaafila-accent">
                         {typingNames.join(', ')} typing...
                       </p>
                     )}
@@ -819,7 +819,7 @@ export default function GroupDetailPage() {
 
                   <form
                     onSubmit={handleSendMessage}
-                    className="flex items-center gap-2 border-t border-white/10 bg-kaafila-bg/40 p-3 sm:p-4"
+                    className="flex items-center gap-2 border-t border-kaafila-border bg-kaafila-bg/40 p-3 sm:p-4"
                   >
                     <input
                       type="text"
@@ -827,12 +827,12 @@ export default function GroupDetailPage() {
                       onChange={(e) => handleDraftChange(e.target.value)}
                       placeholder="Message the riding group..."
                       maxLength={2000}
-                      className="flex-1 rounded-xl border border-white/15 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                      className="flex-1 rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
                     />
                     <button
                       type="submit"
                       disabled={!draft.trim() || sending}
-                      className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover disabled:opacity-40"
+                      className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover disabled:opacity-40"
                     >
                       {sending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
                       <span className="hidden sm:inline">Send</span>
@@ -841,7 +841,7 @@ export default function GroupDetailPage() {
                 </div>
 
                 {/* Active Members Mini Roster */}
-                <aside className="rounded-2xl border border-white/10 bg-kaafila-surface p-5 lg:col-span-4">
+                <aside className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 lg:col-span-4">
                   <h3 className="font-display text-xl font-bold text-kaafila-text">
                     Active Squad ({members.length})
                   </h3>
@@ -851,7 +851,7 @@ export default function GroupDetailPage() {
                       return (
                         <div
                           key={m._id}
-                          className="flex items-center justify-between gap-2 rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2"
+                          className="flex items-center justify-between gap-2 rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2"
                         >
                           <div className="flex items-center gap-2.5 min-w-0">
                             <span
@@ -866,14 +866,14 @@ export default function GroupDetailPage() {
                               {m.riderProfile?.handle && (
                                 <Link
                                   to={`/riders/${m.riderProfile.handle}`}
-                                  className="block truncate text-[11px] font-mono text-kaafila-yellow/80 hover:underline"
+                                  className="block truncate text-[11px] font-mono text-kaafila-accent/80 hover:underline"
                                 >
                                   @{m.riderProfile.handle}
                                 </Link>
                               )}
                             </div>
                           </div>
-                          <span className="shrink-0 rounded-md border border-kaafila-yellow/30 bg-kaafila-yellow/10 px-2 py-0.5 text-[10px] font-bold uppercase text-kaafila-yellow">
+                          <span className="shrink-0 rounded-md border border-kaafila-primary/30 bg-kaafila-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase text-kaafila-accent">
                             {m.role}
                           </span>
                         </div>
@@ -890,7 +890,7 @@ export default function GroupDetailPage() {
                 {canManage && (
                   <form
                     onSubmit={handleSaveAnnouncement}
-                    className="h-fit space-y-4 rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-5 lg:col-span-5"
+                    className="h-fit space-y-4 rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-5 lg:col-span-5"
                   >
                     <h2 className="font-display text-2xl font-bold text-kaafila-text">
                       {editingAnn ? 'Edit Announcement' : 'Publish Announcement'}
@@ -905,7 +905,7 @@ export default function GroupDetailPage() {
                         value={annForm.title}
                         onChange={(e) => setAnnForm((f) => ({ ...f, title: e.target.value }))}
                         placeholder="e.g. 05:30 AM Flag-Off Checklist"
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
 
@@ -919,7 +919,7 @@ export default function GroupDetailPage() {
                         value={annForm.content}
                         onChange={(e) => setAnnForm((f) => ({ ...f, content: e.target.value }))}
                         placeholder="Share route updates, fuel stops, weather alerts..."
-                        className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
 
@@ -928,7 +928,7 @@ export default function GroupDetailPage() {
                         type="checkbox"
                         checked={annForm.isPinned}
                         onChange={(e) => setAnnForm((f) => ({ ...f, isPinned: e.target.checked }))}
-                        className="h-4 w-4 accent-kaafila-yellow"
+                        className="h-4 w-4 accent-kaafila-primary"
                       />
                       Pin announcement to top of chat & board
                     </label>
@@ -937,7 +937,7 @@ export default function GroupDetailPage() {
                       <button
                         type="submit"
                         disabled={postingAnn}
-                        className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover disabled:opacity-50"
+                        className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover disabled:opacity-50"
                       >
                         <Megaphone className="h-4 w-4" />
                         {postingAnn
@@ -953,7 +953,7 @@ export default function GroupDetailPage() {
                             setEditingAnn(null);
                             setAnnForm({ title: '', content: '', isPinned: false });
                           }}
-                          className="rounded-xl border border-white/15 px-3.5 py-2.5 text-xs text-kaafila-muted"
+                          className="rounded-xl border border-kaafila-border px-3.5 py-2.5 text-xs text-kaafila-muted"
                         >
                           Cancel
                         </button>
@@ -964,8 +964,8 @@ export default function GroupDetailPage() {
 
                 <div className={`space-y-4 ${canManage ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
                   {announcements.length === 0 ? (
-                    <div className="rounded-2xl border border-white/10 bg-kaafila-surface p-10 text-center">
-                      <Megaphone className="mx-auto h-10 w-10 text-kaafila-yellow/60" />
+                    <div className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
+                      <Megaphone className="mx-auto h-10 w-10 text-kaafila-accent/60" />
                       <p className="mt-3 text-sm text-kaafila-muted">
                         No group announcements posted yet.
                       </p>
@@ -976,15 +976,15 @@ export default function GroupDetailPage() {
                         key={ann._id}
                         className={`rounded-2xl border p-5 ${
                           ann.isPinned
-                            ? 'border-kaafila-yellow/45 bg-kaafila-yellow/5'
-                            : 'border-white/10 bg-kaafila-surface'
+                            ? 'border-kaafila-primary/45 bg-kaafila-primary/5'
+                            : 'border-kaafila-border bg-kaafila-surface'
                         }`}
                       >
                         <div className="flex flex-wrap items-start justify-between gap-2">
                           <div>
                             <div className="flex items-center gap-2">
                               {ann.isPinned && (
-                                <span className="inline-flex items-center gap-1 rounded-full bg-kaafila-yellow px-2 py-0.5 text-[10px] font-bold uppercase text-kaafila-bg">
+                                <span className="inline-flex items-center gap-1 rounded-full bg-kaafila-primary px-2 py-0.5 text-[10px] font-bold uppercase text-kaafila-dark">
                                   <Pin className="h-3 w-3" />
                                   Pinned
                                 </span>
@@ -1004,7 +1004,7 @@ export default function GroupDetailPage() {
                               <button
                                 type="button"
                                 onClick={() => handleTogglePin(ann)}
-                                className="rounded-lg border border-white/10 p-1.5 text-kaafila-muted hover:text-kaafila-yellow"
+                                className="rounded-lg border border-kaafila-border p-1.5 text-kaafila-muted hover:text-kaafila-accent"
                                 title={ann.isPinned ? 'Unpin' : 'Pin'}
                               >
                                 <Pin className="h-4 w-4" />
@@ -1019,7 +1019,7 @@ export default function GroupDetailPage() {
                                     isPinned: Boolean(ann.isPinned),
                                   });
                                 }}
-                                className="rounded-lg border border-white/10 p-1.5 text-kaafila-muted hover:text-kaafila-yellow"
+                                className="rounded-lg border border-kaafila-border p-1.5 text-kaafila-muted hover:text-kaafila-accent"
                                 title="Edit"
                               >
                                 <Edit3 className="h-4 w-4" />
@@ -1027,7 +1027,7 @@ export default function GroupDetailPage() {
                               <button
                                 type="button"
                                 onClick={() => handleDeleteAnnouncement(ann._id)}
-                                className="rounded-lg border border-white/10 p-1.5 text-kaafila-muted hover:text-red-400"
+                                className="rounded-lg border border-kaafila-border p-1.5 text-kaafila-muted hover:text-red-400"
                                 title="Delete"
                               >
                                 <Trash2 className="h-4 w-4" />
@@ -1054,7 +1054,7 @@ export default function GroupDetailPage() {
                     {/* Invite Form */}
                     <form
                       onSubmit={handleInviteRider}
-                      className="rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-5"
+                      className="rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-5"
                     >
                       <h2 className="font-display text-xl font-bold text-kaafila-text">
                         Invite Rider by @handle
@@ -1068,12 +1068,12 @@ export default function GroupDetailPage() {
                           value={inviteHandle}
                           onChange={(e) => setInviteHandle(e.target.value)}
                           placeholder="@riderhandle"
-                          className="flex-1 rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="flex-1 rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                         <button
                           type="submit"
                           disabled={inviting || !inviteHandle.trim()}
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark disabled:opacity-50"
                         >
                           <UserPlus className="h-4 w-4" />
                           {inviting ? 'Sending...' : 'Invite'}
@@ -1082,7 +1082,7 @@ export default function GroupDetailPage() {
                     </form>
 
                     {/* Pending Join Requests */}
-                    <div className="rounded-2xl border border-white/10 bg-kaafila-surface p-5">
+                    <div className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5">
                       <h2 className="font-display text-xl font-bold text-kaafila-text">
                         Pending Join Requests ({pendingRequests.length})
                       </h2>
@@ -1095,14 +1095,14 @@ export default function GroupDetailPage() {
                           {pendingRequests.map((reqItem) => (
                             <div
                               key={reqItem._id}
-                              className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5"
+                              className="flex items-center justify-between gap-3 rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5"
                             >
                               <div className="min-w-0">
                                 <p className="truncate text-sm font-semibold text-kaafila-text">
                                   {reqItem.user?.fullName}
                                 </p>
                                 {reqItem.riderProfile?.handle && (
-                                  <p className="text-xs font-mono text-kaafila-yellow">
+                                  <p className="text-xs font-mono text-kaafila-accent">
                                     @{reqItem.riderProfile.handle}
                                   </p>
                                 )}
@@ -1113,7 +1113,7 @@ export default function GroupDetailPage() {
                                   onClick={() =>
                                     handleMemberManage(reqItem._id, { action: 'approve' })
                                   }
-                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-bold text-kaafila-bg"
+                                  className="inline-flex items-center gap-1 rounded-lg bg-emerald-500 px-3 py-1.5 text-xs font-bold text-white"
                                 >
                                   <Check className="h-3.5 w-3.5" />
                                   Approve
@@ -1123,7 +1123,7 @@ export default function GroupDetailPage() {
                                   onClick={() =>
                                     handleMemberManage(reqItem._id, { action: 'reject' })
                                   }
-                                  className="inline-flex items-center gap-1 rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-muted hover:text-red-300"
+                                  className="inline-flex items-center gap-1 rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-muted hover:text-red-700"
                                 >
                                   <X className="h-3.5 w-3.5" />
                                   Reject
@@ -1138,7 +1138,7 @@ export default function GroupDetailPage() {
                 )}
 
                 {/* Active Members Table */}
-                <div className="rounded-2xl border border-white/10 bg-kaafila-surface p-5">
+                <div className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5">
                   <h2 className="font-display text-2xl font-bold text-kaafila-text">
                     Group Roster ({members.length})
                   </h2>
@@ -1146,7 +1146,7 @@ export default function GroupDetailPage() {
                     {members.map((m) => (
                       <div
                         key={m._id}
-                        className="flex flex-col justify-between gap-3 rounded-xl border border-white/10 bg-kaafila-bg p-4"
+                        className="flex flex-col justify-between gap-3 rounded-xl border border-kaafila-border bg-kaafila-bg p-4"
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="min-w-0">
@@ -1156,19 +1156,19 @@ export default function GroupDetailPage() {
                             {m.riderProfile?.handle && (
                               <Link
                                 to={`/riders/${m.riderProfile.handle}`}
-                                className="text-xs font-mono text-kaafila-yellow hover:underline"
+                                className="text-xs font-mono text-kaafila-accent hover:underline"
                               >
                                 @{m.riderProfile.handle}
                               </Link>
                             )}
                           </div>
-                          <span className="rounded-full border border-kaafila-yellow/35 bg-kaafila-yellow/10 px-2.5 py-0.5 text-[10px] font-bold uppercase text-kaafila-yellow">
+                          <span className="rounded-full border border-kaafila-primary/35 bg-kaafila-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase text-kaafila-accent">
                             {m.role}
                           </span>
                         </div>
 
                         {canManage && m.role !== 'owner' && (
-                          <div className="flex items-center justify-between gap-2 border-t border-white/10 pt-3">
+                          <div className="flex items-center justify-between gap-2 border-t border-kaafila-border pt-3">
                             {group.myMembership?.role === 'owner' && (
                               <select
                                 value={m.role}
@@ -1179,7 +1179,7 @@ export default function GroupDetailPage() {
                                   })
                                 }
                                 aria-label={`Role for ${m.user?.fullName}`}
-                                className="rounded-lg border border-white/15 bg-kaafila-surface px-2.5 py-1 text-xs text-kaafila-text"
+                                className="rounded-lg border border-kaafila-border bg-kaafila-surface px-2.5 py-1 text-xs text-kaafila-text"
                               >
                                 <option value="member">Member</option>
                                 <option value="marshal">Marshal</option>

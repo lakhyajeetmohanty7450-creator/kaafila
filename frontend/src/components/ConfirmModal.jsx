@@ -20,14 +20,14 @@ export default function ConfirmModal({
       aria-modal="true"
       aria-labelledby="confirm-modal-title"
     >
-      <div className="w-full max-w-md rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-6 shadow-card">
+      <div className="w-full max-w-md rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-6 shadow-card">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <div
               className={`flex h-10 w-10 items-center justify-center rounded-xl border ${
                 destructive
                   ? 'border-red-500/40 bg-red-500/10 text-red-400'
-                  : 'border-kaafila-yellow/40 bg-kaafila-yellow/10 text-kaafila-yellow'
+                  : 'border-kaafila-primary/40 bg-kaafila-primary/10 text-kaafila-accent'
               }`}
             >
               <AlertTriangle className="h-5 w-5" />
@@ -54,7 +54,7 @@ export default function ConfirmModal({
             type="button"
             onClick={onCancel}
             disabled={loading}
-            className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-text hover:border-kaafila-yellow/40 transition disabled:opacity-50"
+            className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-text hover:border-kaafila-primary/40 transition disabled:opacity-50"
           >
             {cancelLabel}
           </button>
@@ -65,7 +65,7 @@ export default function ConfirmModal({
             className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition disabled:opacity-50 ${
               destructive
                 ? 'bg-red-600 text-white hover:bg-red-500'
-                : 'bg-kaafila-yellow text-kaafila-bg hover:bg-kaafila-yellowHover'
+                : 'bg-kaafila-primary text-kaafila-dark hover:bg-kaafila-primary-hover'
             }`}
           >
             {loading ? 'Processing...' : confirmLabel}

@@ -35,7 +35,7 @@ export default function LoginPage() {
 
   return (
     <div className="mx-auto grid min-h-[calc(100vh-140px)] max-w-6xl items-center gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:px-8">
-      <div className="relative hidden h-[540px] overflow-hidden rounded-3xl border border-kaafila-yellow/30 lg:block">
+      <div className="relative hidden h-[540px] overflow-hidden rounded-3xl border border-kaafila-primary/30 lg:block">
         <img
           src="/images/expedition-spiti.png"
           alt="Himalayan motorcycle rider on cliff road"
@@ -43,7 +43,7 @@ export default function LoginPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-kaafila-bg via-kaafila-bg/35 to-transparent" />
         <div className="absolute bottom-8 left-8 right-8">
-          <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+          <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-kaafila-accent">
             <Compass className="h-4 w-4" />
             {loginRole === 'rider' ? 'Rider Portal' : 'Organisation Portal'}
           </span>
@@ -58,9 +58,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <div className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-8 shadow-card sm:p-10">
+      <div className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-8 shadow-card sm:p-10">
         {/* Distinct Rider / Organisation Login Tabs */}
-        <div className="mb-6 grid grid-cols-2 gap-2 rounded-2xl border border-kaafila-yellow/20 bg-kaafila-bg p-1.5">
+        <div className="mb-6 grid grid-cols-2 gap-2 rounded-2xl border border-kaafila-primary/20 bg-kaafila-bg p-1.5">
           <button
             type="button"
             onClick={() => {
@@ -69,7 +69,7 @@ export default function LoginPage() {
             }}
             className={`flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition ${
               loginRole === 'rider'
-                ? 'bg-kaafila-yellow text-kaafila-bg'
+                ? 'bg-kaafila-primary text-kaafila-dark'
                 : 'text-kaafila-muted hover:text-kaafila-text'
             }`}
           >
@@ -84,7 +84,7 @@ export default function LoginPage() {
             }}
             className={`flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold uppercase tracking-wider transition ${
               loginRole === 'organisation'
-                ? 'bg-kaafila-yellow text-kaafila-bg'
+                ? 'bg-kaafila-primary text-kaafila-dark'
                 : 'text-kaafila-muted hover:text-kaafila-text'
             }`}
           >
@@ -93,7 +93,7 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-yellow">
+        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-accent">
           {loginRole === 'rider' ? 'Rider Sign In' : 'Organisation Sign In'}
         </span>
         <h1 className="mt-2 font-display text-3xl font-bold uppercase text-kaafila-text sm:text-4xl">
@@ -106,7 +106,7 @@ export default function LoginPage() {
         </p>
 
         {error && (
-          <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 p-3.5 text-xs text-red-200">
+          <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 p-3.5 text-xs text-red-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -124,7 +124,7 @@ export default function LoginPage() {
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               placeholder={loginRole === 'rider' ? 'rider@domain.com' : 'ops@organisation.com'}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/50 focus:border-kaafila-yellow focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/50 focus:border-kaafila-primary focus:outline-none"
             />
           </div>
 
@@ -139,14 +139,14 @@ export default function LoginPage() {
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               placeholder="Minimum 8 characters"
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/50 focus:border-kaafila-yellow focus:outline-none"
+              className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/50 focus:border-kaafila-primary focus:outline-none"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-yellow px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-bg shadow-amber transition hover:bg-kaafila-yellowHover disabled:opacity-60"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-primary px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-dark shadow-blue transition hover:bg-kaafila-primary-hover disabled:opacity-60"
           >
             <LogIn className="h-4 w-4" />
             <span>
@@ -159,9 +159,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 border-t border-white/10 pt-5 text-center text-sm text-kaafila-muted">
+        <div className="mt-6 border-t border-kaafila-border pt-5 text-center text-sm text-kaafila-muted">
           New to KAAFILA?{' '}
-          <Link to={`/register?role=${loginRole}`} className="font-semibold text-kaafila-yellow hover:underline">
+          <Link to={`/register?role=${loginRole}`} className="font-semibold text-kaafila-accent hover:underline">
             Register as {loginRole === 'rider' ? 'a Rider' : 'an Organisation'}
           </Link>
         </div>

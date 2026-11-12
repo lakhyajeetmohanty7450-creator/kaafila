@@ -69,9 +69,9 @@ export default function LeaderboardsPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-      <div className="flex flex-col gap-4 border-b border-white/10 pb-6 sm:flex-row sm:items-end sm:justify-between">
+      <div className="flex flex-col gap-4 border-b border-kaafila-border pb-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-kaafila-yellow">
+          <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-kaafila-accent">
             <Trophy className="h-4 w-4" />
             Verified Rider Standings
           </span>
@@ -86,7 +86,7 @@ export default function LeaderboardsPage() {
         {isAuthenticated && user?.role === 'rider' && (
           <Link
             to="/dashboard/rider/stats"
-            className="inline-flex items-center gap-2 rounded-xl border border-kaafila-yellow/40 bg-kaafila-surface px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/10 transition"
+            className="inline-flex items-center gap-2 rounded-xl border border-kaafila-primary/40 bg-kaafila-surface px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/10 transition"
           >
             <Award className="h-4 w-4" />
             My Badges & Rank
@@ -106,8 +106,8 @@ export default function LeaderboardsPage() {
               onClick={() => setCategory(t.key)}
               className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-bold uppercase tracking-wider transition ${
                 active
-                  ? 'border-kaafila-yellow bg-kaafila-yellow text-kaafila-bg shadow-amber'
-                  : 'border-white/10 bg-kaafila-surface text-kaafila-text/80 hover:border-kaafila-yellow/40'
+                  ? 'border-kaafila-primary bg-kaafila-primary text-kaafila-dark shadow-blue'
+                  : 'border-kaafila-border bg-kaafila-surface text-kaafila-text/80 hover:border-kaafila-primary/40'
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -128,7 +128,7 @@ export default function LeaderboardsPage() {
             type="month"
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="rounded-xl border border-white/15 bg-kaafila-surface px-3 py-2 font-mono text-xs text-kaafila-text outline-none focus:border-kaafila-yellow"
+            className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3 py-2 font-mono text-xs text-kaafila-text outline-none focus:border-kaafila-primary"
           />
         </div>
       )}
@@ -142,7 +142,7 @@ export default function LeaderboardsPage() {
             id="lb-org"
             value={selectedOrgId}
             onChange={(e) => setSelectedOrgId(e.target.value)}
-            className="rounded-xl border border-white/15 bg-kaafila-surface px-3.5 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-yellow"
+            className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-primary"
           >
             {organisations.map((org) => (
               <option key={org._id} value={org._id}>
@@ -162,7 +162,7 @@ export default function LeaderboardsPage() {
             id="lb-ride"
             value={selectedRideId}
             onChange={(e) => setSelectedRideId(e.target.value)}
-            className="rounded-xl border border-white/15 bg-kaafila-surface px-3.5 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-yellow"
+            className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-primary"
           >
             {rides.map((r) => (
               <option key={r._id} value={r._id}>
@@ -175,13 +175,13 @@ export default function LeaderboardsPage() {
 
       {/* Authenticated Rider Standing Spotlight */}
       {myEntry && (
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-kaafila-yellow/40 bg-gradient-to-r from-kaafila-surface to-kaafila-bg p-4 shadow-card">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-kaafila-primary/40 bg-gradient-to-r from-kaafila-surface to-kaafila-bg p-4 shadow-card">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-kaafila-yellow font-display text-lg font-bold text-kaafila-bg">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-kaafila-primary font-display text-lg font-bold text-kaafila-dark">
               #{myEntry.position}
             </div>
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-widest text-kaafila-yellow">
+              <span className="font-mono text-[10px] uppercase tracking-widest text-kaafila-accent">
                 Your Current Standing
               </span>
               <p className="font-display text-lg font-bold text-kaafila-text">
@@ -192,7 +192,7 @@ export default function LeaderboardsPage() {
           <div className="flex items-center gap-6 font-mono text-sm">
             <div>
               <span className="block text-[10px] uppercase text-kaafila-muted">Verified KM</span>
-              <span className="font-bold text-kaafila-yellow">
+              <span className="font-bold text-kaafila-accent">
                 {Number(myEntry.verifiedKilometres || 0).toLocaleString('en-IN')} km
               </span>
             </div>
@@ -207,12 +207,12 @@ export default function LeaderboardsPage() {
       {/* Leaderboard List */}
       <div className="mt-6">
         {loading ? (
-          <div className="flex h-52 items-center justify-center rounded-3xl border border-white/10 bg-kaafila-surface">
-            <Loader2 className="h-7 w-7 animate-spin text-kaafila-yellow" />
+          <div className="flex h-52 items-center justify-center rounded-3xl border border-kaafila-border bg-kaafila-surface">
+            <Loader2 className="h-7 w-7 animate-spin text-kaafila-accent" />
           </div>
         ) : entries.length === 0 ? (
-          <div className="rounded-3xl border border-white/10 bg-kaafila-surface p-10 text-center">
-            <Medal className="mx-auto h-9 w-9 text-kaafila-yellow/70" />
+          <div className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
+            <Medal className="mx-auto h-9 w-9 text-kaafila-accent/70" />
             <p className="mt-3 font-display text-xl font-bold uppercase text-kaafila-text">
               No Ranked Entries Yet
             </p>
@@ -226,28 +226,28 @@ export default function LeaderboardsPage() {
               <Link
                 key={row.userId}
                 to={`/riders/${row.handle}`}
-                className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-white/10 bg-kaafila-surface p-4 hover:border-kaafila-yellow/45 transition"
+                className="flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-kaafila-border bg-kaafila-surface p-4 hover:border-kaafila-primary/45 transition"
               >
                 <div className="flex min-w-0 items-center gap-3.5">
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-display text-base font-bold ${
                       row.position === 1
-                        ? 'bg-kaafila-yellow text-kaafila-bg shadow-amber'
+                        ? 'bg-kaafila-primary text-kaafila-dark shadow-blue'
                         : row.position === 2
-                          ? 'bg-slate-300 text-kaafila-bg'
+                          ? 'bg-kaafila-elevated border border-kaafila-border text-kaafila-text'
                           : row.position === 3
-                            ? 'bg-amber-700 text-white'
-                            : 'border border-white/15 bg-kaafila-bg text-kaafila-text'
+                            ? 'bg-kaafila-dark text-white'
+                            : 'border border-kaafila-border bg-kaafila-bg text-kaafila-text'
                     }`}
                   >
                     {row.position === 1 ? <Crown className="h-5 w-5" /> : `#${row.position}`}
                   </div>
 
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-kaafila-yellow/35 bg-kaafila-bg">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-kaafila-primary/35 bg-kaafila-bg">
                     {row.avatarUrl ? (
                       <img src={row.avatarUrl} alt={row.fullName} className="h-full w-full object-cover" />
                     ) : (
-                      <span className="font-display text-lg font-bold text-kaafila-yellow">
+                      <span className="font-display text-lg font-bold text-kaafila-accent">
                         {row.fullName?.slice(0, 1).toUpperCase()}
                       </span>
                     )}
@@ -258,11 +258,11 @@ export default function LeaderboardsPage() {
                       <p className="truncate font-display text-lg font-bold text-kaafila-text">
                         {row.fullName}
                       </p>
-                      <span className="rounded-full border border-kaafila-yellow/35 bg-kaafila-yellow/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-kaafila-yellow">
+                      <span className="rounded-full border border-kaafila-primary/35 bg-kaafila-primary/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-kaafila-accent">
                         {row.rank}
                       </span>
                       {row.isDemo && (
-                        <span className="rounded bg-kaafila-earth/70 px-1.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
+                        <span className="rounded bg-kaafila-secondary/70 px-1.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
                           Demo
                         </span>
                       )}
@@ -276,7 +276,7 @@ export default function LeaderboardsPage() {
                 <div className="flex items-center gap-6 font-mono text-xs sm:text-sm">
                   <div className="text-right">
                     <span className="block text-[10px] uppercase text-kaafila-muted">Verified KM</span>
-                    <span className="font-bold text-kaafila-yellow">
+                    <span className="font-bold text-kaafila-accent">
                       {Number(row.verifiedKilometres || 0).toLocaleString('en-IN')} km
                     </span>
                   </div>

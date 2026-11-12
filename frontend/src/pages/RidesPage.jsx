@@ -39,8 +39,8 @@ export default function RidesPage() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-      <div className="border-b border-white/10 pb-6">
-        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-yellow">
+      <div className="border-b border-kaafila-border pb-6">
+        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-accent">
           Expedition Departures
         </span>
         <h1 className="mt-1 font-display text-4xl font-bold uppercase text-kaafila-text sm:text-5xl">
@@ -48,21 +48,21 @@ export default function RidesPage() {
         </h1>
       </div>
 
-      <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-kaafila-yellow/25 bg-kaafila-surface p-4 sm:flex-row sm:items-center">
+      <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-kaafila-primary/25 bg-kaafila-surface p-4 sm:flex-row sm:items-center">
         <div className="relative flex-1">
-          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-yellow" />
+          <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-accent" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search passes, Leh, Spiti, Zuluk..."
-            className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-10 pr-4 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+            className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-10 pr-4 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
           />
         </div>
         <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className="rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+          className="rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
         >
           <option value="all">All Difficulties</option>
           <option value="moderate">Moderate</option>
@@ -76,7 +76,7 @@ export default function RidesPage() {
       </div>
 
       {error && (
-        <div className="mt-6 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">{error}</div>
+        <div className="mt-6 rounded-xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-700">{error}</div>
       )}
 
       {loading ? (
@@ -86,7 +86,7 @@ export default function RidesPage() {
           ))}
         </div>
       ) : rides.length === 0 ? (
-        <div className="mt-10 rounded-2xl border border-white/10 bg-kaafila-surface p-10 text-center text-kaafila-muted">
+        <div className="mt-10 rounded-2xl border border-kaafila-border bg-kaafila-surface p-10 text-center text-kaafila-muted">
           No expeditions match your search criteria.
         </div>
       ) : (

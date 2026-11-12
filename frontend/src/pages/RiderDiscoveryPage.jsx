@@ -168,11 +168,11 @@ export default function RiderDiscoveryPage() {
     <div className="min-h-screen bg-kaafila-bg pb-20 pt-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col gap-4 border-b border-kaafila-yellow/20 pb-6 md:flex-row md:items-end md:justify-between">
+        <div className="flex flex-col gap-4 border-b border-kaafila-primary/20 pb-6 md:flex-row md:items-end md:justify-between">
           <div>
             <Link
               to="/community"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-yellow hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-accent hover:underline"
             >
               <Compass className="h-3.5 w-3.5" />
               Community Hub
@@ -189,7 +189,7 @@ export default function RiderDiscoveryPage() {
             {user?.role === 'rider' && (
               <Link
                 to="/community/connections"
-                className="inline-flex items-center gap-2 rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/20 transition"
+                className="inline-flex items-center gap-2 rounded-xl border border-kaafila-primary/40 bg-kaafila-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/20 transition"
               >
                 <UserPlus className="h-4 w-4" />
                 My Connections
@@ -197,7 +197,7 @@ export default function RiderDiscoveryPage() {
             )}
             <Link
               to="/community/groups"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-kaafila-surface px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-text hover:border-kaafila-yellow/40 transition"
+              className="inline-flex items-center gap-2 rounded-xl border border-kaafila-border bg-kaafila-surface px-4 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-text hover:border-kaafila-primary/40 transition"
             >
               Explore Groups
             </Link>
@@ -205,7 +205,7 @@ export default function RiderDiscoveryPage() {
         </div>
 
         {/* Filters */}
-        <div className="mt-6 rounded-2xl border border-white/10 bg-kaafila-surface p-4 sm:p-5">
+        <div className="mt-6 rounded-2xl border border-kaafila-border bg-kaafila-surface p-4 sm:p-5">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
             <div className="relative lg:col-span-2">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-muted" />
@@ -217,7 +217,7 @@ export default function RiderDiscoveryPage() {
                   setPage(1);
                 }}
                 placeholder="Search by rider name, @handle, city or bike..."
-                className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
               />
             </div>
 
@@ -231,7 +231,7 @@ export default function RiderDiscoveryPage() {
                   setPage(1);
                 }}
                 placeholder="Filter by city (e.g. Pune)"
-                className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
               />
             </div>
 
@@ -245,7 +245,7 @@ export default function RiderDiscoveryPage() {
                   setPage(1);
                 }}
                 placeholder="Motorcycle (e.g. Himalayan)"
-                className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
               />
             </div>
 
@@ -256,7 +256,7 @@ export default function RiderDiscoveryPage() {
                 setPage(1);
               }}
               aria-label="Filter by riding experience"
-              className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+              className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
             >
               {EXPERIENCE_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -279,8 +279,8 @@ export default function RiderDiscoveryPage() {
                   }}
                   className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                     rank === r
-                      ? 'bg-kaafila-yellow text-kaafila-bg font-bold'
-                      : 'border border-white/10 bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark font-bold'
+                      : 'border border-kaafila-border bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   {r === 'all' ? 'All Ranks' : r}
@@ -292,7 +292,7 @@ export default function RiderDiscoveryPage() {
               <button
                 type="button"
                 onClick={clearFilters}
-                className="inline-flex items-center gap-1 text-xs font-medium text-kaafila-yellow hover:underline"
+                className="inline-flex items-center gap-1 text-xs font-medium text-kaafila-accent hover:underline"
               >
                 <X className="h-3.5 w-3.5" />
                 Reset Filters
@@ -311,13 +311,13 @@ export default function RiderDiscoveryPage() {
             {[1, 2, 3, 4, 5, 6].map((idx) => (
               <div
                 key={idx}
-                className="h-64 animate-pulse rounded-2xl border border-white/10 bg-kaafila-surface/60"
+                className="h-64 animate-pulse rounded-2xl border border-kaafila-border bg-kaafila-surface/60"
               />
             ))}
           </div>
         ) : riders.length === 0 ? (
-          <div className="mt-8 rounded-2xl border border-white/10 bg-kaafila-surface p-10 text-center">
-            <Compass className="mx-auto h-10 w-10 text-kaafila-yellow/70" />
+          <div className="mt-8 rounded-2xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
+            <Compass className="mx-auto h-10 w-10 text-kaafila-accent/70" />
             <h2 className="mt-3 font-display text-xl font-bold text-kaafila-text">
               No Matching Riders Found
             </h2>
@@ -327,7 +327,7 @@ export default function RiderDiscoveryPage() {
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-4 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+              className="mt-4 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
             >
               Show All Public Riders
             </button>
@@ -341,7 +341,7 @@ export default function RiderDiscoveryPage() {
               return (
                 <article
                   key={rider._id}
-                  className="flex min-w-0 flex-col justify-between rounded-2xl border border-white/10 bg-kaafila-surface p-5 transition hover:border-kaafila-yellow/40"
+                  className="flex min-w-0 flex-col justify-between rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 transition hover:border-kaafila-primary/40"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-3">
@@ -351,10 +351,10 @@ export default function RiderDiscoveryPage() {
                             <img
                               src={rider.avatarUrl}
                               alt={rider.fullName}
-                              className="h-14 w-14 rounded-full border border-kaafila-yellow/40 object-cover"
+                              className="h-14 w-14 rounded-full border border-kaafila-primary/40 object-cover"
                             />
                           ) : (
-                            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-kaafila-yellow/40 bg-kaafila-bg font-display text-xl font-bold text-kaafila-yellow">
+                            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-kaafila-primary/40 bg-kaafila-bg font-display text-xl font-bold text-kaafila-accent">
                               {rider.fullName?.charAt(0)?.toUpperCase() || 'R'}
                             </div>
                           )}
@@ -366,17 +366,17 @@ export default function RiderDiscoveryPage() {
                           )}
                         </div>
                         <div className="min-w-0">
-                          <h3 className="truncate font-display text-xl font-bold text-kaafila-text group-hover:text-kaafila-yellow transition">
+                          <h3 className="truncate font-display text-xl font-bold text-kaafila-text group-hover:text-kaafila-accent transition">
                             {rider.fullName}
                           </h3>
-                          <p className="truncate text-xs font-mono text-kaafila-yellow/80">
+                          <p className="truncate text-xs font-mono text-kaafila-accent/80">
                             @{rider.handle}
                           </p>
                         </div>
                       </Link>
 
                       {rider.isDemo && (
-                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-kaafila-yellow/30 bg-kaafila-yellow/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-kaafila-yellow">
+                        <span className="inline-flex shrink-0 items-center gap-1 rounded-full border border-kaafila-primary/30 bg-kaafila-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-kaafila-accent">
                           <ShieldAlert className="h-3 w-3" />
                           Demo
                         </span>
@@ -384,14 +384,14 @@ export default function RiderDiscoveryPage() {
                     </div>
 
                     <div className="mt-4 flex flex-wrap gap-2 text-xs">
-                      <span className="inline-flex items-center gap-1 rounded-lg border border-kaafila-yellow/30 bg-kaafila-yellow/10 px-2.5 py-1 font-semibold text-kaafila-yellow">
+                      <span className="inline-flex items-center gap-1 rounded-lg border border-kaafila-primary/30 bg-kaafila-primary/10 px-2.5 py-1 font-semibold text-kaafila-accent">
                         <Award className="h-3.5 w-3.5" />
                         {rider.rank}
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-kaafila-bg px-2.5 py-1 capitalize text-kaafila-muted">
+                      <span className="inline-flex items-center gap-1 rounded-lg border border-kaafila-border bg-kaafila-bg px-2.5 py-1 capitalize text-kaafila-muted">
                         {rider.ridingExperience || 'intermediate'}
                       </span>
-                      <span className="inline-flex items-center gap-1 rounded-lg border border-white/10 bg-kaafila-bg px-2.5 py-1 text-kaafila-text">
+                      <span className="inline-flex items-center gap-1 rounded-lg border border-kaafila-border bg-kaafila-bg px-2.5 py-1 text-kaafila-text">
                         {(rider.verifiedKilometres || 0).toLocaleString()} km
                       </span>
                     </div>
@@ -399,13 +399,13 @@ export default function RiderDiscoveryPage() {
                     <div className="mt-3 space-y-1.5 text-xs text-kaafila-muted">
                       {rider.homeCity && (
                         <p className="flex items-center gap-1.5">
-                          <MapPin className="h-3.5 w-3.5 text-kaafila-yellow/80" />
+                          <MapPin className="h-3.5 w-3.5 text-kaafila-accent/80" />
                           <span className="truncate">{rider.homeCity}</span>
                         </p>
                       )}
                       {rider.primaryMotorcycle && (
                         <p className="flex items-center gap-1.5">
-                          <Bike className="h-3.5 w-3.5 text-kaafila-yellow/80" />
+                          <Bike className="h-3.5 w-3.5 text-kaafila-accent/80" />
                           <span className="truncate">{rider.primaryMotorcycle}</span>
                         </p>
                       )}
@@ -418,10 +418,10 @@ export default function RiderDiscoveryPage() {
                     )}
                   </div>
 
-                  <div className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4">
+                  <div className="mt-5 flex items-center gap-2 border-t border-kaafila-border pt-4">
                     <Link
                       to={`/riders/${rider.handle}`}
-                      className="flex-1 rounded-xl border border-white/15 bg-kaafila-bg px-3 py-2 text-center text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow/40 transition"
+                      className="flex-1 rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-center text-xs font-semibold text-kaafila-text hover:border-kaafila-primary/40 transition"
                     >
                       View Profile
                     </Link>
@@ -431,7 +431,7 @@ export default function RiderDiscoveryPage() {
                         type="button"
                         disabled={busy}
                         onClick={() => handleStartMessage(rider)}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-kaafila-yellow px-3 py-2 text-xs font-bold text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-kaafila-primary px-3 py-2 text-xs font-bold text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                       >
                         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <MessageSquare className="h-3.5 w-3.5" />}
                         Message
@@ -441,7 +441,7 @@ export default function RiderDiscoveryPage() {
                         type="button"
                         disabled={busy}
                         onClick={() => handleCancelRequest(rider)}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-2 text-xs font-semibold text-kaafila-yellow hover:bg-red-500/15 hover:border-red-500/40 hover:text-red-300 transition disabled:opacity-50"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-kaafila-primary/40 bg-kaafila-primary/10 px-3 py-2 text-xs font-semibold text-kaafila-accent hover:bg-red-500/15 hover:border-red-500/40 hover:text-red-700 transition disabled:opacity-50"
                       >
                         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Clock className="h-3.5 w-3.5" />}
                         Requested
@@ -451,7 +451,7 @@ export default function RiderDiscoveryPage() {
                         type="button"
                         disabled={busy}
                         onClick={() => handleAcceptRequest(rider)}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-500 px-3 py-2 text-xs font-bold text-kaafila-bg hover:bg-emerald-400 transition disabled:opacity-50"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-emerald-500 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-400 transition disabled:opacity-50"
                       >
                         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UserCheck className="h-3.5 w-3.5" />}
                         Accept
@@ -461,7 +461,7 @@ export default function RiderDiscoveryPage() {
                         type="button"
                         disabled={busy}
                         onClick={() => handleSendRequest(rider)}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-kaafila-yellow px-3 py-2 text-xs font-bold text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-kaafila-primary px-3 py-2 text-xs font-bold text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                       >
                         {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <UserPlus className="h-3.5 w-3.5" />}
                         Connect
@@ -481,7 +481,7 @@ export default function RiderDiscoveryPage() {
               type="button"
               disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
+              className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
             >
               Previous
             </button>
@@ -492,7 +492,7 @@ export default function RiderDiscoveryPage() {
               type="button"
               disabled={page >= pagination.totalPages}
               onClick={() => setPage((p) => p + 1)}
-              className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
+              className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
             >
               Next
             </button>

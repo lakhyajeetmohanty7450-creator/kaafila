@@ -98,7 +98,7 @@ export default function RegisterPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 lg:px-8">
       <div className="text-center">
-        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-yellow">
+        <span className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-kaafila-accent">
           Join The Marketplace
         </span>
         <h1 className="mt-2 font-display text-4xl font-bold uppercase text-kaafila-text sm:text-5xl">
@@ -110,7 +110,7 @@ export default function RegisterPage() {
       </div>
 
       {/* Role Switcher */}
-      <div className="mt-8 grid grid-cols-2 gap-3 rounded-2xl border border-kaafila-yellow/25 bg-kaafila-surface p-2">
+      <div className="mt-8 grid grid-cols-2 gap-3 rounded-2xl border border-kaafila-primary/25 bg-kaafila-surface p-2">
         <button
           type="button"
           onClick={() => {
@@ -119,7 +119,7 @@ export default function RegisterPage() {
           }}
           className={`flex items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-wider transition ${
             role === 'rider'
-              ? 'bg-kaafila-yellow text-kaafila-bg shadow-amber'
+              ? 'bg-kaafila-primary text-kaafila-dark shadow-blue'
               : 'text-kaafila-muted hover:text-kaafila-text'
           }`}
         >
@@ -134,7 +134,7 @@ export default function RegisterPage() {
           }}
           className={`flex items-center justify-center gap-2 rounded-xl py-3 text-xs font-bold uppercase tracking-wider transition ${
             role === 'organisation'
-              ? 'bg-kaafila-yellow text-kaafila-bg shadow-amber'
+              ? 'bg-kaafila-primary text-kaafila-dark shadow-blue'
               : 'text-kaafila-muted hover:text-kaafila-text'
           }`}
         >
@@ -143,9 +143,9 @@ export default function RegisterPage() {
         </button>
       </div>
 
-      <div className="mt-6 rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+      <div className="mt-6 rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
         {error && (
-          <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 p-3.5 text-xs text-red-200">
+          <div className="mb-6 flex items-start gap-2.5 rounded-xl border border-red-500/40 bg-red-500/10 p-3.5 text-xs text-red-700">
             <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
             <span>{error}</span>
           </div>
@@ -165,7 +165,7 @@ export default function RegisterPage() {
                   value={riderForm.fullName}
                   onChange={(e) => setRiderForm({ ...riderForm, fullName: e.target.value })}
                   placeholder="Aarav Sharma"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -179,7 +179,7 @@ export default function RegisterPage() {
                   value={riderForm.email}
                   onChange={(e) => setRiderForm({ ...riderForm, email: e.target.value })}
                   placeholder="rider@example.com"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -197,7 +197,7 @@ export default function RegisterPage() {
                   value={riderForm.password}
                   onChange={(e) => setRiderForm({ ...riderForm, password: e.target.value })}
                   placeholder="••••••••"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -212,7 +212,7 @@ export default function RegisterPage() {
                   value={riderForm.confirmPassword}
                   onChange={(e) => setRiderForm({ ...riderForm, confirmPassword: e.target.value })}
                   placeholder="••••••••"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -229,7 +229,7 @@ export default function RegisterPage() {
                   value={riderForm.city}
                   onChange={(e) => setRiderForm({ ...riderForm, city: e.target.value })}
                   placeholder="Chandigarh"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -242,7 +242,7 @@ export default function RegisterPage() {
                   value={riderForm.phoneNumber}
                   onChange={(e) => setRiderForm({ ...riderForm, phoneNumber: e.target.value })}
                   placeholder="+91 98765 43210"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-yellow px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover disabled:opacity-60"
+              className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-primary px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover disabled:opacity-60"
             >
               <UserPlus className="h-4 w-4" />
               <span>{loading ? 'Creating Rider Account...' : 'Register as Rider'}</span>
@@ -270,7 +270,7 @@ export default function RegisterPage() {
                   value={orgForm.organisationName}
                   onChange={(e) => setOrgForm({ ...orgForm, organisationName: e.target.value })}
                   placeholder="Garhwal Summit Moto"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -284,7 +284,7 @@ export default function RegisterPage() {
                   value={orgForm.officialEmail}
                   onChange={(e) => setOrgForm({ ...orgForm, officialEmail: e.target.value })}
                   placeholder="ops@yourcompany.com"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -302,7 +302,7 @@ export default function RegisterPage() {
                   value={orgForm.password}
                   onChange={(e) => setOrgForm({ ...orgForm, password: e.target.value })}
                   placeholder="••••••••"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -317,7 +317,7 @@ export default function RegisterPage() {
                   value={orgForm.confirmPassword}
                   onChange={(e) => setOrgForm({ ...orgForm, confirmPassword: e.target.value })}
                   placeholder="••••••••"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -334,7 +334,7 @@ export default function RegisterPage() {
                   value={orgForm.contactNumber}
                   onChange={(e) => setOrgForm({ ...orgForm, contactNumber: e.target.value })}
                   placeholder="+91 98160 12345"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
               <div>
@@ -348,7 +348,7 @@ export default function RegisterPage() {
                   value={orgForm.location}
                   onChange={(e) => setOrgForm({ ...orgForm, location: e.target.value })}
                   placeholder="Manali, Himachal Pradesh"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                  className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
                 />
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function RegisterPage() {
                 value={orgForm.officialWebsite}
                 onChange={(e) => setOrgForm({ ...orgForm, officialWebsite: e.target.value })}
                 placeholder="https://yourcompany.com"
-                className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
               />
             </div>
 
@@ -380,14 +380,14 @@ export default function RegisterPage() {
                 value={orgForm.description}
                 onChange={(e) => setOrgForm({ ...orgForm, description: e.target.value })}
                 placeholder="Describe your expeditions, bike fleet, and emergency support (max 280 chars)"
-                className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-yellow focus:outline-none"
+                className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text focus:border-kaafila-primary focus:outline-none"
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-yellow px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-kaafila-primary px-6 py-3.5 text-sm font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover disabled:opacity-60"
             >
               <Building2 className="h-4 w-4" />
               <span>{loading ? 'Registering Organisation...' : 'Register Organisation'}</span>
@@ -395,9 +395,9 @@ export default function RegisterPage() {
           </form>
         )}
 
-        <div className="mt-6 border-t border-white/10 pt-5 text-center text-sm text-kaafila-muted">
+        <div className="mt-6 border-t border-kaafila-border pt-5 text-center text-sm text-kaafila-muted">
           Already registered?{' '}
-          <Link to={`/login?role=${role}`} className="font-semibold text-kaafila-yellow hover:underline">
+          <Link to={`/login?role=${role}`} className="font-semibold text-kaafila-accent hover:underline">
             Sign in here
           </Link>
         </div>

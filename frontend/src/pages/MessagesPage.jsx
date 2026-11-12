@@ -265,8 +265,8 @@ export default function MessagesPage() {
   if (!isAuthenticated || user?.role !== 'rider') {
     return (
       <div className="min-h-screen bg-kaafila-bg px-4 py-16">
-        <div className="mx-auto max-w-xl rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-8 text-center">
-          <MessageSquare className="mx-auto h-10 w-10 text-kaafila-yellow" />
+        <div className="mx-auto max-w-xl rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-8 text-center">
+          <MessageSquare className="mx-auto h-10 w-10 text-kaafila-accent" />
           <h1 className="mt-4 font-display text-2xl font-bold text-kaafila-text">
             Rider Private Messaging
           </h1>
@@ -278,7 +278,7 @@ export default function MessagesPage() {
           <div className="mt-6 flex justify-center gap-3">
             <Link
               to={isAuthenticated ? '/community/groups' : '/login'}
-              className="rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+              className="rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
             >
               {isAuthenticated ? 'Open KAAFILA Groups' : 'Rider Sign In'}
             </Link>
@@ -300,12 +300,12 @@ export default function MessagesPage() {
           <div className="flex items-center gap-3">
             <Link
               to="/community"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-yellow hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-accent hover:underline"
             >
               <Compass className="h-3.5 w-3.5" />
               Community
             </Link>
-            <span className="text-white/20">/</span>
+            <span className="text-kaafila-muted">/</span>
             <h1 className="font-display text-2xl font-bold text-kaafila-text sm:text-3xl">
               Private Messages
             </h1>
@@ -313,22 +313,22 @@ export default function MessagesPage() {
 
           <Link
             to="/community/connections"
-            className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-yellow/35 bg-kaafila-surface px-3.5 py-2 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10 transition"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-primary/35 bg-kaafila-surface px-3.5 py-2 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/10 transition"
           >
             <UserPlus className="h-3.5 w-3.5" />
             Manage Connections
           </Link>
         </div>
 
-        <div className="grid min-h-[70vh] overflow-hidden rounded-2xl border border-white/10 bg-kaafila-surface lg:grid-cols-12">
+        <div className="grid min-h-[70vh] overflow-hidden rounded-2xl border border-kaafila-border bg-kaafila-surface lg:grid-cols-12">
           {/* Sidebar Conversations */}
           <aside
-            className={`border-white/10 lg:col-span-4 lg:border-r ${
+            className={`border-kaafila-border lg:col-span-4 lg:border-r ${
               conversationId ? 'hidden lg:block' : 'block'
             }`}
           >
-            <div className="border-b border-white/10 px-4 py-3.5">
-              <p className="text-xs font-bold uppercase tracking-widest text-kaafila-yellow">
+            <div className="border-b border-kaafila-border px-4 py-3.5">
+              <p className="text-xs font-bold uppercase tracking-widest text-kaafila-accent">
                 Conversations ({conversations.length})
               </p>
             </div>
@@ -344,7 +344,7 @@ export default function MessagesPage() {
                   </p>
                   <Link
                     to="/community/riders"
-                    className="mt-4 inline-flex rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold text-kaafila-bg"
+                    className="mt-4 inline-flex rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold text-kaafila-dark"
                   >
                     Discover Riders
                   </Link>
@@ -362,8 +362,8 @@ export default function MessagesPage() {
                         to={`/community/messages/${conv._id}`}
                         className={`flex items-center gap-3 px-4 py-3.5 transition ${
                           isSelected
-                            ? 'bg-kaafila-yellow/10 border-l-2 border-kaafila-yellow'
-                            : 'hover:bg-white/5'
+                            ? 'bg-kaafila-primary/10 border-l-2 border-kaafila-primary'
+                            : 'hover:bg-kaafila-elevated'
                         }`}
                       >
                         <div className="relative h-11 w-11 shrink-0">
@@ -371,10 +371,10 @@ export default function MessagesPage() {
                             <img
                               src={p.avatarUrl}
                               alt={p.fullName}
-                              className="h-11 w-11 rounded-full object-cover border border-kaafila-yellow/30"
+                              className="h-11 w-11 rounded-full object-cover border border-kaafila-primary/30"
                             />
                           ) : (
-                            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-kaafila-yellow/30 bg-kaafila-bg font-display text-lg font-bold text-kaafila-yellow">
+                            <div className="flex h-11 w-11 items-center justify-center rounded-full border border-kaafila-primary/30 bg-kaafila-bg font-display text-lg font-bold text-kaafila-accent">
                               {p.fullName?.charAt(0)?.toUpperCase() || 'R'}
                             </div>
                           )}
@@ -397,7 +397,7 @@ export default function MessagesPage() {
                               {conv.lastMessageText || 'Say hello to start chatting...'}
                             </p>
                             {conv.unreadCount > 0 && (
-                              <span className="shrink-0 rounded-full bg-kaafila-yellow px-1.5 py-0.5 text-[10px] font-bold text-kaafila-bg">
+                              <span className="shrink-0 rounded-full bg-kaafila-primary px-1.5 py-0.5 text-[10px] font-bold text-kaafila-dark">
                                 {conv.unreadCount}
                               </span>
                             )}
@@ -418,10 +418,10 @@ export default function MessagesPage() {
                             key={conn._id}
                             type="button"
                             onClick={() => startConversationWith(conn.user._id)}
-                            className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-left text-xs text-kaafila-text hover:border-kaafila-yellow/40 transition"
+                            className="flex w-full items-center justify-between rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-left text-xs text-kaafila-text hover:border-kaafila-primary/40 transition"
                           >
                             <span className="truncate font-medium">{conn.user.fullName}</span>
-                            <span className="text-[11px] font-semibold text-kaafila-yellow">
+                            <span className="text-[11px] font-semibold text-kaafila-accent">
                               Chat
                             </span>
                           </button>
@@ -442,7 +442,7 @@ export default function MessagesPage() {
           >
             {!conversationId ? (
               <div className="flex flex-1 flex-col items-center justify-center p-10 text-center">
-                <MessageSquare className="h-12 w-12 text-kaafila-yellow/60" />
+                <MessageSquare className="h-12 w-12 text-kaafila-accent/60" />
                 <h2 className="mt-4 font-display text-2xl font-bold text-kaafila-text">
                   Select a Conversation
                 </h2>
@@ -454,11 +454,11 @@ export default function MessagesPage() {
             ) : (
               <>
                 {/* Thread Header */}
-                <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3.5">
+                <div className="flex items-center justify-between gap-3 border-b border-kaafila-border px-4 py-3.5">
                   <div className="flex items-center gap-3 min-w-0">
                     <Link
                       to="/community/messages"
-                      className="rounded-lg border border-white/10 p-1.5 text-kaafila-muted hover:text-kaafila-text lg:hidden"
+                      className="rounded-lg border border-kaafila-border p-1.5 text-kaafila-muted hover:text-kaafila-text lg:hidden"
                       aria-label="Back to conversation list"
                     >
                       <ArrowLeft className="h-4 w-4" />
@@ -471,10 +471,10 @@ export default function MessagesPage() {
                             <img
                               src={partner.avatarUrl}
                               alt={partner.fullName}
-                              className="h-10 w-10 rounded-full object-cover border border-kaafila-yellow/40"
+                              className="h-10 w-10 rounded-full object-cover border border-kaafila-primary/40"
                             />
                           ) : (
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-kaafila-yellow/40 bg-kaafila-bg font-display text-lg font-bold text-kaafila-yellow">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-kaafila-primary/40 bg-kaafila-bg font-display text-lg font-bold text-kaafila-accent">
                               {partner.fullName?.charAt(0)?.toUpperCase() || 'R'}
                             </div>
                           )}
@@ -486,7 +486,7 @@ export default function MessagesPage() {
                           {partner.riderProfile?.handle ? (
                             <Link
                               to={`/riders/${partner.riderProfile.handle}`}
-                              className="block truncate font-display text-lg font-bold text-kaafila-text hover:text-kaafila-yellow"
+                              className="block truncate font-display text-lg font-bold text-kaafila-text hover:text-kaafila-accent"
                             >
                               {partner.fullName}
                             </Link>
@@ -497,7 +497,7 @@ export default function MessagesPage() {
                           )}
                           <p className="text-xs text-kaafila-muted">
                             {partnerTyping ? (
-                              <span className="text-kaafila-yellow">Typing...</span>
+                              <span className="text-kaafila-accent">Typing...</span>
                             ) : partnerOnline ? (
                               <span className="text-emerald-400">Online</span>
                             ) : (
@@ -518,7 +518,7 @@ export default function MessagesPage() {
                         type="button"
                         disabled={loadingThread}
                         onClick={() => loadThread(conversationId, msgPage + 1, true)}
-                        className="inline-flex items-center gap-1 rounded-full border border-white/15 bg-kaafila-bg px-3.5 py-1 text-xs font-medium text-kaafila-muted hover:text-kaafila-yellow"
+                        className="inline-flex items-center gap-1 rounded-full border border-kaafila-border bg-kaafila-bg px-3.5 py-1 text-xs font-medium text-kaafila-muted hover:text-kaafila-accent"
                       >
                         <ChevronUp className="h-3.5 w-3.5" />
                         Load Older Messages
@@ -548,8 +548,8 @@ export default function MessagesPage() {
                           <div
                             className={`max-w-[80%] rounded-2xl px-4 py-2.5 text-sm shadow-sm ${
                               isMine
-                                ? 'bg-kaafila-yellow text-kaafila-bg rounded-br-sm'
-                                : 'border border-white/10 bg-kaafila-bg text-kaafila-text rounded-bl-sm'
+                                ? 'bg-kaafila-primary text-kaafila-dark rounded-br-sm'
+                                : 'border border-kaafila-border bg-kaafila-bg text-kaafila-text rounded-bl-sm'
                             }`}
                           >
                             <p className="whitespace-pre-wrap break-words leading-relaxed">
@@ -557,7 +557,7 @@ export default function MessagesPage() {
                             </p>
                             <div
                               className={`mt-1 flex items-center justify-end gap-1 text-[10px] ${
-                                isMine ? 'text-kaafila-bg/75' : 'text-kaafila-muted'
+                                isMine ? 'text-white/75' : 'text-kaafila-muted'
                               }`}
                             >
                               <span>{formatMessageTime(msg.createdAt)}</span>
@@ -579,7 +579,7 @@ export default function MessagesPage() {
                 {/* Compose */}
                 <form
                   onSubmit={handleSend}
-                  className="flex items-center gap-2 border-t border-white/10 bg-kaafila-bg/40 p-3 sm:p-4"
+                  className="flex items-center gap-2 border-t border-kaafila-border bg-kaafila-bg/40 p-3 sm:p-4"
                 >
                   <input
                     type="text"
@@ -587,12 +587,12 @@ export default function MessagesPage() {
                     onChange={(e) => handleDraftChange(e.target.value)}
                     placeholder="Write a message..."
                     maxLength={2000}
-                    className="flex-1 rounded-xl border border-white/15 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                    className="flex-1 rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
                   />
                   <button
                     type="submit"
                     disabled={!draft.trim() || sending}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-40"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-40"
                   >
                     {sending ? (
                       <Loader2 className="h-4 w-4 animate-spin" />

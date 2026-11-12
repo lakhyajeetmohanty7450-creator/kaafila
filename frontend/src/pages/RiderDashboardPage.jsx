@@ -234,24 +234,24 @@ export default function RiderDashboardPage({ section = 'overview' }) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       {/* Mobile Sidebar Header */}
-      <div className="mb-5 flex items-center justify-between rounded-2xl border border-kaafila-yellow/25 bg-kaafila-surface px-4 py-3 lg:hidden">
+      <div className="mb-5 flex items-center justify-between rounded-2xl border border-kaafila-primary/25 bg-kaafila-surface px-4 py-3 lg:hidden">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-kaafila-yellow/40 bg-kaafila-bg">
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl border border-kaafila-primary/40 bg-kaafila-bg">
             {u?.avatarUrl ? (
               <img src={u.avatarUrl} alt={u.fullName} className="h-full w-full object-cover" />
             ) : (
-              <UserIcon className="h-4 w-4 text-kaafila-yellow" />
+              <UserIcon className="h-4 w-4 text-kaafila-accent" />
             )}
           </div>
           <div>
             <p className="font-display text-base font-bold uppercase text-kaafila-text">Rider Garage</p>
-            <p className="font-mono text-[11px] text-kaafila-yellow">@{profile?.handle || 'rider'}</p>
+            <p className="font-mono text-[11px] text-kaafila-accent">@{profile?.handle || 'rider'}</p>
           </div>
         </div>
         <button
           type="button"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="rounded-lg border border-kaafila-yellow/30 p-2 text-kaafila-text"
+          className="rounded-lg border border-kaafila-primary/30 p-2 text-kaafila-text"
           aria-label="Toggle rider dashboard sidebar"
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -261,20 +261,20 @@ export default function RiderDashboardPage({ section = 'overview' }) {
       <div className="grid gap-8 lg:grid-cols-12">
         {/* Rider Sidebar */}
         <aside className={`${mobileMenuOpen ? 'block' : 'hidden'} lg:col-span-3 lg:block`}>
-          <div className="sticky top-24 overflow-hidden rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface shadow-card">
-            <div className="border-b border-white/10 bg-gradient-to-br from-kaafila-bg to-kaafila-surface p-5">
+          <div className="sticky top-24 overflow-hidden rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface shadow-card">
+            <div className="border-b border-kaafila-border bg-gradient-to-br from-kaafila-bg to-kaafila-surface p-5">
               <div className="flex items-center gap-3.5">
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-yellow bg-kaafila-bg">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-primary bg-kaafila-bg">
                   {u?.avatarUrl ? (
                     <img src={u.avatarUrl} alt={u.fullName} className="h-full w-full object-cover" />
                   ) : (
-                    <span className="font-display text-2xl font-bold text-kaafila-yellow">
+                    <span className="font-display text-2xl font-bold text-kaafila-accent">
                       {u?.fullName?.slice(0, 1).toUpperCase() || 'R'}
                     </span>
                   )}
                 </div>
                 <div className="min-w-0">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-kaafila-yellow">
+                  <span className="font-mono text-[10px] uppercase tracking-widest text-kaafila-accent">
                     Rider Console
                   </span>
                   <h2 className="truncate font-display text-xl font-bold text-kaafila-text">
@@ -298,8 +298,8 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-sm font-medium transition ${
                       active
-                        ? 'bg-kaafila-yellow text-kaafila-bg font-bold shadow-amber'
-                        : 'text-kaafila-text/80 hover:bg-white/5 hover:text-kaafila-yellow'
+                        ? 'bg-kaafila-primary text-kaafila-dark font-bold shadow-blue'
+                        : 'text-kaafila-text/80 hover:bg-kaafila-elevated hover:text-kaafila-accent'
                     }`}
                   >
                     <Icon className="h-4 w-4 shrink-0" />
@@ -310,7 +310,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="mt-2 flex w-full items-center gap-3 rounded-xl border border-white/10 px-3.5 py-2.5 text-sm font-medium text-red-300 hover:border-red-400/40 hover:bg-red-500/10 transition"
+                className="mt-2 flex w-full items-center gap-3 rounded-xl border border-kaafila-border px-3.5 py-2.5 text-sm font-medium text-red-700 hover:border-red-400/40 hover:bg-red-500/10 transition"
               >
                 <LogOut className="h-4 w-4 shrink-0" />
                 <span>Logout</span>
@@ -332,11 +332,11 @@ export default function RiderDashboardPage({ section = 'overview' }) {
             </div>
           ) : error ? (
             <div className="rounded-3xl border border-red-500/35 bg-kaafila-surface p-8 text-center">
-              <p className="text-sm text-red-300">{error}</p>
+              <p className="text-sm text-red-700">{error}</p>
               <button
                 type="button"
                 onClick={loadDashboard}
-                className="mt-4 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase text-kaafila-bg"
+                className="mt-4 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase text-kaafila-dark"
               >
                 Retry
               </button>
@@ -347,20 +347,20 @@ export default function RiderDashboardPage({ section = 'overview' }) {
               {section === 'overview' && (
                 <div className="space-y-6">
                   {/* Welcome Section */}
-                  <section className="rounded-3xl border border-kaafila-yellow/30 bg-gradient-to-br from-kaafila-surface via-kaafila-surface to-kaafila-bg p-6 shadow-card sm:p-8">
+                  <section className="rounded-3xl border border-kaafila-primary/30 bg-gradient-to-br from-kaafila-surface via-kaafila-surface to-kaafila-bg p-6 shadow-card sm:p-8">
                     <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-yellow bg-kaafila-bg">
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border-2 border-kaafila-primary bg-kaafila-bg">
                           {u?.avatarUrl ? (
                             <img src={u.avatarUrl} alt={u.fullName} className="h-full w-full object-cover" />
                           ) : (
-                            <span className="font-display text-2xl font-bold text-kaafila-yellow">
+                            <span className="font-display text-2xl font-bold text-kaafila-accent">
                               {u?.fullName?.slice(0, 1).toUpperCase()}
                             </span>
                           )}
                         </div>
                         <div>
-                          <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                          <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                             Welcome Back, Rider
                           </span>
                           <h1 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -375,14 +375,14 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       <div className="flex flex-wrap gap-2">
                         <Link
                           to="/dashboard/rider/tracking"
-                          className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-yellow/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/10 transition"
+                          className="inline-flex items-center gap-1.5 rounded-xl border border-kaafila-primary/40 px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/10 transition"
                         >
                           <Navigation className="h-3.5 w-3.5" />
                           {dashboard?.activeTrackingSession ? 'Tracking Active' : 'GPS Tracker'}
                         </Link>
                         <Link
                           to="/rides"
-                          className="rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition"
+                          className="rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition"
                         >
                           Explore Expeditions
                         </Link>
@@ -390,7 +390,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                     </div>
 
                     {dashboard?.activeTrackingSession && (
-                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-200">
+                      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-700">
                         <span className="inline-flex items-center gap-2 font-semibold">
                           <Radio className="h-4 w-4 animate-pulse text-emerald-400" />
                           Active GPS session: {dashboard.activeTrackingSession.title} (
@@ -398,7 +398,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                         </span>
                         <Link
                           to="/dashboard/rider/tracking"
-                          className="font-mono font-bold uppercase text-emerald-300 underline"
+                          className="font-mono font-bold uppercase text-emerald-700 underline"
                         >
                           Manage Tracker
                         </Link>
@@ -408,10 +408,10 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
                   {/* Rank Progress & Leaderboard Quick Row */}
                   <section className="grid gap-4 lg:grid-cols-12">
-                    <div className="rounded-2xl border border-kaafila-yellow/25 bg-kaafila-surface p-5 lg:col-span-8">
+                    <div className="rounded-2xl border border-kaafila-primary/25 bg-kaafila-surface p-5 lg:col-span-8">
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <div>
-                          <span className="font-mono text-[10px] uppercase tracking-wider text-kaafila-yellow">
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-kaafila-accent">
                             Current KAAFILA Rank
                           </span>
                           <h2 className="font-display text-2xl font-bold text-kaafila-text">
@@ -424,9 +424,9 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             : 'Maximum Tier Reached'}
                         </span>
                       </div>
-                      <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-white/10">
+                      <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-kaafila-elevated">
                         <div
-                          className="h-full bg-kaafila-yellow transition-all"
+                          className="h-full bg-kaafila-primary transition-all"
                           style={{ width: `${tierProgress?.kmProgressPercent || 0}%` }}
                         />
                       </div>
@@ -438,7 +438,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             .map((a) => (
                               <span
                                 key={a.code}
-                                className="inline-flex items-center gap-1 rounded-full border border-kaafila-yellow/35 bg-kaafila-yellow/10 px-2.5 py-0.5 font-mono text-[10px] text-kaafila-yellow"
+                                className="inline-flex items-center gap-1 rounded-full border border-kaafila-primary/35 bg-kaafila-primary/10 px-2.5 py-0.5 font-mono text-[10px] text-kaafila-accent"
                               >
                                 <Award className="h-3 w-3" />
                                 {a.title}
@@ -450,15 +450,15 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
                     <Link
                       to="/leaderboards"
-                      className="flex flex-col justify-between rounded-2xl border border-white/10 bg-kaafila-surface p-5 hover:border-kaafila-yellow/50 transition lg:col-span-4"
+                      className="flex flex-col justify-between rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 hover:border-kaafila-primary/50 transition lg:col-span-4"
                     >
                       <div className="flex items-center justify-between">
                         <span className="font-mono text-[10px] uppercase tracking-wider text-kaafila-muted">
                           Global Standing
                         </span>
-                        <Trophy className="h-5 w-5 text-kaafila-yellow" />
+                        <Trophy className="h-5 w-5 text-kaafila-accent" />
                       </div>
-                      <p className="mt-2 font-display text-3xl font-bold text-kaafila-yellow">
+                      <p className="mt-2 font-display text-3xl font-bold text-kaafila-accent">
                         {dashboard?.leaderboardPosition ? `#${dashboard.leaderboardPosition}` : 'Private'}
                       </p>
                       <span className="mt-1 text-xs text-kaafila-muted">View full KAAFILA leaderboards →</span>
@@ -497,13 +497,13 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       return (
                         <div
                           key={card.label}
-                          className="rounded-2xl border border-white/10 bg-kaafila-surface p-5 shadow-card"
+                          className="rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 shadow-card"
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-semibold uppercase tracking-wider text-kaafila-muted">
                               {card.label}
                             </span>
-                            <Icon className="h-4 w-4 text-kaafila-yellow" />
+                            <Icon className="h-4 w-4 text-kaafila-accent" />
                           </div>
                           <p className="mt-2 font-mono text-2xl font-bold text-kaafila-text">{card.value}</p>
                           <p className="mt-1 text-[11px] text-kaafila-muted">{card.sub}</p>
@@ -514,27 +514,27 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
                   <div className="grid gap-6 lg:grid-cols-12">
                     {/* Upcoming Rides List */}
-                    <section className="rounded-3xl border border-white/10 bg-kaafila-surface p-6 lg:col-span-7">
+                    <section className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6 lg:col-span-7">
                       <div className="flex items-center justify-between gap-2">
                         <h2 className="font-display text-2xl font-bold uppercase text-kaafila-text">
                           Upcoming Rides
                         </h2>
                         <Link
                           to="/dashboard/rider/rides"
-                          className="text-xs font-semibold text-kaafila-yellow hover:underline"
+                          className="text-xs font-semibold text-kaafila-accent hover:underline"
                         >
                           View All Rides
                         </Link>
                       </div>
 
                       {upcomingRides.length === 0 ? (
-                        <div className="mt-5 rounded-2xl border border-dashed border-white/15 bg-kaafila-bg p-6 text-center">
+                        <div className="mt-5 rounded-2xl border border-dashed border-kaafila-border bg-kaafila-bg p-6 text-center">
                           <p className="text-sm text-kaafila-muted">
                             You have not added any upcoming expeditions to your KAAFILA roster yet.
                           </p>
                           <Link
                             to="/rides"
-                            className="mt-4 inline-block rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase text-kaafila-bg"
+                            className="mt-4 inline-block rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase text-kaafila-dark"
                           >
                             Browse Expeditions
                           </Link>
@@ -544,7 +544,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           {upcomingRides.slice(0, 4).map((entry) => (
                             <div
                               key={entry._id}
-                              className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-kaafila-bg p-4 sm:flex-row sm:items-center"
+                              className="flex flex-col gap-4 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4 sm:flex-row sm:items-center"
                             >
                               <img
                                 src={entry.ride.coverImageUrl || '/images/expedition-ladakh.png'}
@@ -553,7 +553,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               />
                               <div className="min-w-0 flex-1">
                                 <div className="flex flex-wrap items-center gap-2">
-                                  <span className="font-mono text-[11px] uppercase text-kaafila-yellow">
+                                  <span className="font-mono text-[11px] uppercase text-kaafila-accent">
                                     {entry.ride.organisation?.name || 'Touring Organisation'}
                                   </span>
                                   <span className="rounded bg-kaafila-surface px-2 py-0.5 font-mono text-[10px] uppercase text-kaafila-text">
@@ -562,7 +562,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                 </div>
                                 <Link
                                   to={`/rides/${entry.ride.slug}`}
-                                  className="mt-1 block truncate font-display text-lg font-bold text-kaafila-text hover:text-kaafila-yellow"
+                                  className="mt-1 block truncate font-display text-lg font-bold text-kaafila-text hover:text-kaafila-accent"
                                 >
                                   {entry.ride.title}
                                 </Link>
@@ -581,7 +581,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                 )}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-kaafila-yellow/40 px-3 py-2 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                                className="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-xl border border-kaafila-primary/40 px-3 py-2 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/10"
                               >
                                 <span>Official Site</span>
                                 <ExternalLink className="h-3.5 w-3.5" />
@@ -593,9 +593,9 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                     </section>
 
                     {/* Recent Activity */}
-                    <section className="rounded-3xl border border-white/10 bg-kaafila-surface p-6 lg:col-span-5">
+                    <section className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6 lg:col-span-5">
                       <div className="flex items-center gap-2">
-                        <Activity className="h-5 w-5 text-kaafila-yellow" />
+                        <Activity className="h-5 w-5 text-kaafila-accent" />
                         <h2 className="font-display text-2xl font-bold uppercase text-kaafila-text">
                           Recent Activity
                         </h2>
@@ -607,11 +607,11 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           {recentActivity.map((act) => (
                             <li
                               key={act.id}
-                              className="rounded-xl border border-white/10 bg-kaafila-bg px-4 py-3"
+                              className="rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-3"
                             >
                               <div className="flex items-center justify-between gap-2">
                                 <span className="text-sm font-semibold text-kaafila-text">{act.title}</span>
-                                <span className="font-mono text-[10px] uppercase text-kaafila-yellow">
+                                <span className="font-mono text-[10px] uppercase text-kaafila-accent">
                                   {act.status}
                                 </span>
                               </div>
@@ -634,9 +634,9 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
               {/* PROFILE MANAGEMENT SECTION */}
               {section === 'profile' && (
-                <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                  <div className="border-b border-white/10 pb-5">
-                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                  <div className="border-b border-kaafila-border pb-5">
+                    <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                       Rider Profile &amp; Safety Privacy
                     </span>
                     <h1 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -666,7 +666,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           minLength={2}
                           value={profileForm.fullName}
                           onChange={(e) => setProfileForm((p) => ({ ...p, fullName: e.target.value }))}
-                          className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                       </div>
 
@@ -679,7 +679,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           value={profileForm.phoneNumber}
                           onChange={(e) => setProfileForm((p) => ({ ...p, phoneNumber: e.target.value }))}
                           placeholder="+91 98XXXXXXXX"
-                          className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                       </div>
 
@@ -691,7 +691,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           type="text"
                           value={profileForm.homeCity}
                           onChange={(e) => setProfileForm((p) => ({ ...p, homeCity: e.target.value }))}
-                          className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                       </div>
 
@@ -706,7 +706,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             setProfileForm((p) => ({ ...p, primaryMotorcycle: e.target.value }))
                           }
                           placeholder="e.g., Royal Enfield Himalayan 450"
-                          className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                       </div>
 
@@ -719,7 +719,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           onChange={(e) =>
                             setProfileForm((p) => ({ ...p, ridingExperience: e.target.value }))
                           }
-                          className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         >
                           <option value="beginner">Beginner</option>
                           <option value="intermediate">Intermediate</option>
@@ -739,13 +739,13 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                         value={profileForm.bio}
                         onChange={(e) => setProfileForm((p) => ({ ...p, bio: e.target.value }))}
                         placeholder="Share your riding style, favourite passes, or touring story..."
-                        className="mt-1.5 w-full rounded-xl border border-white/10 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                        className="mt-1.5 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                       />
                     </div>
 
-                    <div className="rounded-2xl border border-kaafila-yellow/25 bg-kaafila-bg p-5">
+                    <div className="rounded-2xl border border-kaafila-primary/25 bg-kaafila-bg p-5">
                       <div className="flex items-center gap-2">
-                        <Shield className="h-4 w-4 text-kaafila-yellow" />
+                        <Shield className="h-4 w-4 text-kaafila-accent" />
                         <h3 className="font-display text-lg font-bold uppercase text-kaafila-text">
                           Emergency Contact &amp; Privacy Controls
                         </h3>
@@ -765,7 +765,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               emergencyContact: { ...p.emergencyContact, name: e.target.value },
                             }))
                           }
-                          className="rounded-xl border border-white/10 bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                         <input
                           type="text"
@@ -777,7 +777,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               emergencyContact: { ...p.emergencyContact, relationship: e.target.value },
                             }))
                           }
-                          className="rounded-xl border border-white/10 bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                         <input
                           type="tel"
@@ -789,7 +789,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               emergencyContact: { ...p.emergencyContact, phone: e.target.value },
                             }))
                           }
-                          className="rounded-xl border border-white/10 bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                         <input
                           type="text"
@@ -801,7 +801,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               emergencyContact: { ...p.emergencyContact, bloodGroup: e.target.value },
                             }))
                           }
-                          className="rounded-xl border border-white/10 bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                          className="rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                         />
                       </div>
 
@@ -818,7 +818,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               },
                             }))
                           }
-                          className="mt-0.5 accent-kaafila-yellow"
+                          className="mt-0.5 accent-kaafila-primary"
                         />
                         <span>
                           Allow confirmed expedition organisations to view my contact and emergency details for safety coordination.
@@ -835,7 +835,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               isProfilePublic: e.target.checked,
                             }))
                           }
-                          className="mt-0.5 accent-kaafila-yellow"
+                          className="mt-0.5 accent-kaafila-primary"
                         />
                         <span>
                           Make my rider profile visible in public Rider Discovery (/community/riders). Private email, phone number, and emergency contact remain hidden.
@@ -847,7 +847,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       <button
                         type="submit"
                         disabled={savingProfile}
-                        className="rounded-xl bg-kaafila-yellow px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                        className="rounded-xl bg-kaafila-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                       >
                         {savingProfile ? 'Saving Changes...' : 'Save Rider Profile'}
                       </button>
@@ -859,10 +859,10 @@ export default function RiderDashboardPage({ section = 'overview' }) {
               {/* MY RIDES & UPCOMING EXPEDITIONS SECTION */}
               {(section === 'rides' || section === 'upcoming') && (
                 <section className="space-y-5">
-                  <div className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6">
+                  <div className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6">
                     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                       <div>
-                        <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                        <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                           Expedition Roster
                         </span>
                         <h1 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -871,14 +871,14 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       </div>
                       <Link
                         to="/rides"
-                        className="rounded-xl bg-kaafila-yellow px-4 py-2 text-center text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+                        className="rounded-xl bg-kaafila-primary px-4 py-2 text-center text-xs font-bold uppercase tracking-wider text-kaafila-dark"
                       >
                         Discover More Rides
                       </Link>
                     </div>
 
-                    <div className="mt-4 rounded-xl border border-kaafila-yellow/20 bg-kaafila-bg px-4 py-3 text-xs text-kaafila-muted">
-                      <ShieldAlert className="mr-1.5 inline h-4 w-4 text-kaafila-yellow" />
+                    <div className="mt-4 rounded-xl border border-kaafila-primary/20 bg-kaafila-bg px-4 py-3 text-xs text-kaafila-muted">
+                      <ShieldAlert className="mr-1.5 inline h-4 w-4 text-kaafila-accent" />
                       <strong>Booking Distinction:</strong> KAAFILA records your roster status (<em>Interested</em>, <em>Confirmed</em>, <em>Completed</em>, <em>Cancelled</em>). Commercial ticket bookings and payments take place externally on each organisation&apos;s official website.
                     </div>
 
@@ -899,8 +899,8 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             }}
                             className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
                               ridesFilter === tab.key
-                                ? 'bg-kaafila-yellow text-kaafila-bg'
-                                : 'border border-white/10 bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
+                                ? 'bg-kaafila-primary text-kaafila-dark'
+                                : 'border border-kaafila-border bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
                             }`}
                           >
                             {tab.label}
@@ -917,13 +917,13 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       ))}
                     </div>
                   ) : ridesData.length === 0 ? (
-                    <div className="rounded-3xl border border-white/10 bg-kaafila-surface p-10 text-center">
+                    <div className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
                       <p className="text-sm text-kaafila-muted">
                         No expeditions found in this category yet.
                       </p>
                       <Link
                         to="/rides"
-                        className="mt-4 inline-block rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase text-kaafila-bg"
+                        className="mt-4 inline-block rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase text-kaafila-dark"
                       >
                         Browse Expeditions
                       </Link>
@@ -933,7 +933,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       {ridesData.map((entry) => (
                         <article
                           key={entry._id}
-                          className="flex flex-col gap-5 rounded-2xl border border-white/10 bg-kaafila-surface p-5 sm:flex-row"
+                          className="flex flex-col gap-5 rounded-2xl border border-kaafila-border bg-kaafila-surface p-5 sm:flex-row"
                         >
                           <img
                             src={entry.ride.coverImageUrl || '/images/expedition-ladakh.png'}
@@ -943,10 +943,10 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                           <div className="flex flex-1 flex-col justify-between">
                             <div>
                               <div className="flex flex-wrap items-center gap-2">
-                                <span className="rounded bg-kaafila-yellow/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase text-kaafila-yellow">
+                                <span className="rounded bg-kaafila-primary/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase text-kaafila-accent">
                                   KAAFILA: {entry.status}
                                 </span>
-                                <span className="rounded border border-white/10 px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-muted">
+                                <span className="rounded border border-kaafila-border px-2.5 py-0.5 font-mono text-[10px] uppercase text-kaafila-muted">
                                   External Booking Required
                                 </span>
                               </div>
@@ -957,7 +957,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                 Organised by{' '}
                                 <Link
                                   to={`/organisations/${entry.ride.organisation?.slug}`}
-                                  className="font-semibold text-kaafila-yellow hover:underline"
+                                  className="font-semibold text-kaafila-accent hover:underline"
                                 >
                                   {entry.ride.organisation?.name || 'Touring Organisation'}
                                 </Link>{' '}
@@ -965,7 +965,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               </p>
                               <div className="mt-3 flex flex-wrap gap-4 font-mono text-xs text-kaafila-text/85">
                                 <span className="inline-flex items-center gap-1">
-                                  <Calendar className="h-3.5 w-3.5 text-kaafila-yellow" />
+                                  <Calendar className="h-3.5 w-3.5 text-kaafila-accent" />
                                   {new Date(entry.ride.startDate).toLocaleDateString('en-IN', {
                                     day: 'numeric',
                                     month: 'short',
@@ -974,7 +974,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                   ({entry.ride.durationDays} Days)
                                 </span>
                                 <span className="inline-flex items-center gap-1">
-                                  <MapPin className="h-3.5 w-3.5 text-kaafila-yellow" />
+                                  <MapPin className="h-3.5 w-3.5 text-kaafila-accent" />
                                   {entry.ride.startLocation} → {entry.ride.endLocation}
                                 </span>
                               </div>
@@ -983,7 +983,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             <div className="mt-4 flex flex-wrap items-center gap-3">
                               <Link
                                 to={`/rides/${entry.ride.slug}`}
-                                className="rounded-xl border border-white/15 px-3.5 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow"
+                                className="rounded-xl border border-kaafila-border px-3.5 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-primary hover:text-kaafila-accent"
                               >
                                 Expedition Details
                               </Link>
@@ -993,7 +993,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                 )}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-3.5 py-2 text-xs font-bold uppercase text-kaafila-bg hover:bg-kaafila-yellowHover"
+                                className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-3.5 py-2 text-xs font-bold uppercase text-kaafila-dark hover:bg-kaafila-primary-hover"
                               >
                                 <span>Official Booking Site</span>
                                 <ExternalLink className="h-3.5 w-3.5" />
@@ -1002,7 +1002,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                                 <button
                                   type="button"
                                   onClick={() => setCancelTarget(entry)}
-                                  className="rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-300 hover:bg-red-500/10"
+                                  className="rounded-xl border border-red-500/35 px-3.5 py-2 text-xs font-semibold text-red-700 hover:bg-red-500/10"
                                 >
                                   Cancel Roster Entry
                                 </button>
@@ -1018,7 +1018,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             type="button"
                             disabled={ridesPage <= 1}
                             onClick={() => setRidesPage((p) => Math.max(1, p - 1))}
-                            className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
+                            className="rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
                           >
                             Previous
                           </button>
@@ -1029,7 +1029,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             type="button"
                             disabled={ridesPage >= ridesTotalPages}
                             onClick={() => setRidesPage((p) => Math.min(ridesTotalPages, p + 1))}
-                            className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
+                            className="rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-text disabled:opacity-40"
                           >
                             Next
                           </button>
@@ -1042,8 +1042,8 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
               {/* RIDING STATISTICS SECTION */}
               {section === 'stats' && (
-                <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                     Genuine Verified Telemetry
                   </span>
                   <h1 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1051,37 +1051,37 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                   </h1>
 
                   <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-5">
+                    <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-5">
                       <span className="text-xs uppercase text-kaafila-muted">Verified Kilometres</span>
-                      <p className="mt-1 font-mono text-3xl font-bold text-kaafila-yellow">
+                      <p className="mt-1 font-mono text-3xl font-bold text-kaafila-accent">
                         {Number(profile?.verifiedKilometres || 0).toLocaleString('en-IN')} km
                       </p>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-5">
+                    <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-5">
                       <span className="text-xs uppercase text-kaafila-muted">Completed Rides</span>
                       <p className="mt-1 font-mono text-3xl font-bold text-kaafila-text">
                         {stats.totalCompletedRides}
                       </p>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-5">
+                    <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-5">
                       <span className="text-xs uppercase text-kaafila-muted">Current KAAFILA Rank</span>
-                      <p className="mt-1 font-display text-3xl font-bold text-kaafila-yellow">
+                      <p className="mt-1 font-display text-3xl font-bold text-kaafila-accent">
                         {profile?.rank || 'Beginner'}
                       </p>
                     </div>
                   </div>
 
                   {tierProgress && (
-                    <div className="mt-6 rounded-2xl border border-white/10 bg-kaafila-bg p-5">
+                    <div className="mt-6 rounded-2xl border border-kaafila-border bg-kaafila-bg p-5">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-semibold uppercase text-kaafila-text">
                           Progress to {tierProgress.nextTier ? tierProgress.nextTier.name : 'Max Tier'}
                         </span>
-                        <span className="font-mono text-kaafila-yellow">{tierProgress.kmProgressPercent}%</span>
+                        <span className="font-mono text-kaafila-accent">{tierProgress.kmProgressPercent}%</span>
                       </div>
-                      <div className="mt-3 h-3 overflow-hidden rounded-full bg-white/10">
+                      <div className="mt-3 h-3 overflow-hidden rounded-full bg-kaafila-elevated">
                         <div
-                          className="h-full bg-kaafila-yellow transition-all"
+                          className="h-full bg-kaafila-primary transition-all"
                           style={{ width: `${tierProgress.kmProgressPercent}%` }}
                         />
                       </div>
@@ -1104,8 +1104,8 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             key={tier.name}
                             className={`rounded-xl border p-4 ${
                               profile?.rank === tier.name
-                                ? 'border-kaafila-yellow bg-kaafila-yellow/10'
-                                : 'border-white/10 bg-kaafila-bg'
+                                ? 'border-kaafila-primary bg-kaafila-primary/10'
+                                : 'border-kaafila-border bg-kaafila-bg'
                             }`}
                           >
                             <p className="font-display text-lg font-bold text-kaafila-text">{tier.name}</p>
@@ -1125,7 +1125,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                         <h2 className="font-display text-xl font-bold uppercase text-kaafila-text">
                           Achievements &amp; Badges
                         </h2>
-                        <span className="font-mono text-xs text-kaafila-yellow">
+                        <span className="font-mono text-xs text-kaafila-accent">
                           {dashboard.achievements.filter((a) => a.earned).length}/{dashboard.achievements.length} Earned
                         </span>
                       </div>
@@ -1135,15 +1135,15 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                             key={ach.code}
                             className={`rounded-2xl border p-4 ${
                               ach.earned
-                                ? 'border-kaafila-yellow/45 bg-kaafila-bg'
-                                : 'border-white/10 bg-kaafila-bg/60 opacity-80'
+                                ? 'border-kaafila-primary/45 bg-kaafila-bg'
+                                : 'border-kaafila-border bg-kaafila-bg/60 opacity-80'
                             }`}
                           >
                             <div className="flex items-start justify-between gap-2">
                               <div>
                                 <div className="flex items-center gap-2">
                                   {ach.earned ? (
-                                    <Award className="h-4 w-4 text-kaafila-yellow" />
+                                    <Award className="h-4 w-4 text-kaafila-accent" />
                                   ) : (
                                     <Lock className="h-4 w-4 text-kaafila-muted" />
                                   )}
@@ -1156,16 +1156,16 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                               <span
                                 className={`rounded px-2 py-0.5 font-mono text-[10px] uppercase ${
                                   ach.earned
-                                    ? 'bg-emerald-500/15 text-emerald-300'
-                                    : 'bg-white/10 text-kaafila-muted'
+                                    ? 'bg-emerald-500/15 text-emerald-700'
+                                    : 'bg-kaafila-elevated text-kaafila-muted'
                                 }`}
                               >
                                 {ach.earned ? 'Earned' : ach.tier}
                               </span>
                             </div>
-                            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+                            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-kaafila-elevated">
                               <div
-                                className={`h-full transition-all ${ach.earned ? 'bg-emerald-400' : 'bg-kaafila-yellow'}`}
+                                className={`h-full transition-all ${ach.earned ? 'bg-emerald-400' : 'bg-kaafila-primary'}`}
                                 style={{ width: `${ach.progressPercent}%` }}
                               />
                             </div>
@@ -1191,8 +1191,8 @@ export default function RiderDashboardPage({ section = 'overview' }) {
 
               {/* ACCOUNT SETTINGS SECTION */}
               {section === 'settings' && (
-                <section className="rounded-3xl border border-kaafila-yellow/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
-                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+                <section className="rounded-3xl border border-kaafila-primary/25 bg-kaafila-surface p-6 shadow-card sm:p-8">
+                  <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                     Account &amp; Privacy
                   </span>
                   <h1 className="mt-1 font-display text-3xl font-bold uppercase text-kaafila-text">
@@ -1200,17 +1200,17 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                   </h1>
 
                   <div className="mt-6 space-y-4">
-                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                       <div>
                         <p className="text-xs uppercase text-kaafila-muted">Account Email</p>
                         <p className="mt-1 font-mono text-sm text-kaafila-text">{u?.email}</p>
                       </div>
-                      <span className="rounded-full border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-1 font-mono text-xs uppercase text-kaafila-yellow">
+                      <span className="rounded-full border border-kaafila-primary/40 bg-kaafila-primary/10 px-3 py-1 font-mono text-xs uppercase text-kaafila-accent">
                         Role: {user.role}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                       <div>
                         <p className="text-xs uppercase text-kaafila-muted">Public Rider Profile</p>
                         <p className="mt-1 text-sm text-kaafila-text">@{profile?.handle}</p>
@@ -1218,14 +1218,14 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       {profile?.handle && (
                         <Link
                           to={`/riders/${profile.handle}`}
-                          className="rounded-xl border border-kaafila-yellow/40 px-4 py-2 text-xs font-bold uppercase text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                          className="rounded-xl border border-kaafila-primary/40 px-4 py-2 text-xs font-bold uppercase text-kaafila-accent hover:bg-kaafila-primary/10"
                         >
                           View Public Profile
                         </Link>
                       )}
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+                    <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
                       <div>
                         <p className="text-xs uppercase text-kaafila-muted">Emergency Contact Sharing</p>
                         <p className="mt-1 text-sm text-kaafila-text">
@@ -1236,7 +1236,7 @@ export default function RiderDashboardPage({ section = 'overview' }) {
                       </div>
                       <Link
                         to="/dashboard/rider/profile"
-                        className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow"
+                        className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-primary hover:text-kaafila-accent"
                       >
                         Manage Privacy
                       </Link>

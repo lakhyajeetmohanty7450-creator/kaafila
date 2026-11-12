@@ -137,8 +137,8 @@ export default function NotificationsPage() {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-kaafila-bg px-4 py-16">
-        <div className="mx-auto max-w-xl rounded-2xl border border-kaafila-yellow/30 bg-kaafila-surface p-8 text-center">
-          <Bell className="mx-auto h-10 w-10 text-kaafila-yellow" />
+        <div className="mx-auto max-w-xl rounded-2xl border border-kaafila-primary/30 bg-kaafila-surface p-8 text-center">
+          <Bell className="mx-auto h-10 w-10 text-kaafila-accent" />
           <h1 className="mt-4 font-display text-2xl font-bold text-kaafila-text">
             Notification Centre
           </h1>
@@ -148,7 +148,7 @@ export default function NotificationsPage() {
           </p>
           <Link
             to="/login"
-            className="mt-6 inline-flex rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+            className="mt-6 inline-flex rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
           >
             Sign In
           </Link>
@@ -160,11 +160,11 @@ export default function NotificationsPage() {
   return (
     <div className="min-h-screen bg-kaafila-bg pb-20 pt-8">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-4 border-b border-kaafila-yellow/20 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-4 border-b border-kaafila-primary/20 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Link
               to="/community"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-yellow hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-accent hover:underline"
             >
               <Compass className="h-3.5 w-3.5" />
               Community Hub
@@ -182,7 +182,7 @@ export default function NotificationsPage() {
               type="button"
               disabled={markingAll}
               onClick={handleMarkAllRead}
-              className="inline-flex items-center gap-2 rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/20 transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-xl border border-kaafila-primary/40 bg-kaafila-primary/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/20 transition disabled:opacity-50"
             >
               {markingAll ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -201,8 +201,8 @@ export default function NotificationsPage() {
             onClick={() => setFilterTab('all')}
             className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
               filterTab === 'all'
-                ? 'bg-kaafila-yellow text-kaafila-bg'
-                : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                ? 'bg-kaafila-primary text-kaafila-dark'
+                : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
             }`}
           >
             All Activity
@@ -212,8 +212,8 @@ export default function NotificationsPage() {
             onClick={() => setFilterTab('unread')}
             className={`rounded-xl px-4 py-2 text-xs font-bold uppercase tracking-wider transition ${
               filterTab === 'unread'
-                ? 'bg-kaafila-yellow text-kaafila-bg'
-                : 'border border-white/10 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                ? 'bg-kaafila-primary text-kaafila-dark'
+                : 'border border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
             }`}
           >
             Unread ({unreadCount})
@@ -226,13 +226,13 @@ export default function NotificationsPage() {
             {[1, 2, 3].map((i) => (
               <div
                 key={i}
-                className="h-20 animate-pulse rounded-2xl border border-white/10 bg-kaafila-surface/60"
+                className="h-20 animate-pulse rounded-2xl border border-kaafila-border bg-kaafila-surface/60"
               />
             ))}
           </div>
         ) : items.length === 0 ? (
-          <div className="mt-8 rounded-2xl border border-white/10 bg-kaafila-surface p-10 text-center">
-            <Bell className="mx-auto h-10 w-10 text-kaafila-yellow/60" />
+          <div className="mt-8 rounded-2xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
+            <Bell className="mx-auto h-10 w-10 text-kaafila-accent/60" />
             <h2 className="mt-3 font-display text-xl font-bold text-kaafila-text">
               {filterTab === 'unread' ? 'All Caught Up!' : 'No Notifications Yet'}
             </h2>
@@ -253,16 +253,16 @@ export default function NotificationsPage() {
                   onKeyDown={(e) => e.key === 'Enter' && handleMarkRead(notif)}
                   className={`flex cursor-pointer items-start justify-between gap-4 rounded-2xl border p-4 transition ${
                     notif.isRead
-                      ? 'border-white/10 bg-kaafila-surface hover:border-white/25'
-                      : 'border-kaafila-yellow/45 bg-kaafila-yellow/5 hover:border-kaafila-yellow'
+                      ? 'border-kaafila-border bg-kaafila-surface hover:border-kaafila-primary'
+                      : 'border-kaafila-primary/45 bg-kaafila-primary/5 hover:border-kaafila-primary'
                   }`}
                 >
                   <div className="flex items-start gap-3.5 min-w-0">
                     <div
                       className={`mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
                         notif.isRead
-                          ? 'border-white/10 bg-kaafila-bg text-kaafila-muted'
-                          : 'border-kaafila-yellow/40 bg-kaafila-yellow/15 text-kaafila-yellow'
+                          ? 'border-kaafila-border bg-kaafila-bg text-kaafila-muted'
+                          : 'border-kaafila-primary/40 bg-kaafila-primary/15 text-kaafila-accent'
                       }`}
                     >
                       <Icon className="h-5 w-5" />
@@ -285,7 +285,7 @@ export default function NotificationsPage() {
                         e.stopPropagation();
                         handleMarkRead({ ...notif, link: '' });
                       }}
-                      className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-kaafila-yellow/40 bg-kaafila-bg px-2.5 py-1 text-[11px] font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                      className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-kaafila-primary/40 bg-kaafila-bg px-2.5 py-1 text-[11px] font-semibold text-kaafila-accent hover:bg-kaafila-primary/10"
                     >
                       <Check className="h-3 w-3" />
                       Mark Read

@@ -134,7 +134,7 @@ export default function CommunityPage() {
   return (
     <div className="min-h-screen bg-kaafila-bg pb-20">
       {/* Hero Banner */}
-      <section className="relative overflow-hidden border-b border-kaafila-yellow/20 bg-kaafila-surface/70">
+      <section className="relative overflow-hidden border-b border-kaafila-primary/20 bg-kaafila-surface/70">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-25"
           style={{ backgroundImage: "url('/images/community-camp.png')" }}
@@ -143,7 +143,7 @@ export default function CommunityPage() {
 
         <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-kaafila-yellow">
+            <span className="inline-flex items-center gap-2 rounded-full border border-kaafila-primary/40 bg-kaafila-primary/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-kaafila-accent">
               <Radio className="h-3.5 w-3.5" />
               KAAFILA Rider Community
             </span>
@@ -151,8 +151,8 @@ export default function CommunityPage() {
               <span
                 className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium ${
                   connected
-                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                    : 'border-white/15 bg-kaafila-surface text-kaafila-muted'
+                    ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-700'
+                    : 'border-kaafila-border bg-kaafila-surface text-kaafila-muted'
                 }`}
               >
                 <span
@@ -177,13 +177,13 @@ export default function CommunityPage() {
             <div className="mt-6 flex flex-wrap gap-3">
               <Link
                 to="/register"
-                className="rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition"
+                className="rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition"
               >
                 Join as a Rider
               </Link>
               <Link
                 to="/login"
-                className="rounded-xl border border-kaafila-yellow/40 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/10 transition"
+                className="rounded-xl border border-kaafila-primary/40 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/10 transition"
               >
                 Sign In
               </Link>
@@ -204,31 +204,31 @@ export default function CommunityPage() {
             return (
               <div
                 key={card.to}
-                className="group flex flex-col justify-between rounded-2xl border border-white/10 bg-kaafila-surface p-6 transition hover:border-kaafila-yellow/40"
+                className="group flex flex-col justify-between rounded-2xl border border-kaafila-border bg-kaafila-surface p-6 transition hover:border-kaafila-primary/40"
               >
                 <div>
                   <div className="flex items-start justify-between gap-3">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-kaafila-yellow/35 bg-kaafila-yellow/10 text-kaafila-yellow">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-kaafila-primary/35 bg-kaafila-primary/10 text-kaafila-accent">
                       <Icon className="h-6 w-6" />
                     </div>
-                    <span className="rounded-full border border-white/10 bg-kaafila-bg px-3 py-1 text-[11px] font-medium text-kaafila-muted">
+                    <span className="rounded-full border border-kaafila-border bg-kaafila-bg px-3 py-1 text-[11px] font-medium text-kaafila-muted">
                       {card.stat}
                     </span>
                   </div>
 
-                  <h2 className="mt-5 font-display text-2xl font-bold text-kaafila-text group-hover:text-kaafila-yellow transition">
+                  <h2 className="mt-5 font-display text-2xl font-bold text-kaafila-text group-hover:text-kaafila-accent transition">
                     {card.title}
                   </h2>
                   <p className="mt-2 text-sm leading-relaxed text-kaafila-muted">{card.description}</p>
                 </div>
 
-                <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
+                <div className="mt-6 flex items-center justify-between border-t border-kaafila-border pt-4">
                   {lockedForVisitor ? (
                     <Link
                       to={isAuthenticated ? '/community/groups' : '/login'}
-                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-kaafila-muted hover:text-kaafila-yellow transition"
+                      className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-kaafila-muted hover:text-kaafila-accent transition"
                     >
-                      <ShieldCheck className="h-4 w-4 text-kaafila-yellow/70" />
+                      <ShieldCheck className="h-4 w-4 text-kaafila-accent/70" />
                       <span>
                         {isAuthenticated
                           ? 'Available for Rider Accounts'
@@ -238,7 +238,7 @@ export default function CommunityPage() {
                   ) : (
                     <Link
                       to={card.to}
-                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:text-kaafila-yellowHover transition"
+                      className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:text-kaafila-accent-hover transition"
                     >
                       <span>{card.cta}</span>
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />

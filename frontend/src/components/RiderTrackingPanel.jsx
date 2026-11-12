@@ -362,8 +362,8 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
 
   if (loading) {
     return (
-      <div className="flex h-56 items-center justify-center rounded-3xl border border-white/10 bg-kaafila-surface">
-        <Loader2 className="h-7 w-7 animate-spin text-kaafila-yellow" />
+      <div className="flex h-56 items-center justify-center rounded-3xl border border-kaafila-border bg-kaafila-surface">
+        <Loader2 className="h-7 w-7 animate-spin text-kaafila-accent" />
       </div>
     );
   }
@@ -371,10 +371,10 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
   return (
     <div className="space-y-6">
       {mode !== 'history' && (
-        <section className="rounded-3xl border border-kaafila-yellow/30 bg-kaafila-surface p-6 shadow-card">
+        <section className="rounded-3xl border border-kaafila-primary/30 bg-kaafila-surface p-6 shadow-card">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+              <span className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-kaafila-accent">
                 <Navigation className="h-3.5 w-3.5" />
                 Opt-In GPS Ride Tracker
               </span>
@@ -388,8 +388,8 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 <span
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] font-bold uppercase ${
                     activeSession.status === 'active'
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
-                      : 'bg-kaafila-yellow/20 text-kaafila-yellow border border-kaafila-yellow/40'
+                      ? 'bg-emerald-500/20 text-emerald-700 border border-emerald-500/40'
+                      : 'bg-kaafila-primary/20 text-kaafila-accent border border-kaafila-primary/40'
                   }`}
                 >
                   <Radio className="h-3 w-3 animate-pulse" />
@@ -401,7 +401,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                     type="button"
                     disabled={busyAction}
                     onClick={() => handleToggleLiveSharing(false)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-red-400/50 bg-red-500/15 px-3 py-1 font-mono text-[11px] font-bold uppercase text-red-200 hover:bg-red-500/25 transition"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-red-400/50 bg-red-500/15 px-3 py-1 font-mono text-[11px] font-bold uppercase text-red-700 hover:bg-red-500/25 transition"
                   >
                     <EyeOff className="h-3 w-3" />
                     Stop Sharing Now
@@ -422,7 +422,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. Manali Morning Shakedown or Leh–Pangong Leg"
-                  className="mt-1 w-full rounded-xl border border-white/15 bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                  className="mt-1 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-4 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                 />
               </div>
 
@@ -433,7 +433,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 <select
                   value={selectedRideId}
                   onChange={(e) => setSelectedRideId(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-white/15 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                  className="mt-1 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                 >
                   <option value="">Solo / Unlinked Ride</option>
                   {rides.map((r) => (
@@ -451,7 +451,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 <select
                   value={selectedGroupId}
                   onChange={(e) => setSelectedGroupId(e.target.value)}
-                  className="mt-1 w-full rounded-xl border border-white/15 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                  className="mt-1 w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                 >
                   <option value="">No Group Selected</option>
                   {groups.map((g) => (
@@ -462,16 +462,16 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 </select>
               </div>
 
-              <div className="sm:col-span-2 rounded-2xl border border-kaafila-yellow/25 bg-kaafila-bg p-4">
+              <div className="sm:col-span-2 rounded-2xl border border-kaafila-primary/25 bg-kaafila-bg p-4">
                 <label className="flex cursor-pointer items-start gap-3">
                   <input
                     type="checkbox"
                     checked={optInShareOnStart}
                     onChange={(e) => setOptInShareOnStart(e.target.checked)}
-                    className="mt-0.5 accent-kaafila-yellow"
+                    className="mt-0.5 accent-kaafila-primary"
                   />
                   <span className="text-xs leading-relaxed text-kaafila-text">
-                    <strong className="text-kaafila-yellow">Opt-in Live Group Location Sharing:</strong>{' '}
+                    <strong className="text-kaafila-accent">Opt-in Live Group Location Sharing:</strong>{' '}
                     Share my live coordinates exclusively with verified active members of the selected KAAFILA group and the expedition organiser while this session is active. Never shared publicly.
                   </span>
                 </label>
@@ -481,7 +481,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 <button
                   type="submit"
                   disabled={busyAction}
-                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-6 py-3 text-xs font-bold uppercase tracking-wider text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                 >
                   <Play className="h-4 w-4" />
                   Start Explicit GPS Tracking
@@ -492,25 +492,25 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
             <div className="mt-5 space-y-5">
               {/* Telemetry Grid */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-3.5">
+                <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-3.5">
                   <span className="text-[10px] uppercase text-kaafila-muted">Elapsed Time</span>
                   <p className="mt-1 font-mono text-xl font-bold text-kaafila-text">
                     {formatDuration(elapsedSeconds)}
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-3.5">
+                <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-3.5">
                   <span className="text-[10px] uppercase text-kaafila-muted">Estimated Distance</span>
-                  <p className="mt-1 font-mono text-xl font-bold text-kaafila-yellow">
+                  <p className="mt-1 font-mono text-xl font-bold text-kaafila-accent">
                     {Number(activeSession.estimatedDistanceKm || 0).toFixed(2)} km
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-3.5">
+                <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-3.5">
                   <span className="text-[10px] uppercase text-kaafila-muted">Verified Distance</span>
                   <p className="mt-1 font-mono text-xl font-bold text-emerald-400">
                     {Number(activeSession.verifiedDistanceKm || 0).toFixed(2)} km
                   </p>
                 </div>
-                <div className="rounded-2xl border border-white/10 bg-kaafila-bg p-3.5">
+                <div className="rounded-2xl border border-kaafila-border bg-kaafila-bg p-3.5">
                   <span className="text-[10px] uppercase text-kaafila-muted">GPS Accuracy</span>
                   <p className="mt-1 font-mono text-xl font-bold text-kaafila-text">
                     {currentCoord?.accuracyMeters ? `±${currentCoord.accuracyMeters}m` : 'Acquiring...'}
@@ -522,8 +522,8 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                 <div
                   className={`flex items-start gap-2.5 rounded-xl border p-3.5 text-xs ${
                     gpsStatus === 'denied' || gpsStatus === 'unavailable'
-                      ? 'border-red-500/40 bg-red-500/10 text-red-200'
-                      : 'border-kaafila-yellow/40 bg-kaafila-yellow/10 text-kaafila-yellow'
+                      ? 'border-red-500/40 bg-red-500/10 text-red-700'
+                      : 'border-kaafila-primary/40 bg-kaafila-primary/10 text-kaafila-accent'
                   }`}
                 >
                   <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
@@ -538,7 +538,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                     type="button"
                     disabled={busyAction}
                     onClick={handlePauseResume}
-                    className="inline-flex items-center gap-2 rounded-xl border border-kaafila-yellow/50 bg-kaafila-yellow/10 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-yellow hover:bg-kaafila-yellow/20 transition"
+                    className="inline-flex items-center gap-2 rounded-xl border border-kaafila-primary/50 bg-kaafila-primary/10 px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-accent hover:bg-kaafila-primary/20 transition"
                   >
                     {activeSession.status === 'active' ? (
                       <>
@@ -561,13 +561,13 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                   </button>
                 </div>
 
-                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text">
+                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2 text-xs text-kaafila-text">
                   <input
                     type="checkbox"
                     checked={Boolean(activeSession.isLocationSharingEnabled)}
                     disabled={busyAction}
                     onChange={(e) => handleToggleLiveSharing(e.target.checked)}
-                    className="accent-kaafila-yellow"
+                    className="accent-kaafila-primary"
                   />
                   <span>Live Group Sharing</span>
                 </label>
@@ -590,7 +590,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
 
           {/* Expedition Checkpoint Proximity Check-ins */}
           {activeSession && rideRouteBundle?.checkpoints?.length > 0 && (
-            <div className="mt-5 rounded-2xl border border-white/10 bg-kaafila-bg p-4">
+            <div className="mt-5 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4">
               <h3 className="font-display text-lg font-bold uppercase text-kaafila-text">
                 Checkpoint Verification
               </h3>
@@ -603,10 +603,10 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                   return (
                     <div
                       key={cp._id}
-                      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-white/10 bg-kaafila-surface px-3.5 py-2.5 text-xs"
+                      className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-kaafila-border bg-kaafila-surface px-3.5 py-2.5 text-xs"
                     >
                       <div className="flex items-center gap-2.5">
-                        <span className="font-mono font-bold text-kaafila-yellow">#{cp.sequenceNumber}</span>
+                        <span className="font-mono font-bold text-kaafila-accent">#{cp.sequenceNumber}</span>
                         <div>
                           <p className="font-semibold text-kaafila-text">{cp.name}</p>
                           <p className="text-[11px] text-kaafila-muted">Radius: {cp.radiusMeters}m</p>
@@ -621,7 +621,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                           type="button"
                           disabled={busyAction || activeSession.status !== 'active' || !currentCoord}
                           onClick={() => handleVerifyCheckpoint(cp)}
-                          className="rounded-lg border border-kaafila-yellow/40 px-3 py-1.5 font-mono text-[11px] font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/15 disabled:opacity-45 transition"
+                          className="rounded-lg border border-kaafila-primary/40 px-3 py-1.5 font-mono text-[11px] font-semibold text-kaafila-accent hover:bg-kaafila-primary/15 disabled:opacity-45 transition"
                         >
                           Verify Check-In
                         </button>
@@ -636,10 +636,10 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
       )}
 
       {/* Recorded Ride History */}
-      <section className="rounded-3xl border border-white/10 bg-kaafila-surface p-6 shadow-card">
+      <section className="rounded-3xl border border-kaafila-border bg-kaafila-surface p-6 shadow-card">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-kaafila-yellow">
+            <span className="font-mono text-xs uppercase tracking-widest text-kaafila-accent">
               Verified Logbook
             </span>
             <h3 className="mt-1 font-display text-2xl font-bold uppercase text-kaafila-text">
@@ -650,7 +650,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
             <button
               type="button"
               onClick={() => setSelectedHistorySession(null)}
-              className="rounded-lg border border-white/15 px-3 py-1.5 text-xs text-kaafila-muted hover:text-kaafila-yellow"
+              className="rounded-lg border border-kaafila-border px-3 py-1.5 text-xs text-kaafila-muted hover:text-kaafila-accent"
             >
               Close Map Preview
             </button>
@@ -669,8 +669,8 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
         )}
 
         {sessions.length === 0 ? (
-          <div className="mt-4 rounded-2xl border border-white/10 bg-kaafila-bg p-8 text-center">
-            <Compass className="mx-auto h-8 w-8 text-kaafila-yellow/70" />
+          <div className="mt-4 rounded-2xl border border-kaafila-border bg-kaafila-bg p-8 text-center">
+            <Compass className="mx-auto h-8 w-8 text-kaafila-accent/70" />
             <p className="mt-2 text-sm text-kaafila-muted">
               No GPS tracking sessions logged yet. Start your first ride above to log verified kilometres.
             </p>
@@ -680,7 +680,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
             {sessions.map((s) => (
               <div
                 key={s._id}
-                className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-kaafila-bg p-4 sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col gap-3 rounded-2xl border border-kaafila-border bg-kaafila-bg p-4 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
@@ -688,10 +688,10 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                     <span
                       className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
                         s.verificationStatus === 'verified'
-                          ? 'bg-emerald-500/15 text-emerald-300'
+                          ? 'bg-emerald-500/15 text-emerald-700'
                           : s.verificationStatus === 'flagged'
-                            ? 'bg-red-500/15 text-red-300'
-                            : 'bg-white/10 text-kaafila-muted'
+                            ? 'bg-red-500/15 text-red-700'
+                            : 'bg-kaafila-elevated text-kaafila-muted'
                       }`}
                     >
                       {s.verificationStatus}
@@ -699,10 +699,10 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                   </div>
                   <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-kaafila-muted">
                     <span className="inline-flex items-center gap-1">
-                      <Clock className="h-3.5 w-3.5 text-kaafila-yellow" />
+                      <Clock className="h-3.5 w-3.5 text-kaafila-accent" />
                       {new Date(s.startedAt).toLocaleDateString()} · {formatDuration(s.activeDurationSeconds)}
                     </span>
-                    <span className="inline-flex items-center gap-1 font-mono text-kaafila-yellow">
+                    <span className="inline-flex items-center gap-1 font-mono text-kaafila-accent">
                       <RouteIcon className="h-3.5 w-3.5" />
                       {Number(s.verifiedDistanceKm || 0).toFixed(1)} km verified
                     </span>
@@ -713,7 +713,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                       </span>
                     )}
                     {s.suspiciousFlags?.length > 0 && (
-                      <span className="inline-flex items-center gap-1 text-red-300">
+                      <span className="inline-flex items-center gap-1 text-red-700">
                         <ShieldAlert className="h-3.5 w-3.5" />
                         {s.suspiciousFlags.length} GPS anomaly filtered
                       </span>
@@ -728,8 +728,8 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                       onClick={() => handleTogglePublicRoute(s)}
                       className={`inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-semibold transition ${
                         s.shareSimplifiedRoutePublic
-                          ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300'
-                          : 'border-white/15 bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
+                          ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-700'
+                          : 'border-kaafila-border bg-kaafila-surface text-kaafila-muted hover:text-kaafila-text'
                       }`}
                     >
                       {s.shareSimplifiedRoutePublic ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}
@@ -739,7 +739,7 @@ export default function RiderTrackingPanel({ mode = 'tracking', onSessionFinaliz
                   <button
                     type="button"
                     onClick={() => setSelectedHistorySession(s)}
-                    className="rounded-lg border border-kaafila-yellow/40 px-3 py-1.5 text-[11px] font-bold uppercase text-kaafila-yellow hover:bg-kaafila-yellow/10"
+                    className="rounded-lg border border-kaafila-primary/40 px-3 py-1.5 text-[11px] font-bold uppercase text-kaafila-accent hover:bg-kaafila-primary/10"
                   >
                     Preview Route
                   </button>

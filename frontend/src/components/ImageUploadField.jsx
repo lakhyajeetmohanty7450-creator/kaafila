@@ -58,7 +58,7 @@ export default function ImageUploadField({
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <div
-          className={`relative shrink-0 overflow-hidden rounded-xl border border-kaafila-yellow/25 bg-kaafila-bg ${
+          className={`relative shrink-0 overflow-hidden rounded-xl border border-kaafila-primary/25 bg-kaafila-bg ${
             aspect === 'square' ? 'h-20 w-20' : 'h-20 w-36'
           }`}
         >
@@ -84,7 +84,7 @@ export default function ImageUploadField({
               type="button"
               onClick={() => inputRef.current?.click()}
               disabled={uploading}
-              className="inline-flex items-center gap-2 rounded-lg border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-1.5 text-xs font-semibold text-kaafila-yellow hover:bg-kaafila-yellow/20 transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-lg border border-kaafila-primary/40 bg-kaafila-primary/10 px-3 py-1.5 text-xs font-semibold text-kaafila-accent hover:bg-kaafila-primary/20 transition disabled:opacity-50"
             >
               {uploading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Upload className="h-3.5 w-3.5" />}
               <span>{uploading ? 'Uploading...' : 'Upload Image'}</span>
@@ -97,7 +97,7 @@ export default function ImageUploadField({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
-            className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-yellow"
+            className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-xs text-kaafila-text outline-none focus:border-kaafila-primary"
           />
         </div>
       </div>

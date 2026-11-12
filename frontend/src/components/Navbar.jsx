@@ -4,11 +4,21 @@ import { Menu, X, Compass, LogOut, User as UserIcon, Building2, Shield, Bell, Me
 import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 
-export function KaafilaLogo({ compact = false }) {
+export function KaafilaLogo({ compact = false, dark = false }) {
   return (
     <Link to="/" className="group flex items-center gap-3">
-      <div className="relative flex h-10 w-10 items-center justify-center rounded-lg border border-kaafila-yellow/60 bg-kaafila-surface shadow-amber transition group-hover:border-kaafila-yellow">
-        <svg viewBox="0 0 36 36" className="h-6 w-6 text-kaafila-yellow" fill="none">
+      <div
+        className={`relative flex h-10 w-10 items-center justify-center rounded-lg border transition ${
+          dark
+            ? 'border-kaafila-primary/55 bg-kaafila-dark shadow-blue group-hover:border-kaafila-primary'
+            : 'border-kaafila-primary/60 bg-kaafila-surface shadow-blue group-hover:border-kaafila-primary'
+        }`}
+      >
+        <svg
+          viewBox="0 0 36 36"
+          className={`h-6 w-6 ${dark ? 'text-kaafila-primary' : 'text-kaafila-accent'}`}
+          fill="none"
+        >
           <path
             d="M4 26L13 11L19 20L24 14L32 26H4Z"
             stroke="currentColor"
@@ -20,10 +30,20 @@ export function KaafilaLogo({ compact = false }) {
       </div>
       {!compact && (
         <div className="leading-none">
-          <span className="font-display text-2xl font-bold tracking-[0.14em] text-kaafila-text group-hover:text-kaafila-yellow transition">
+          <span
+            className={`font-display text-2xl font-bold tracking-[0.14em] transition ${
+              dark
+                ? 'text-white group-hover:text-kaafila-primary'
+                : 'text-kaafila-text group-hover:text-kaafila-accent'
+            }`}
+          >
             KAAFILA
           </span>
-          <span className="block font-mono text-[9px] uppercase tracking-[0.26em] text-kaafila-yellow/80">
+          <span
+            className={`block font-mono text-[9px] uppercase tracking-[0.26em] ${
+              dark ? 'text-kaafila-primary/90' : 'text-kaafila-accent/85'
+            }`}
+          >
             Himalayan Moto Marketplace
           </span>
         </div>
@@ -62,13 +82,13 @@ export default function Navbar() {
 
   const navLinkClass = ({ isActive }) =>
     `text-sm font-medium tracking-wide transition ${
-      isActive ? 'text-kaafila-yellow' : 'text-kaafila-text/80 hover:text-kaafila-yellow'
+      isActive ? 'text-kaafila-primary font-semibold' : 'text-white/85 hover:text-kaafila-primary'
     }`;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-kaafila-yellow/20 bg-kaafila-bg/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-kaafila-nav/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
-        <KaafilaLogo />
+        <KaafilaLogo dark />
 
         <nav aria-label="Primary navigation" className="hidden items-center gap-5 lg:flex xl:gap-7">
           {navItems.map((item) => (
@@ -84,7 +104,7 @@ export default function Navbar() {
               {user?.role === 'rider' && (
                 <Link
                   to="/community/messages"
-                  className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-kaafila-surface text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow transition"
+                  className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:border-kaafila-primary hover:text-kaafila-primary transition"
                   title="Private Messages"
                   aria-label="Private Messages"
                 >
@@ -93,27 +113,27 @@ export default function Navbar() {
               )}
               <Link
                 to="/notifications"
-                className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 bg-kaafila-surface text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow transition"
+                className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white hover:border-kaafila-primary hover:text-kaafila-primary transition"
                 title="Notifications"
                 aria-label="Notifications"
               >
                 <Bell className="h-4 w-4" />
                 {unreadNotifications > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-kaafila-yellow px-1 font-mono text-[10px] font-bold text-kaafila-bg">
+                  <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-kaafila-coral px-1 font-mono text-[10px] font-bold text-kaafila-dark">
                     {unreadNotifications > 99 ? '99+' : unreadNotifications}
                   </span>
                 )}
               </Link>
               <Link
                 to={dashboardPath}
-                className="flex items-center gap-2 rounded-lg border border-kaafila-yellow/35 bg-kaafila-surface px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-kaafila-text hover:border-kaafila-yellow hover:text-kaafila-yellow transition"
+                className="flex items-center gap-2 rounded-lg border border-kaafila-primary/40 bg-white/5 px-3.5 py-2 text-xs font-semibold uppercase tracking-wider text-white hover:border-kaafila-primary hover:text-kaafila-primary transition"
               >
                 {user?.role === 'organisation' ? (
-                  <Building2 className="h-4 w-4 text-kaafila-yellow" />
+                  <Building2 className="h-4 w-4 text-kaafila-primary" />
                 ) : user?.role === 'admin' ? (
-                  <Shield className="h-4 w-4 text-kaafila-yellow" />
+                  <Shield className="h-4 w-4 text-kaafila-primary" />
                 ) : (
-                  <UserIcon className="h-4 w-4 text-kaafila-yellow" />
+                  <UserIcon className="h-4 w-4 text-kaafila-primary" />
                 )}
                 <span>
                   {user?.role === 'organisation'
@@ -126,7 +146,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 rounded-lg border border-white/10 px-3 py-2 text-xs font-medium text-kaafila-muted hover:border-red-400/40 hover:text-red-300 transition"
+                className="flex items-center gap-1.5 rounded-lg border border-white/15 px-3 py-2 text-xs font-medium text-white/75 hover:border-red-400/50 hover:text-red-300 transition"
                 title="Log out"
               >
                 <LogOut className="h-4 w-4" />
@@ -137,13 +157,13 @@ export default function Navbar() {
             <>
               <Link
                 to="/login"
-                className="rounded-lg px-4 py-2 text-sm font-medium text-kaafila-text/90 hover:text-kaafila-yellow transition"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-white/90 hover:text-kaafila-primary transition"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="inline-flex items-center gap-2 rounded-lg bg-kaafila-yellow px-4 py-2 text-sm font-bold text-kaafila-bg shadow-amber hover:bg-kaafila-yellowHover transition"
+                className="inline-flex items-center gap-2 rounded-lg bg-kaafila-primary px-4 py-2 text-sm font-bold text-kaafila-dark shadow-blue hover:bg-kaafila-primary-hover transition"
               >
                 <Compass className="h-4 w-4" />
                 <span>Join KAAFILA</span>
@@ -155,7 +175,7 @@ export default function Navbar() {
         <button
           type="button"
           onClick={() => setMobileOpen((prev) => !prev)}
-          className="inline-flex items-center justify-center rounded-lg border border-kaafila-yellow/30 p-2 text-kaafila-text lg:hidden"
+          className="inline-flex items-center justify-center rounded-lg border border-white/20 p-2 text-white lg:hidden"
           aria-label="Toggle navigation menu"
           aria-expanded={mobileOpen}
         >
@@ -164,7 +184,7 @@ export default function Navbar() {
       </div>
 
       {mobileOpen && (
-        <div className="border-t border-kaafila-yellow/15 bg-kaafila-surface px-4 py-4 lg:hidden">
+        <div className="border-t border-white/10 bg-kaafila-nav px-4 py-4 lg:hidden">
           <div className="flex flex-col gap-3">
             {navItems.map((item) => (
               <NavLink
@@ -183,7 +203,7 @@ export default function Navbar() {
                   <Link
                     to="/notifications"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-medium text-kaafila-text"
+                    className="rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-medium text-white"
                   >
                     Notifications {unreadNotifications > 0 ? `(${unreadNotifications})` : ''}
                   </Link>
@@ -191,7 +211,7 @@ export default function Navbar() {
                     <Link
                       to="/community/messages"
                       onClick={() => setMobileOpen(false)}
-                      className="rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-medium text-kaafila-text"
+                      className="rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-medium text-white"
                     >
                       Messages
                     </Link>
@@ -199,7 +219,7 @@ export default function Navbar() {
                   <Link
                     to={dashboardPath}
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-kaafila-yellow/40 px-4 py-2.5 text-center text-sm font-semibold text-kaafila-yellow"
+                    className="rounded-lg border border-kaafila-primary/45 px-4 py-2.5 text-center text-sm font-semibold text-kaafila-primary"
                   >
                     {user?.role === 'organisation'
                       ? 'Organisation Dashboard'
@@ -210,7 +230,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="rounded-lg border border-white/10 px-4 py-2.5 text-sm text-kaafila-muted"
+                    className="rounded-lg border border-white/15 px-4 py-2.5 text-sm text-white/75"
                   >
                     Logout
                   </button>
@@ -220,14 +240,14 @@ export default function Navbar() {
                   <Link
                     to="/login"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg border border-kaafila-yellow/30 px-4 py-2.5 text-center text-sm font-medium text-kaafila-text"
+                    className="rounded-lg border border-white/20 px-4 py-2.5 text-center text-sm font-medium text-white"
                   >
                     Sign In
                   </Link>
                   <Link
                     to="/register"
                     onClick={() => setMobileOpen(false)}
-                    className="rounded-lg bg-kaafila-yellow px-4 py-2.5 text-center text-sm font-bold text-kaafila-bg"
+                    className="rounded-lg bg-kaafila-primary px-4 py-2.5 text-center text-sm font-bold text-kaafila-dark"
                   >
                     Join KAAFILA
                   </Link>

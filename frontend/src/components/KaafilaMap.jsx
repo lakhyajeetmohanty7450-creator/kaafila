@@ -7,9 +7,9 @@ const DEFAULT_ZOOM = 7;
 
 const CHECKPOINT_STYLE = {
   start: { bg: '#10B981', border: '#ECFDF5', label: 'Start' },
-  checkpoint: { bg: '#F3C744', border: '#141615', label: 'Checkpoint' },
+  checkpoint: { bg: '#287D80', border: '#EAF7F8', label: 'Checkpoint' },
   rest_stop: { bg: '#38BDF8', border: '#082F49', label: 'Rest Stop' },
-  fuel_stop: { bg: '#F97316', border: '#431407', label: 'Fuel Stop' },
+  fuel_stop: { bg: '#06B6D4', border: '#ECFEFF', label: 'Fuel Stop' },
   important: { bg: '#A855F7', border: '#FAF5FF', label: 'Key Landmark' },
   destination: { bg: '#EF4444', border: '#FEF2F2', label: 'Destination' },
 };
@@ -42,7 +42,7 @@ function escapeHtml(str) {
 function createPinIcon(type, seqLabel = '', verified = false) {
   const cfg = CHECKPOINT_STYLE[type] || CHECKPOINT_STYLE.checkpoint;
   const ring = verified ? 'box-shadow: 0 0 0 3px #10B981;' : 'box-shadow: 0 2px 8px rgba(0,0,0,0.65);';
-  const textColor = type === 'checkpoint' ? '#141615' : '#FFFFFF';
+  const textColor = '#FFFFFF';
   return L.divIcon({
     className: 'kaafila-map-pin',
     html: `<div style="width:28px;height:28px;border-radius:9999px;background:${cfg.bg};border:2px solid ${cfg.border};color:${textColor};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;${ring}">${escapeHtml(seqLabel || '•')}</div>`,
@@ -56,7 +56,7 @@ function createLiveRiderIcon(name = 'Rider') {
   const initial = escapeHtml(String(name || 'R').slice(0, 1).toUpperCase());
   return L.divIcon({
     className: 'kaafila-live-rider-pin',
-    html: `<div style="position:relative;width:30px;height:30px;border-radius:9999px;background:#F3C744;border:2px solid #141615;color:#141615;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;box-shadow:0 0 0 4px rgba(243,199,68,0.3);">${initial}</div>`,
+    html: `<div style="position:relative;width:30px;height:30px;border-radius:9999px;background:#50C9C1;border:2px solid #102B3D;color:#102B3D;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;box-shadow:0 0 0 4px rgba(80,201,193,0.4);">${initial}</div>`,
     iconSize: [30, 30],
     iconAnchor: [15, 15],
     popupAnchor: [0, -16],
@@ -190,7 +190,7 @@ export default function KaafilaMap({
     if (geomCoords.length >= 2) {
       const latLngs = geomCoords.map(([lng, lat]) => [lat, lng]);
       L.polyline(latLngs, {
-        color: '#F3C744',
+        color: '#287D80',
         weight: 4,
         opacity: 0.9,
       }).addTo(group);
@@ -203,7 +203,7 @@ export default function KaafilaMap({
         if (Array.isArray(seg.coordinates) && seg.coordinates.length >= 2) {
           const latLngs = seg.coordinates.map(([lng, lat]) => [lat, lng]);
           L.polyline(latLngs, {
-            color: '#F3C744',
+            color: '#287D80',
             weight: 3.5,
             dashArray: '6 4',
             opacity: 0.85,
@@ -248,9 +248,9 @@ export default function KaafilaMap({
       const typeLabel = CHECKPOINT_STYLE[cp.type]?.label || 'Checkpoint';
       marker.bindPopup(
         `<div style="min-width:170px;font-size:12px;line-height:1.45;">
-          <div style="font-weight:700;color:#F3C744;">#${cp.sequenceNumber || idx + 1} · ${escapeHtml(cp.name)}</div>
-          <div style="font-size:11px;color:#9ca3af;margin-top:2px;">${escapeHtml(typeLabel)}${cp.altitudeMeters ? ` · ${cp.altitudeMeters}m` : ''}</div>
-          ${cp.description ? `<div style="margin-top:4px;color:#e7e1d2;">${escapeHtml(cp.description)}</div>` : ''}
+          <div style="font-weight:700;color:#287D80;">#${cp.sequenceNumber || idx + 1} · ${escapeHtml(cp.name)}</div>
+          <div style="font-size:11px;color:#647C89;margin-top:2px;">${escapeHtml(typeLabel)}${cp.altitudeMeters ? ` · ${cp.altitudeMeters}m` : ''}</div>
+          ${cp.description ? `<div style="margin-top:4px;color:#3A586B;">${escapeHtml(cp.description)}</div>` : ''}
           ${verified ? `<div style="margin-top:4px;font-weight:700;color:#34d399;">✓ Checkpoint Verified</div>` : ''}
         </div>`
       );
@@ -299,8 +299,8 @@ export default function KaafilaMap({
       const timeStr = rider.updatedAt ? new Date(rider.updatedAt).toLocaleTimeString() : 'Live';
       m.bindPopup(
         `<div style="font-size:12px;">
-          <strong style="color:#F3C744;">${escapeHtml(rider.fullName)}</strong><br/>
-          <span style="color:#9ca3af;">Updated: ${escapeHtml(timeStr)}</span>
+          <strong style="color:#287D80;">${escapeHtml(rider.fullName)}</strong><br/>
+          <span style="color:#647C89;">Updated: ${escapeHtml(timeStr)}</span>
           ${rider.speedKmh ? `<br/>Speed: ${Math.round(rider.speedKmh)} km/h` : ''}
         </div>`
       );
@@ -315,7 +315,7 @@ export default function KaafilaMap({
   }, [route, checkpoints, arrivedSet, liveTrackPoints, liveRiders, onMarkerSelect]);
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-kaafila-yellow/30 bg-kaafila-bg shadow-card">
+    <div className="relative overflow-hidden rounded-2xl border border-kaafila-primary/30 bg-kaafila-bg shadow-card">
       <div
         ref={containerRef}
         className={`w-full ${heightClass} ${onMapClick ? 'cursor-crosshair' : ''}`}
@@ -324,7 +324,7 @@ export default function KaafilaMap({
 
       {loading && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-kaafila-bg/85 backdrop-blur-sm">
-          <Loader2 className="h-8 w-8 animate-spin text-kaafila-yellow" />
+          <Loader2 className="h-8 w-8 animate-spin text-kaafila-accent" />
           <p className="mt-2 font-mono text-xs uppercase tracking-wider text-kaafila-text">
             Loading Route Geometry...
           </p>
@@ -334,13 +334,13 @@ export default function KaafilaMap({
       {!loading && error && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-kaafila-bg/90 p-6 text-center">
           <AlertTriangle className="h-8 w-8 text-red-400" />
-          <p className="mt-2 text-sm font-semibold text-red-300">{error}</p>
+          <p className="mt-2 text-sm font-semibold text-red-700">{error}</p>
         </div>
       )}
 
       {!loading && !error && !hasAnySpatialContent && (
         <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-kaafila-bg/90 p-6 text-center">
-          <Compass className="h-9 w-9 text-kaafila-yellow/75" />
+          <Compass className="h-9 w-9 text-kaafila-accent/75" />
           <p className="mt-3 font-display text-xl font-bold uppercase text-kaafila-text">
             {emptyTitle}
           </p>
@@ -349,21 +349,21 @@ export default function KaafilaMap({
       )}
 
       {tileWarning && !loading && !error && (
-        <div className="pointer-events-none absolute left-3 top-3 z-30 rounded-lg border border-kaafila-yellow/35 bg-kaafila-bg/90 px-3 py-1.5 text-[11px] text-kaafila-yellow">
+        <div className="pointer-events-none absolute left-3 top-3 z-30 rounded-lg border border-kaafila-primary/35 bg-kaafila-bg/90 px-3 py-1.5 text-[11px] text-kaafila-accent">
           Basemap tiles offline — vector route & checkpoints remain active.
         </div>
       )}
 
       {showLegend && !loading && !error && (
-        <div className="flex flex-wrap items-center gap-3 border-t border-white/10 bg-kaafila-surface/95 px-4 py-2.5 text-[11px] text-kaafila-muted">
+        <div className="flex flex-wrap items-center gap-3 border-t border-kaafila-border bg-kaafila-surface/95 px-4 py-2.5 text-[11px] text-kaafila-muted">
           <span className="inline-flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" /> Start / My GPS
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-kaafila-yellow" /> Route / Checkpoint
+            <span className="h-2.5 w-2.5 rounded-full bg-kaafila-primary" /> Route / Checkpoint
           </span>
           <span className="inline-flex items-center gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-orange-500" /> Fuel Stop
+            <span className="h-2.5 w-2.5 rounded-full bg-cyan-500" /> Fuel Stop
           </span>
           <span className="inline-flex items-center gap-1.5">
             <span className="h-2.5 w-2.5 rounded-full bg-sky-400" /> Rest Stop

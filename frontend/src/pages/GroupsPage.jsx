@@ -23,12 +23,12 @@ import ImageUploadField from '../components/ImageUploadField';
 
 function privacyMeta(privacy) {
   if (privacy === 'private') {
-    return { label: 'Private', Icon: Lock, cls: 'border-amber-500/35 bg-amber-500/10 text-amber-300' };
+    return { label: 'Private', Icon: Lock, cls: 'border-indigo-400/40 bg-indigo-500/15 text-indigo-700' };
   }
   if (privacy === 'invite_only') {
-    return { label: 'Invite Only', Icon: ShieldCheck, cls: 'border-purple-400/35 bg-purple-400/10 text-purple-300' };
+    return { label: 'Invite Only', Icon: ShieldCheck, cls: 'border-purple-400/35 bg-purple-400/10 text-purple-700' };
   }
-  return { label: 'Public', Icon: Globe, cls: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-300' };
+  return { label: 'Public', Icon: Globe, cls: 'border-emerald-500/35 bg-emerald-500/10 text-emerald-700' };
 }
 
 export default function GroupsPage() {
@@ -171,11 +171,11 @@ export default function GroupsPage() {
     <div className="min-h-screen bg-kaafila-bg pb-20 pt-8">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col gap-4 border-b border-kaafila-yellow/20 pb-6 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col gap-4 border-b border-kaafila-primary/20 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Link
               to="/community"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-yellow hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-kaafila-accent hover:underline"
             >
               <Compass className="h-3.5 w-3.5" />
               Community Hub
@@ -192,7 +192,7 @@ export default function GroupsPage() {
           <button
             type="button"
             onClick={openCreateModal}
-            className="inline-flex items-center justify-center gap-2 rounded-xl bg-kaafila-yellow px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover transition"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-kaafila-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover transition"
           >
             <Plus className="h-4 w-4" />
             Create Group
@@ -200,7 +200,7 @@ export default function GroupsPage() {
         </div>
 
         {/* Search & Filter */}
-        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-white/10 bg-kaafila-surface p-4 sm:p-5">
+        <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-kaafila-border bg-kaafila-surface p-4 sm:p-5">
           <div className="grid gap-3 md:grid-cols-3">
             <div className="relative md:col-span-2">
               <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-kaafila-muted" />
@@ -212,7 +212,7 @@ export default function GroupsPage() {
                   setPage(1);
                 }}
                 placeholder="Search groups by name, destination or keyword..."
-                className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
               />
             </div>
 
@@ -226,7 +226,7 @@ export default function GroupsPage() {
                   setPage(1);
                 }}
                 placeholder="Filter by destination (e.g. Ladakh)"
-                className="w-full rounded-xl border border-white/10 bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-yellow"
+                className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg py-2.5 pl-9 pr-3 text-sm text-kaafila-text placeholder:text-kaafila-muted/60 outline-none focus:border-kaafila-primary"
               />
             </div>
           </div>
@@ -243,8 +243,8 @@ export default function GroupsPage() {
                   }}
                   className={`rounded-xl px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wider transition ${
                     privacyTab === t.id
-                      ? 'bg-kaafila-yellow text-kaafila-bg font-bold'
-                      : 'border border-white/10 bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
+                      ? 'bg-kaafila-primary text-kaafila-dark font-bold'
+                      : 'border border-kaafila-border bg-kaafila-bg text-kaafila-muted hover:text-kaafila-text'
                   }`}
                 >
                   {t.label}
@@ -264,13 +264,13 @@ export default function GroupsPage() {
             {[1, 2, 3].map((idx) => (
               <div
                 key={idx}
-                className="h-80 animate-pulse rounded-2xl border border-white/10 bg-kaafila-surface/60"
+                className="h-80 animate-pulse rounded-2xl border border-kaafila-border bg-kaafila-surface/60"
               />
             ))}
           </div>
         ) : groups.length === 0 ? (
-          <div className="mt-8 rounded-2xl border border-white/10 bg-kaafila-surface p-10 text-center">
-            <Users className="mx-auto h-10 w-10 text-kaafila-yellow/60" />
+          <div className="mt-8 rounded-2xl border border-kaafila-border bg-kaafila-surface p-10 text-center">
+            <Users className="mx-auto h-10 w-10 text-kaafila-accent/60" />
             <h2 className="mt-3 font-display text-xl font-bold text-kaafila-text">
               No KAAFILA Groups Found
             </h2>
@@ -280,7 +280,7 @@ export default function GroupsPage() {
             <button
               type="button"
               onClick={openCreateModal}
-              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-bg"
+              className="mt-4 inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-kaafila-dark"
             >
               <Plus className="h-4 w-4" />
               Create Riding Group
@@ -297,7 +297,7 @@ export default function GroupsPage() {
               return (
                 <article
                   key={group._id}
-                  className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-kaafila-surface transition hover:border-kaafila-yellow/40"
+                  className="group flex flex-col overflow-hidden rounded-2xl border border-kaafila-border bg-kaafila-surface transition hover:border-kaafila-primary/40"
                 >
                   <Link
                     to={`/community/groups/${group.slug}`}
@@ -318,7 +318,7 @@ export default function GroupsPage() {
                         {meta.label}
                       </span>
                       {group.isDemo && (
-                        <span className="rounded-full border border-kaafila-yellow/40 bg-black/70 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-kaafila-yellow">
+                        <span className="rounded-full border border-kaafila-primary/40 bg-kaafila-dark/85 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-kaafila-primary">
                           Demo Group
                         </span>
                       )}
@@ -329,7 +329,7 @@ export default function GroupsPage() {
                     <div>
                       <Link
                         to={`/community/groups/${group.slug}`}
-                        className="block font-display text-2xl font-bold text-kaafila-text group-hover:text-kaafila-yellow transition"
+                        className="block font-display text-2xl font-bold text-kaafila-text group-hover:text-kaafila-accent transition"
                       >
                         {group.name}
                       </Link>
@@ -337,17 +337,17 @@ export default function GroupsPage() {
                       <div className="mt-2 flex flex-wrap gap-3 text-xs text-kaafila-muted">
                         {group.destination && (
                           <span className="inline-flex items-center gap-1">
-                            <MapPin className="h-3.5 w-3.5 text-kaafila-yellow" />
+                            <MapPin className="h-3.5 w-3.5 text-kaafila-accent" />
                             {group.destination}
                           </span>
                         )}
                         <span className="inline-flex items-center gap-1">
-                          <Users className="h-3.5 w-3.5 text-kaafila-yellow" />
+                          <Users className="h-3.5 w-3.5 text-kaafila-accent" />
                           {group.memberCount} / {group.maxMembers} riders
                         </span>
                         {group.startDate && (
                           <span className="inline-flex items-center gap-1">
-                            <Calendar className="h-3.5 w-3.5 text-kaafila-yellow" />
+                            <Calendar className="h-3.5 w-3.5 text-kaafila-accent" />
                             {new Date(group.startDate).toLocaleDateString()}
                           </span>
                         )}
@@ -360,22 +360,22 @@ export default function GroupsPage() {
                       )}
                     </div>
 
-                    <div className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4">
+                    <div className="mt-5 flex items-center gap-2 border-t border-kaafila-border pt-4">
                       <Link
                         to={`/community/groups/${group.slug}`}
-                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-white/15 bg-kaafila-bg px-3 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-yellow/40 transition"
+                        className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-kaafila-border bg-kaafila-bg px-3 py-2 text-xs font-semibold text-kaafila-text hover:border-kaafila-primary/40 transition"
                       >
                         <span>{membershipStatus === 'active' ? 'Open Chat' : 'View Group'}</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
 
                       {membershipStatus === 'active' ? (
-                        <span className="inline-flex items-center gap-1 rounded-xl border border-emerald-500/35 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-300">
+                        <span className="inline-flex items-center gap-1 rounded-xl border border-emerald-500/35 bg-emerald-500/10 px-3 py-2 text-xs font-semibold text-emerald-700">
                           <Check className="h-3.5 w-3.5" />
                           Joined
                         </span>
                       ) : membershipStatus === 'pending_request' ? (
-                        <span className="inline-flex items-center gap-1 rounded-xl border border-kaafila-yellow/35 bg-kaafila-yellow/10 px-3 py-2 text-xs font-semibold text-kaafila-yellow">
+                        <span className="inline-flex items-center gap-1 rounded-xl border border-kaafila-primary/35 bg-kaafila-primary/10 px-3 py-2 text-xs font-semibold text-kaafila-accent">
                           <Clock className="h-3.5 w-3.5" />
                           Pending
                         </span>
@@ -384,7 +384,7 @@ export default function GroupsPage() {
                           type="button"
                           disabled={isBusy}
                           onClick={() => handleJoinAction(group)}
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-3.5 py-2 text-xs font-bold text-kaafila-bg hover:bg-emerald-400 transition disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-emerald-500 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-400 transition disabled:opacity-50"
                         >
                           {isBusy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Accept Invite'}
                         </button>
@@ -393,7 +393,7 @@ export default function GroupsPage() {
                           type="button"
                           disabled={isBusy}
                           onClick={() => handleJoinAction(group)}
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-yellow px-3.5 py-2 text-xs font-bold text-kaafila-bg hover:bg-kaafila-yellowHover transition disabled:opacity-50"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-kaafila-primary px-3.5 py-2 text-xs font-bold text-kaafila-dark hover:bg-kaafila-primary-hover transition disabled:opacity-50"
                         >
                           {isBusy ? (
                             <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -419,7 +419,7 @@ export default function GroupsPage() {
               type="button"
               disabled={page <= 1}
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
+              className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
             >
               Previous
             </button>
@@ -430,7 +430,7 @@ export default function GroupsPage() {
               type="button"
               disabled={page >= pagination.totalPages}
               onClick={() => setPage((p) => p + 1)}
-              className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
+              className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-text disabled:opacity-40"
             >
               Next
             </button>
@@ -445,8 +445,8 @@ export default function GroupsPage() {
           role="dialog"
           aria-modal="true"
         >
-          <div className="w-full max-w-xl rounded-2xl border border-kaafila-yellow/35 bg-kaafila-surface p-6 shadow-card">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="w-full max-w-xl rounded-2xl border border-kaafila-primary/35 bg-kaafila-surface p-6 shadow-card">
+            <div className="flex items-center justify-between border-b border-kaafila-border pb-4">
               <div>
                 <h2 className="font-display text-2xl font-bold text-kaafila-text">
                   Create a KAAFILA Group
@@ -476,7 +476,7 @@ export default function GroupsPage() {
                   value={form.name}
                   onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder="e.g. Zanskar Valley July Convoy"
-                  className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                  className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                 />
               </div>
 
@@ -490,7 +490,7 @@ export default function GroupsPage() {
                     value={form.destination}
                     onChange={(e) => setForm((f) => ({ ...f, destination: e.target.value }))}
                     placeholder="e.g. Leh - Hanle - Umling La"
-                    className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                    className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                   />
                 </div>
                 <div>
@@ -500,7 +500,7 @@ export default function GroupsPage() {
                   <select
                     value={form.privacy}
                     onChange={(e) => setForm((f) => ({ ...f, privacy: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                    className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                   >
                     <option value="public">Public (Anyone can join)</option>
                     <option value="private">Private (Requires approval)</option>
@@ -518,7 +518,7 @@ export default function GroupsPage() {
                     type="date"
                     value={form.startDate}
                     onChange={(e) => setForm((f) => ({ ...f, startDate: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                    className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                   />
                 </div>
                 <div>
@@ -531,7 +531,7 @@ export default function GroupsPage() {
                     max={500}
                     value={form.maxMembers}
                     onChange={(e) => setForm((f) => ({ ...f, maxMembers: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                    className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                   />
                 </div>
               </div>
@@ -544,7 +544,7 @@ export default function GroupsPage() {
                   <select
                     value={form.rideId}
                     onChange={(e) => setForm((f) => ({ ...f, rideId: e.target.value }))}
-                    className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                    className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                   >
                     <option value="">None (Independent Rider Group)</option>
                     {ridesOptions.map((r) => (
@@ -565,7 +565,7 @@ export default function GroupsPage() {
                   value={form.description}
                   onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
                   placeholder="Share pace guidelines, riding dates, bike readiness expectations..."
-                  className="w-full rounded-xl border border-white/10 bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-yellow"
+                  className="w-full rounded-xl border border-kaafila-border bg-kaafila-bg px-3.5 py-2.5 text-sm text-kaafila-text outline-none focus:border-kaafila-primary"
                 />
               </div>
 
@@ -575,18 +575,18 @@ export default function GroupsPage() {
                 onChange={(url) => setForm((f) => ({ ...f, coverImageUrl: url }))}
               />
 
-              <div className="flex items-center justify-end gap-3 border-t border-white/10 pt-4">
+              <div className="flex items-center justify-end gap-3 border-t border-kaafila-border pt-4">
                 <button
                   type="button"
                   onClick={() => setShowCreate(false)}
-                  className="rounded-xl border border-white/15 px-4 py-2 text-xs font-semibold text-kaafila-muted hover:text-kaafila-text"
+                  className="rounded-xl border border-kaafila-border px-4 py-2 text-xs font-semibold text-kaafila-muted hover:text-kaafila-text"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={creating}
-                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-yellow px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-bg hover:bg-kaafila-yellowHover disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-xl bg-kaafila-primary px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-kaafila-dark hover:bg-kaafila-primary-hover disabled:opacity-50"
                 >
                   {creating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Plus className="h-4 w-4" />}
                   {creating ? 'Creating...' : 'Create Group'}
