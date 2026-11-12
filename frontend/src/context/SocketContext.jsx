@@ -47,7 +47,16 @@ export function SocketProvider({ children }) {
 
     refreshUnreadNotifications();
 
-    const s = io('/', {
+    const configuredSocketUrl = import.meta.env.VITE_SOCKET_URL?.trim();
+    if (import.meta.env.PROD && !configuredSocketUrl) {
+      console.error('[KAAFILA Socket.IO] VITE_SOCKET_URL is not configured for production.');
+      setSocket(null);
+      setConnected(false);
+      return undefined;
+    }
+
+    const socketUrl = configuredSocketUrl || '/';
+    const s = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling'],
     });
