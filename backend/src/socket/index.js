@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
-import jwt from 'jsonwebtoken';
 import { query, queryOne, transaction } from '../config/pg.js';
 import { env } from '../config/env.js';
+import { verifyToken } from '../middleware/auth.js';
 import { mapMessage, mapUser } from '../repositories/mappers.js';
 import { haversineMeters, isValidCoordPair } from '../utils/geo.js';
 import { createAndEmitNotification, setSocketIO } from '../utils/notify.js';
@@ -61,17 +61,20 @@ export function attachSocketServer(httpServer) {
         return next(new Error('Authentication required.'));
       }
 
-      const decoded = jwt.verify(authToken, env.jwtSecret);
+      const decoded = verifyToken(authToken);
       if (!isValidUuid(String(decoded.id || ''))) {
         return next(new Error('Invalid or expired socket token.'));
       }
 
       const userRow = await queryOne(
-        'SELECT id, full_name, avatar_url, role, is_active FROM users WHERE id = $1',
+        'SELECT id, full_name, avatar_url, role, is_active, token_version FROM users WHERE id = $1',
         [decoded.id]
       );
       if (!userRow || !userRow.is_active) {
         return next(new Error('Account not found or inactive.'));
+      }
+      if (Number(decoded.tv ?? 0) !== Number(userRow.token_version ?? 0)) {
+        return next(new Error('Session has been invalidated. Please log in again.'));
       }
 
       socket.user = mapUser(userRow, { includeEmail: false, includePhone: false });

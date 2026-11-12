@@ -1,10 +1,18 @@
+import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import { query, queryOne, transaction } from '../config/pg.js';
 import { signToken } from '../middleware/auth.js';
 import { getHydratedRiderProfile } from '../repositories/common.js';
 import { mapOrganisation, mapUser } from '../repositories/mappers.js';
-import { isValidHttpUrl } from '../utils/validators.js';
+import { sendPasswordResetEmail } from '../utils/emailAdapter.js';
+import { isValidHttpUrl, validatePassword } from '../utils/validators.js';
 import { toSlug, uniqueSlug } from '../utils/slugify.js';
+
+const PASSWORD_RESET_TTL_MINUTES = 15;
+
+function hashResetToken(rawToken) {
+  return crypto.createHash('sha256').update(String(rawToken)).digest('hex');
+}
 
 function parseLocationInput(locationInput, cityInput, stateInput, regionInput) {
   if (cityInput && stateInput && regionInput) {
@@ -57,10 +65,11 @@ export async function registerRider(req, res, next) {
       });
     }
 
-    if (password.length < 8) {
+    const passwordError = validatePassword(password);
+    if (passwordError) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 8 characters long.',
+        message: passwordError,
       });
     }
 
@@ -181,10 +190,11 @@ export async function registerOrganisation(req, res, next) {
       });
     }
 
-    if (password.length < 8) {
+    const passwordError = validatePassword(password);
+    if (passwordError) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 8 characters long.',
+        message: passwordError,
       });
     }
 
@@ -293,6 +303,11 @@ export async function login(req, res, next) {
       return res.status(400).json({ success: false, message: 'Email and password are required.' });
     }
 
+    const loginPasswordError = validatePassword(password, { requireMinLength: false });
+    if (loginPasswordError) {
+      return res.status(400).json({ success: false, message: loginPasswordError });
+    }
+
     const userRow = await queryOne('SELECT * FROM users WHERE LOWER(email) = LOWER($1)', [email.trim()]);
     if (!userRow) {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });
@@ -319,7 +334,11 @@ export async function login(req, res, next) {
       [userRow.id]
     );
     const userDto = mapUser(updatedUserRow || userRow, { includeEmail: true, includePhone: true });
-    const token = signToken(userDto);
+    const token = signToken({
+      id: userDto.id,
+      role: userDto.role,
+      tokenVersion: (updatedUserRow || userRow).token_version ?? 0,
+    });
 
     let riderProfile = null;
     let organisation = null;
@@ -365,6 +384,204 @@ export async function getMe(req, res, next) {
         riderProfile,
         organisation,
       },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function logout(req, res, next) {
+  try {
+    await query(
+      'UPDATE users SET token_version = token_version + 1 WHERE id = $1',
+      [req.user.id]
+    );
+    return res.json({
+      success: true,
+      message: 'Logged out successfully.',
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function changePassword(req, res, next) {
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    const currentErr = validatePassword(currentPassword, { requireMinLength: false });
+    if (currentErr) {
+      return res.status(400).json({ success: false, message: 'Current password is required.' });
+    }
+
+    const newPassErr = validatePassword(newPassword);
+    if (newPassErr) {
+      return res.status(400).json({ success: false, message: newPassErr });
+    }
+
+    if (confirmPassword !== undefined && newPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password and confirm password do not match.',
+      });
+    }
+
+    if (currentPassword === newPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'New password must be different from your current password.',
+      });
+    }
+
+    const userRow = await queryOne(
+      'SELECT id, role, password_hash, is_active FROM users WHERE id = $1',
+      [req.user.id]
+    );
+    if (!userRow || !userRow.is_active) {
+      return res.status(401).json({ success: false, message: 'Account not found or inactive.' });
+    }
+
+    const isMatch = await bcrypt.compare(currentPassword, userRow.password_hash);
+    if (!isMatch) {
+      return res.status(401).json({ success: false, message: 'Current password is incorrect.' });
+    }
+
+    const newHash = await bcrypt.hash(newPassword, 12);
+    const updated = await queryOne(
+      `UPDATE users
+       SET password_hash = $1, token_version = token_version + 1
+       WHERE id = $2
+       RETURNING id, role, token_version`,
+      [newHash, userRow.id]
+    );
+
+    const token = signToken({
+      id: updated.id,
+      role: updated.role,
+      tokenVersion: updated.token_version,
+    });
+
+    return res.json({
+      success: true,
+      message: 'Password updated successfully. All previous sessions have been invalidated.',
+      data: { token },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function forgotPassword(req, res, next) {
+  try {
+    const { email } = req.body;
+    if (typeof email !== 'string' || !email.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email address is required.',
+      });
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+    const userRow = await queryOne(
+      'SELECT id, email, is_active FROM users WHERE LOWER(email) = LOWER($1)',
+      [normalizedEmail]
+    );
+
+    if (userRow && userRow.is_active) {
+      const rawToken = crypto.randomBytes(32).toString('hex');
+      const tokenHash = hashResetToken(rawToken);
+      const expiresAt = new Date(Date.now() + PASSWORD_RESET_TTL_MINUTES * 60 * 1000);
+
+      await transaction(async (tx) => {
+        await tx.query(
+          'UPDATE password_reset_tokens SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL',
+          [userRow.id]
+        );
+        await tx.query(
+          `INSERT INTO password_reset_tokens (user_id, token_hash, expires_at)
+           VALUES ($1, $2, $3)`,
+          [userRow.id, tokenHash, expiresAt.toISOString()]
+        );
+      });
+
+      await sendPasswordResetEmail({
+        to: userRow.email,
+        resetToken: rawToken,
+        expiresInMinutes: PASSWORD_RESET_TTL_MINUTES,
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: 'If an account with that email exists, a password reset link has been sent.',
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function resetPassword(req, res, next) {
+  try {
+    const { token, password, newPassword, confirmPassword } = req.body;
+    const resolvedPassword = password ?? newPassword;
+
+    if (typeof token !== 'string' || !token.trim()) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password reset token is required.',
+      });
+    }
+
+    const passwordErr = validatePassword(resolvedPassword);
+    if (passwordErr) {
+      return res.status(400).json({
+        success: false,
+        message: passwordErr,
+      });
+    }
+
+    if (confirmPassword !== undefined && resolvedPassword !== confirmPassword) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password and confirm password do not match.',
+      });
+    }
+
+    const tokenHash = hashResetToken(token.trim());
+    const newHash = await bcrypt.hash(resolvedPassword, 12);
+
+    const outcome = await transaction(async (tx) => {
+      const tokenRow = await tx.queryOne(
+        'SELECT id, user_id, expires_at, used_at FROM password_reset_tokens WHERE token_hash = $1 FOR UPDATE',
+        [tokenHash]
+      );
+
+      if (!tokenRow || tokenRow.used_at || new Date(tokenRow.expires_at) <= new Date()) {
+        return { ok: false };
+      }
+
+      await tx.query(
+        'UPDATE password_reset_tokens SET used_at = NOW() WHERE id = $1',
+        [tokenRow.id]
+      );
+      await tx.query(
+        'UPDATE users SET password_hash = $1, token_version = token_version + 1 WHERE id = $2',
+        [newHash, tokenRow.user_id]
+      );
+
+      return { ok: true };
+    });
+
+    if (!outcome.ok) {
+      return res.status(400).json({
+        success: false,
+        message: 'Password reset token is invalid or has expired.',
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: 'Password has been reset successfully. Please log in with your new password.',
     });
   } catch (err) {
     next(err);
