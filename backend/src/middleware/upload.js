@@ -5,6 +5,7 @@ import multer from 'multer';
 import { createClient } from '@supabase/supabase-js';
 import { fileURLToPath } from 'url';
 import { env } from '../config/env.js';
+import { getPostgresMode } from '../config/pg.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -21,6 +22,9 @@ const ALLOWED_MIME_TO_EXT = {
 export const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
 export function isSupabaseStorageConfigured() {
+  if (getPostgresMode() === 'pglite' || env.usePglite) {
+    return false;
+  }
   return Boolean(env.supabaseUrl && env.supabaseServiceRoleKey);
 }
 
