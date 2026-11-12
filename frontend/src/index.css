@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #141615;
+    color: #E7E1D2;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Subtle Himalayan geometric border motif */
+.himalayan-pattern-bg {
+  background-image: radial-gradient(rgba(243, 199, 68, 0.06) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(117, 85, 60, 0.08) 25%, transparent 25%);
+  background-size: 28px 28px, 56px 56px;
+}
+
+/* Ethnic Himalayan woven band divider */
+.himalayan-divider {
+  height: 6px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    #F3C744 0px,
+    #F3C744 12px,
+    transparent 12px,
+    transparent 16px,
+    #75553C 16px,
+    #75553C 28px,
+    transparent 28px,
+    transparent 32px
+  );
+  opacity: 0.55;
+}
+
+.topographic-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q 30 20, 60 60 T 120 60' fill='none' stroke='%23F3C744' stroke-opacity='0.06' stroke-width='1'/%3E%3Cpath d='M0 85 Q 30 45, 60 85 T 120 85' fill='none' stroke='%2375553C' stroke-opacity='0.08' stroke-width='1'/%3E%3Cpath d='M0 35 Q 30 -5, 60 35 T 120 35' fill='none' stroke='%23F3C744' stroke-opacity='0.04' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* Dark theme Leaflet overrides */
+.leaflet-container {
+  background-color: #141615 !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  z-index: 1;
+}
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 20 !important;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background-color: #1b1e1c !important;
+  color: #e7e1d2 !important;
+  border: 1px solid rgba(243, 199, 68, 0.35);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.65) !important;
+}
+.leaflet-control-zoom a {
+  background-color: #1b1e1c !important;
+  color: #f3c744 !important;
+  border-color: rgba(243, 199, 68, 0.25) !important;
+}
+.leaflet-control-zoom a:hover {
+  background-color: #262a27 !important;
+}
+.leaflet-control-attribution {
+  background: rgba(20, 22, 21, 0.78) !important;
+  color: rgba(231, 225, 210, 0.65) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a {
+  color: #f3c744 !important;
+}
+
+
