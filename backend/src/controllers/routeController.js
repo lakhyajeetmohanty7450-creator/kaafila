@@ -1,3 +1,4 @@
+import { env } from '../config/env.js';
 import { query, queryOne, transaction } from '../config/pg.js';
 import { findRideWithOrgBySlugOrId } from '../repositories/common.js';
 import {
@@ -6,7 +7,7 @@ import {
   mapOrganisation,
   mapRide,
 } from '../repositories/mappers.js';
-import { computeLineStringDistanceKm, normalizeLngLat } from '../utils/geo.js';
+import { computeLineStringDistanceKm, isValidCoordPair, normalizeLngLat } from '../utils/geo.js';
 import { isValidUuid } from '../utils/validators.js';
 
 const ACTIVE_RIDE_STATUSES = ['published', 'upcoming', 'ongoing', 'completed'];
@@ -654,6 +655,269 @@ export async function getOrganisationRideTrackingOverview(req, res, next) {
           completedSessionsCount: completedRes.rows.length,
           totalVerifiedDistanceLoggedKm,
         },
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+function formatDurationText(totalSeconds) {
+  const secs = Math.max(0, Math.round(Number(totalSeconds) || 0));
+  const hours = Math.floor(secs / 3600);
+  const mins = Math.round((secs % 3600) / 60);
+  if (hours > 0 && mins > 0) return `${hours}h ${mins}m`;
+  if (hours > 0) return `${hours}h`;
+  return `${Math.max(1, mins)}m`;
+}
+
+function flattenRouteGeometryCoords(geometry) {
+  if (!geometry || !Array.isArray(geometry.coordinates)) return [];
+  if (geometry.type === 'LineString') {
+    return geometry.coordinates.filter((pt) => Array.isArray(pt) && pt.length >= 2);
+  }
+  if (geometry.type === 'MultiLineString') {
+    const merged = [];
+    for (const segment of geometry.coordinates) {
+      if (!Array.isArray(segment)) continue;
+      for (const pt of segment) {
+        if (!Array.isArray(pt) || pt.length < 2) continue;
+        const prev = merged[merged.length - 1];
+        if (!prev || prev[0] !== pt[0] || prev[1] !== pt[1]) {
+          merged.push([Number(pt[0]), Number(pt[1])]);
+        }
+      }
+    }
+    return merged;
+  }
+  return [];
+}
+
+function handleGeoapifyUpstreamError(res, status, fallbackMessage) {
+  if (status === 401 || status === 403) {
+    return res.status(502).json({
+      success: false,
+      message: 'Map provider authentication failed. Please check server configuration.',
+    });
+  }
+  if (status === 429) {
+    return res.status(429).json({
+      success: false,
+      message: 'Map provider rate limit reached. Please retry shortly.',
+    });
+  }
+  return res.status(502).json({
+    success: false,
+    message: fallbackMessage,
+  });
+}
+
+export async function geocodeLocation(req, res, next) {
+  try {
+    const rawText = String(req.query.text || '')
+      .replace(/[\u0000-\u001F\u007F]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    if (rawText.length < 2 || rawText.length > 160) {
+      return res.status(400).json({
+        success: false,
+        message: 'Search query must be between 2 and 160 characters.',
+      });
+    }
+
+    const apiKey = String(env.geoapifyApiKey || '').trim();
+    if (!apiKey) {
+      return res.status(503).json({
+        success: false,
+        message: 'Geocoding service is not configured on the server.',
+      });
+    }
+
+    const params = new URLSearchParams({
+      text: rawText,
+      filter: 'countrycode:in',
+      limit: '7',
+      format: 'json',
+      apiKey,
+    });
+
+    let upstreamRes;
+    try {
+      upstreamRes = await globalThis.fetch(
+        `https://api.geoapify.com/v1/geocode/autocomplete?${params.toString()}`,
+        { signal: AbortSignal.timeout(8000) }
+      );
+    } catch (fetchErr) {
+      if (fetchErr?.name === 'TimeoutError' || fetchErr?.name === 'AbortError') {
+        return res.status(504).json({
+          success: false,
+          message: 'Location search timed out. Please try again.',
+        });
+      }
+      return res.status(502).json({
+        success: false,
+        message: 'Unable to reach location search service.',
+      });
+    }
+
+    if (!upstreamRes.ok) {
+      return handleGeoapifyUpstreamError(res, upstreamRes.status, 'Location search service returned an error.');
+    }
+
+    const payload = await upstreamRes.json();
+    const rawResults = Array.isArray(payload?.results) ? payload.results : [];
+
+    const results = rawResults
+      .filter((item) => isValidCoordPair(Number(item.lon), Number(item.lat)))
+      .map((item, idx) => ({
+        id: item.place_id || `${item.lat}_${item.lon}_${idx}`,
+        name:
+          item.name ||
+          item.address_line1 ||
+          item.city ||
+          item.town ||
+          item.village ||
+          item.state ||
+          item.formatted,
+        formatted: item.formatted || item.address_line1 || '',
+        city: item.city || item.town || item.village || '',
+        state: item.state || '',
+        country: item.country || 'India',
+        lat: Number(Number(item.lat).toFixed(6)),
+        lng: Number(Number(item.lon).toFixed(6)),
+        resultType: item.result_type || '',
+      }));
+
+    return res.json({
+      success: true,
+      data: {
+        query: rawText,
+        results,
+      },
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
+export async function calculateMotorcycleRoute(req, res, next) {
+  try {
+    const rawWaypoints = req.body?.waypoints;
+    if (!Array.isArray(rawWaypoints) || rawWaypoints.length < 2 || rawWaypoints.length > 25) {
+      return res.status(400).json({
+        success: false,
+        message: 'Provide between 2 and 25 ordered waypoints with valid lat and lng.',
+      });
+    }
+
+    const normalizedWaypoints = [];
+    for (let i = 0; i < rawWaypoints.length; i += 1) {
+      const wp = rawWaypoints[i];
+      const lat = Number(wp?.lat ?? wp?.latitude);
+      const lng = Number(wp?.lng ?? wp?.lon ?? wp?.longitude);
+      if (!isValidCoordPair(lng, lat)) {
+        return res.status(400).json({
+          success: false,
+          message: `Waypoint #${i + 1} has invalid latitude or longitude.`,
+        });
+      }
+      normalizedWaypoints.push({
+        lat: Number(lat.toFixed(6)),
+        lng: Number(lng.toFixed(6)),
+        label: wp?.label ? String(wp.label).trim().slice(0, 120) : `Waypoint ${i + 1}`,
+      });
+    }
+
+    const apiKey = String(env.geoapifyApiKey || '').trim();
+    if (!apiKey) {
+      return res.status(503).json({
+        success: false,
+        message: 'Routing service is not configured on the server.',
+      });
+    }
+
+    const waypointParam = normalizedWaypoints.map((w) => `${w.lat},${w.lng}`).join('|');
+    const params = new URLSearchParams({
+      waypoints: waypointParam,
+      mode: 'motorcycle',
+      units: 'metric',
+      apiKey,
+    });
+
+    let upstreamRes;
+    try {
+      upstreamRes = await globalThis.fetch(
+        `https://api.geoapify.com/v1/routing?${params.toString()}`,
+        { signal: AbortSignal.timeout(12000) }
+      );
+    } catch (fetchErr) {
+      if (fetchErr?.name === 'TimeoutError' || fetchErr?.name === 'AbortError') {
+        return res.status(504).json({
+          success: false,
+          message: 'Motorcycle route calculation timed out. Please try again.',
+        });
+      }
+      return res.status(502).json({
+        success: false,
+        message: 'Unable to reach motorcycle routing service.',
+      });
+    }
+
+    if (!upstreamRes.ok) {
+      return handleGeoapifyUpstreamError(res, upstreamRes.status, 'Motorcycle routing service returned an error.');
+    }
+
+    const payload = await upstreamRes.json();
+    const feature = Array.isArray(payload?.features) ? payload.features[0] : null;
+    const coords = flattenRouteGeometryCoords(feature?.geometry);
+    if (!feature || coords.length < 2) {
+      return res.status(422).json({
+        success: false,
+        message: 'No drivable motorcycle route could be found between the selected waypoints.',
+      });
+    }
+
+    const props = feature.properties || {};
+    const distanceMeters = Number(props.distance || 0);
+    const distanceKm =
+      distanceMeters > 0
+        ? Number((distanceMeters / 1000).toFixed(2))
+        : computeLineStringDistanceKm(coords);
+    const durationSeconds = Math.max(0, Math.round(Number(props.time || 0)));
+
+    const instructions = [];
+    if (Array.isArray(props.legs)) {
+      props.legs.forEach((leg, legIndex) => {
+        if (!Array.isArray(leg?.steps)) return;
+        leg.steps.forEach((step) => {
+          const text = step?.instruction?.text;
+          if (!text) return;
+          instructions.push({
+            legIndex,
+            text,
+            type: step?.instruction?.type || '',
+            distanceMeters: Math.round(Number(step?.distance || 0)),
+            timeSeconds: Math.round(Number(step?.time || 0)),
+          });
+        });
+      });
+    }
+
+    return res.json({
+      success: true,
+      data: {
+        mode: 'motorcycle',
+        units: 'metric',
+        waypoints: normalizedWaypoints,
+        geometry: {
+          type: 'LineString',
+          coordinates: coords,
+        },
+        distanceKm,
+        durationSeconds,
+        durationText: formatDurationText(durationSeconds),
+        instructions,
       },
     });
   } catch (err) {

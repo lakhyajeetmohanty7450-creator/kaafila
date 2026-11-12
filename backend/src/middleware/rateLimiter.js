@@ -34,3 +34,14 @@ export const messagingLimiter = rateLimit({
   },
 });
 
+export const mapsProxyLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: env.nodeEnv === 'production' ? 45 : 90,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Map search and routing rate limit exceeded. Please wait a moment and try again.',
+  },
+});
+

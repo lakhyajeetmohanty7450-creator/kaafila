@@ -15,15 +15,20 @@ const CHECKPOINT_STYLE = {
 };
 
 function getTileConfig() {
-  const rawUrl =
-    import.meta.env.VITE_MAP_TILE_URL ||
-    'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-  const apiKey = import.meta.env.VITE_MAP_API_KEY || '';
-  const url = apiKey ? rawUrl.replace('{apiKey}', apiKey) : rawUrl;
+  const apiKey = String(import.meta.env.VITE_MAP_API_KEY || '').trim();
+  const customUrl = String(import.meta.env.VITE_MAP_TILE_URL || '').trim();
+  const geoapifyUrl = apiKey
+    ? `https://maps.geoapify.com/v1/tile/dark-matter/{z}/{x}/{y}.png?apiKey=${encodeURIComponent(apiKey)}`
+    : '';
+  const url = customUrl
+    ? apiKey
+      ? customUrl.replace('{apiKey}', encodeURIComponent(apiKey))
+      : customUrl
+    : geoapifyUrl;
   const attribution =
     import.meta.env.VITE_MAP_ATTRIBUTION ||
-    '&copy; OpenStreetMap contributors &copy; CARTO';
-  return { url, attribution };
+    'Powered by <a href="https://www.geoapify.com/" target="_blank" rel="noopener noreferrer">Geoapify</a> | &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors';
+  return { url, attribution, hasTileSource: Boolean(url) };
 }
 
 function escapeHtml(str) {
@@ -109,25 +114,29 @@ export default function KaafilaMap({
       scrollWheelZoom: true,
     });
 
-    const { url, attribution } = getTileConfig();
+    const { url, attribution, hasTileSource } = getTileConfig();
     let loadedTiles = 0;
     let errorTiles = 0;
 
-    const tileLayer = L.tileLayer(url, {
-      attribution,
-      maxZoom: 18,
-    });
-    tileLayer.on('tileload', () => {
-      loadedTiles += 1;
-      setTileWarning(false);
-    });
-    tileLayer.on('tileerror', () => {
-      errorTiles += 1;
-      if (loadedTiles === 0 && errorTiles >= 4) {
-        setTileWarning(true);
-      }
-    });
-    tileLayer.addTo(map);
+    if (!hasTileSource) {
+      setTileWarning(true);
+    } else {
+      const tileLayer = L.tileLayer(url, {
+        attribution,
+        maxZoom: 18,
+      });
+      tileLayer.on('tileload', () => {
+        loadedTiles += 1;
+        setTileWarning(false);
+      });
+      tileLayer.on('tileerror', () => {
+        errorTiles += 1;
+        if (loadedTiles === 0 && errorTiles >= 4) {
+          setTileWarning(true);
+        }
+      });
+      tileLayer.addTo(map);
+    }
 
     const featureGroup = L.layerGroup().addTo(map);
     mapRef.current = map;

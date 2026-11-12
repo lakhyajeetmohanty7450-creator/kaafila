@@ -1,19 +1,95 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   ArrowDown,
   ArrowUp,
+  Clock,
   Compass,
   Loader2,
   MapPin,
+  Navigation,
   Plus,
   Radio,
   Route as RouteIcon,
   Save,
+  Search,
   Trash2,
 } from 'lucide-react';
 import api from '../api/client';
 import { useToast } from '../context/ToastContext';
 import KaafilaMap from './KaafilaMap';
+
+function LocationSearchInput({ placeholder = 'Search location in India...', onSelect }) {
+  const [queryText, setQueryText] = useState('');
+  const [results, setResults] = useState([]);
+  const [searching, setSearching] = useState(false);
+  const [open, setOpen] = useState(false);
+  const timerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(timerRef.current), []);
+
+  const handleChange = (val) => {
+    setQueryText(val);
+    clearTimeout(timerRef.current);
+    const trimmed = val.trim();
+    if (trimmed.length < 2) {
+      setResults([]);
+      setOpen(false);
+      return;
+    }
+    timerRef.current = setTimeout(async () => {
+      setSearching(true);
+      try {
+        const { data } = await api.get('/maps/geocode', { params: { text: trimmed } });
+        setResults(data?.data?.results || []);
+        setOpen(true);
+      } catch {
+        setResults([]);
+      } finally {
+        setSearching(false);
+      }
+    }, 320);
+  };
+
+  const handlePick = (item) => {
+    setQueryText(item.name || item.formatted);
+    setOpen(false);
+    setResults([]);
+    onSelect(item);
+  };
+
+  return (
+    <div className="relative">
+      <div className="relative flex items-center">
+        <Search className="pointer-events-none absolute left-3 h-3.5 w-3.5 text-kaafila-muted" />
+        <input
+          type="text"
+          value={queryText}
+          onChange={(e) => handleChange(e.target.value)}
+          onFocus={() => { if (results.length > 0) setOpen(true); }}
+          placeholder={placeholder}
+          className="w-full rounded-xl border border-white/15 bg-kaafila-bg py-2 pl-8 pr-8 text-xs text-kaafila-text outline-none focus:border-kaafila-yellow"
+        />
+        {searching && <Loader2 className="absolute right-3 h-3.5 w-3.5 animate-spin text-kaafila-yellow" />}
+      </div>
+      {open && results.length > 0 && (
+        <ul className="absolute z-40 mt-1 max-h-48 w-full overflow-y-auto rounded-xl border border-kaafila-yellow/35 bg-kaafila-surface p-1 shadow-card">
+          {results.map((item) => (
+            <li key={item.id}>
+              <button
+                type="button"
+                onClick={() => handlePick(item)}
+                className="w-full rounded-lg px-3 py-2 text-left text-xs hover:bg-kaafila-yellow/15"
+              >
+                <p className="font-semibold text-kaafila-text">{item.name}</p>
+                <p className="truncate text-[10px] text-kaafila-muted">{item.formatted}</p>
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 const CHECKPOINT_TYPES = [
   { value: 'start', label: 'Start Point' },
@@ -30,6 +106,7 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
   const [selectedRideId, setSelectedRideId] = useState(expeditions[0]?._id || '');
   const [loading, setLoading] = useState(false);
   const [savingRoute, setSavingRoute] = useState(false);
+  const [calculatingRoute, setCalculatingRoute] = useState(false);
   const [savingCp, setSavingCp] = useState(false);
 
   const [routeState, setRouteState] = useState({
@@ -42,6 +119,8 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
     routeDescription: '',
     geometryCoords: [],
     calculatedDistanceKm: 0,
+    estimatedDurationText: '',
+    previewPendingSave: false,
   });
 
   const [checkpoints, setCheckpoints] = useState([]);
@@ -83,6 +162,8 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
         routeDescription: route?.routeDescription || '',
         geometryCoords: route?.geometry?.coordinates || [],
         calculatedDistanceKm: route?.calculatedDistanceKm || 0,
+        estimatedDurationText: '',
+        previewPendingSave: false,
       });
       setCheckpoints(cps || []);
       setTrackingOverview(trackRes.data?.data || null);
@@ -144,8 +225,68 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
       return;
     }
     const coords = checkpoints.map((c) => c.coordinates);
-    setRouteState((prev) => ({ ...prev, geometryCoords: coords }));
+    setRouteState((prev) => ({
+      ...prev,
+      geometryCoords: coords,
+      estimatedDurationText: '',
+      previewPendingSave: true,
+    }));
     showToast('Built LineString from checkpoints. Click "Save Route Geometry" to persist.', 'info');
+  };
+
+  const handleCalculateMotorcycleRoute = async () => {
+    const waypoints = [];
+    const pushWaypoint = (latVal, lngVal, label) => {
+      const lat = Number(latVal);
+      const lng = Number(lngVal);
+      if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+      const prev = waypoints[waypoints.length - 1];
+      if (prev && Math.abs(prev.lat - lat) < 0.0001 && Math.abs(prev.lng - lng) < 0.0001) return;
+      waypoints.push({ lat, lng, label });
+    };
+
+    if (routeState.startLat !== '' && routeState.startLng !== '') {
+      pushWaypoint(routeState.startLat, routeState.startLng, routeState.startLabel || 'Start');
+    }
+    checkpoints.forEach((cp) => {
+      if (Array.isArray(cp.coordinates) && cp.coordinates.length >= 2) {
+        pushWaypoint(cp.coordinates[1], cp.coordinates[0], cp.name);
+      }
+    });
+    if (routeState.endLat !== '' && routeState.endLng !== '') {
+      pushWaypoint(routeState.endLat, routeState.endLng, routeState.endLabel || 'Destination');
+    }
+
+    if (waypoints.length < 2) {
+      showToast('Set at least 2 points (start, checkpoints, or destination) to calculate a motorcycle route.', 'error');
+      return;
+    }
+
+    setCalculatingRoute(true);
+    try {
+      const { data } = await api.post('/maps/route', { waypoints });
+      const routeResult = data?.data;
+      const coords = routeResult?.geometry?.coordinates || [];
+      if (coords.length < 2) {
+        showToast('No road geometry returned for those waypoints.', 'error');
+        return;
+      }
+      setRouteState((prev) => ({
+        ...prev,
+        geometryCoords: coords,
+        calculatedDistanceKm: routeResult.distanceKm || prev.calculatedDistanceKm,
+        estimatedDurationText: routeResult.durationText || '',
+        previewPendingSave: true,
+      }));
+      showToast(
+        `Motorcycle route ready (${routeResult.distanceKm} km${routeResult.durationText ? `, ~${routeResult.durationText}` : ''}). Review map & click "Save Route Geometry" to persist.`,
+        'success'
+      );
+    } catch (err) {
+      showToast(err.response?.data?.message || 'Unable to calculate motorcycle route.', 'error');
+    } finally {
+      setCalculatingRoute(false);
+    }
   };
 
   const handleAddCheckpoint = async (e) => {
@@ -284,7 +425,20 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
           <h3 className="font-display text-xl font-bold uppercase text-kaafila-text">
             Add Waypoint / Checkpoint
           </h3>
-          <form onSubmit={handleAddCheckpoint} className="mt-4 space-y-3">
+          <div className="mt-3">
+            <LocationSearchInput
+              placeholder="Search Indian place / pass for checkpoint..."
+              onSelect={(item) => {
+                setCpForm((p) => ({
+                  ...p,
+                  name: p.name || item.name || item.city || '',
+                  lat: String(item.lat),
+                  lng: String(item.lng),
+                }));
+              }}
+            />
+          </div>
+          <form onSubmit={handleAddCheckpoint} className="mt-3 space-y-3">
             <div className="grid gap-3 sm:grid-cols-2">
               <input
                 type="text"
@@ -422,12 +576,37 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
               <h3 className="font-display text-xl font-bold uppercase text-kaafila-text">
                 Route Endpoints &amp; Geometry
               </h3>
-              <span className="inline-flex items-center gap-1 font-mono text-xs text-kaafila-yellow">
-                <RouteIcon className="h-3.5 w-3.5" />
-                {routeState.calculatedDistanceKm || 0} km
-              </span>
+              <div className="flex items-center gap-3 font-mono text-xs text-kaafila-yellow">
+                <span className="inline-flex items-center gap-1">
+                  <RouteIcon className="h-3.5 w-3.5" />
+                  {routeState.calculatedDistanceKm || 0} km
+                </span>
+                {routeState.estimatedDurationText && (
+                  <span className="inline-flex items-center gap-1 text-emerald-300">
+                    <Clock className="h-3.5 w-3.5" />
+                    {routeState.estimatedDurationText}
+                  </span>
+                )}
+              </div>
             </div>
 
+            {routeState.previewPendingSave && (
+              <div className="rounded-xl border border-kaafila-yellow/40 bg-kaafila-yellow/10 px-3 py-2 text-[11px] text-kaafila-yellow">
+                Calculated route preview shown on map. Click <strong>Save Route Geometry</strong> below to persist changes.
+              </div>
+            )}
+
+            <LocationSearchInput
+              placeholder="Search start point in India (e.g. Leh, Manali)..."
+              onSelect={(item) => {
+                setRouteState((p) => ({
+                  ...p,
+                  startLabel: item.name || item.formatted || p.startLabel,
+                  startLat: String(item.lat),
+                  startLng: String(item.lng),
+                }));
+              }}
+            />
             <div className="grid gap-3 sm:grid-cols-3">
               <input
                 type="text"
@@ -454,6 +633,17 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
               />
             </div>
 
+            <LocationSearchInput
+              placeholder="Search destination in India (e.g. Hanle, Kaza)..."
+              onSelect={(item) => {
+                setRouteState((p) => ({
+                  ...p,
+                  endLabel: item.name || item.formatted || p.endLabel,
+                  endLat: String(item.lat),
+                  endLng: String(item.lng),
+                }));
+              }}
+            />
             <div className="grid gap-3 sm:grid-cols-3">
               <input
                 type="text"
@@ -489,6 +679,15 @@ export default function OrgRouteManagerPanel({ expeditions = [] }) {
             />
 
             <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                disabled={calculatingRoute}
+                onClick={handleCalculateMotorcycleRoute}
+                className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-400/45 bg-emerald-500/10 px-3.5 py-2 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20 disabled:opacity-50"
+              >
+                {calculatingRoute ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Navigation className="h-3.5 w-3.5" />}
+                Calculate Motorcycle Route
+              </button>
               <button
                 type="button"
                 onClick={handleBuildGeometryFromCheckpoints}

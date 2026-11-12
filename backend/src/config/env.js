@@ -21,6 +21,7 @@ export const env = {
   supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
   supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
   supabaseStorageBucket: process.env.SUPABASE_STORAGE_BUCKET || 'kaafila-images',
+  geoapifyApiKey: process.env.GEOAPIFY_API_KEY || '',
   jwtSecret: process.env.JWT_SECRET || 'kaafila_dev_only_secret_change_in_production',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
 };

@@ -3,6 +3,7 @@ import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import { io as ioClient } from '../../frontend/node_modules/socket.io-client/build/esm/index.js';
 import { createApp } from '../src/app.js';
+import { env } from '../src/config/env.js';
 import { attachSocketServer } from '../src/socket/index.js';
 import { connectPostgres, disconnectPostgres, runPostgresMigrations } from '../src/config/pg.js';
 import { seedDemoDataIfEmpty } from '../src/seed/seedData.js';
@@ -525,5 +526,163 @@ describe('KAAFILA Phase 4 — Maps, GPS Tracking, Live Convoy, Ranking & Leaderb
     assert.equal(achRes.status, 200);
     assert.ok(achBody.data.earnedCount >= 2);
     assert.ok(achBody.data.items.some((a) => a.code === 'CHECKPOINT_CHAMPION' && a.earned));
+  });
+
+  it('proxies Geoapify geocoding & motorcycle routing with auth, validation, rate-limit headers & safe key handling (mocked upstream)', async () => {
+    // 1. Unauthenticated requests rejected
+    const unauthGeo = await fetch(`${baseUrl}/maps/geocode?text=Leh`);
+    const unauthRoute = await fetch(`${baseUrl}/maps/route`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ waypoints: [{ lat: 34.15, lng: 77.57 }, { lat: 32.77, lng: 78.96 }] }),
+    });
+    assert.equal(unauthGeo.status, 401);
+    assert.equal(unauthRoute.status, 401);
+
+    // 2. Validation checks (short query, <2 waypoints, invalid lat/lng)
+    const badGeo = await fetch(`${baseUrl}/maps/geocode?text=a`, {
+      headers: { Authorization: `Bearer ${orgAToken}` },
+    });
+    assert.equal(badGeo.status, 400);
+
+    const badWaypoints = await fetch(`${baseUrl}/maps/route`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${orgAToken}` },
+      body: JSON.stringify({ waypoints: [{ lat: 34.15, lng: 77.57 }] }),
+    });
+    assert.equal(badWaypoints.status, 400);
+
+    const invalidCoord = await fetch(`${baseUrl}/maps/route`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${orgAToken}` },
+      body: JSON.stringify({ waypoints: [{ lat: 999, lng: 77.57 }, { lat: 32.77, lng: 78.96 }] }),
+    });
+    assert.equal(invalidCoord.status, 400);
+
+    const prevKey = env.geoapifyApiKey;
+    const origFetch = globalThis.fetch;
+    try {
+      // 3. Missing API key returns 503 safely
+      env.geoapifyApiKey = '';
+      const missingKeyRes = await origFetch(`${baseUrl}/maps/geocode?text=Leh%20Ladakh`, {
+        headers: { Authorization: `Bearer ${orgAToken}` },
+      });
+      assert.equal(missingKeyRes.status, 503);
+
+      // 4. Invalid upstream API key (401) returns 502 without leaking key
+      env.geoapifyApiKey = 'test_dummy_geoapify_key';
+      globalThis.fetch = async (url, opts) => {
+        if (String(url).startsWith('https://api.geoapify.com/')) {
+          return new Response(JSON.stringify({ error: 'Unauthorized' }), { status: 401 });
+        }
+        return origFetch(url, opts);
+      };
+      const badKeyRes = await origFetch(`${baseUrl}/maps/geocode?text=Leh%20Ladakh`, {
+        headers: { Authorization: `Bearer ${orgAToken}` },
+      });
+      assert.equal(badKeyRes.status, 502);
+      const badKeyText = await badKeyRes.text();
+      assert.equal(badKeyText.includes('test_dummy_geoapify_key'), false);
+
+      // 5. Mocked Geoapify geocoding & multi-checkpoint motorcycle routing
+      let capturedGeoUrl = '';
+      let capturedRouteUrl = '';
+      globalThis.fetch = async (url, opts) => {
+        const u = String(url);
+        if (u.startsWith('https://api.geoapify.com/v1/geocode/autocomplete')) {
+          capturedGeoUrl = u;
+          return new Response(
+            JSON.stringify({
+              results: [
+                {
+                  place_id: 'mock_leh',
+                  name: 'Leh',
+                  formatted: 'Leh, Ladakh, India',
+                  city: 'Leh',
+                  state: 'Ladakh',
+                  country: 'India',
+                  lat: 34.1526,
+                  lon: 77.5771,
+                  result_type: 'city',
+                },
+              ],
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        if (u.startsWith('https://api.geoapify.com/v1/routing')) {
+          capturedRouteUrl = u;
+          return new Response(
+            JSON.stringify({
+              features: [
+                {
+                  geometry: {
+                    type: 'MultiLineString',
+                    coordinates: [
+                      [
+                        [77.5771, 34.1526],
+                        [78.2, 33.4],
+                      ],
+                      [
+                        [78.2, 33.4],
+                        [78.96, 32.77],
+                      ],
+                    ],
+                  },
+                  properties: {
+                    distance: 254320,
+                    time: 21900,
+                    legs: [
+                      {
+                        steps: [
+                          { instruction: { text: 'Head southeast toward Upshi', type: 'StartAt' }, distance: 48000, time: 3900 },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+          );
+        }
+        return origFetch(url, opts);
+      };
+
+      const geoRes = await origFetch(`${baseUrl}/maps/geocode?text=Leh`, {
+        headers: { Authorization: `Bearer ${orgAToken}` },
+      });
+      assert.equal(geoRes.status, 200);
+      assert.ok(geoRes.headers.get('ratelimit-limit'));
+      assert.ok(capturedGeoUrl.includes('filter=countrycode%3Ain'));
+      const geoBody = await geoRes.json();
+      assert.equal(geoBody.data.results[0].name, 'Leh');
+      assert.equal(geoBody.data.results[0].lat, 34.1526);
+
+      const routeRes = await origFetch(`${baseUrl}/maps/route`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${orgAToken}` },
+        body: JSON.stringify({
+          waypoints: [
+            { lat: 34.1526, lng: 77.5771, label: 'Leh' },
+            { lat: 33.4, lng: 78.2, label: 'Nyoma' },
+            { lat: 32.77, lng: 78.96, label: 'Hanle' },
+          ],
+        }),
+      });
+      assert.equal(routeRes.status, 200);
+      assert.ok(routeRes.headers.get('ratelimit-limit'));
+      assert.ok(capturedRouteUrl.includes('mode=motorcycle'));
+      assert.ok(capturedRouteUrl.includes('units=metric'));
+      const routeBody = await routeRes.json();
+      assert.equal(routeBody.data.geometry.type, 'LineString');
+      assert.equal(routeBody.data.geometry.coordinates.length, 3);
+      assert.equal(routeBody.data.distanceKm, 254.32);
+      assert.equal(routeBody.data.durationText, '6h 5m');
+      assert.equal(routeBody.data.instructions.length, 1);
+    } finally {
+      env.geoapifyApiKey = prevKey;
+      globalThis.fetch = origFetch;
+    }
   });
 });
