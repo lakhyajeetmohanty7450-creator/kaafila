@@ -66,7 +66,14 @@ export function createApp() {
     }
   });
 
-  app.use('/uploads', express.static(UPLOADS_ROOT));
+  app.use(
+    '/uploads',
+    express.static(UPLOADS_ROOT, {
+      dotfiles: 'deny',
+      index: false,
+      maxAge: '1d',
+    })
+  );
 
   app.use('/api/auth', authRoutes);
   app.use('/api/organisations', organisationRoutes);

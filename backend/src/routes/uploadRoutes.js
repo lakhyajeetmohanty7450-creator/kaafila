@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { protect } from '../middleware/auth.js';
+import { uploadLimiter } from '../middleware/rateLimiter.js';
 import { persistUploadedImage, uploadSingleImage } from '../middleware/upload.js';
 
 const router = Router();
@@ -10,7 +11,7 @@ const router = Router();
  * Uses Supabase Storage when SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY are set,
  * otherwise stores safely on local disk under /uploads.
  */
-router.post('/image', protect, (req, res, next) => {
+router.post('/image', protect, uploadLimiter, (req, res, next) => {
   uploadSingleImage(req, res, async (err) => {
     try {
       if (err) {

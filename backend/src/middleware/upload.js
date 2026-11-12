@@ -18,32 +18,54 @@ const ALLOWED_MIME_TO_EXT = {
   'image/webp': '.webp',
 };
 
-const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
+export const MAX_FILE_SIZE_BYTES = 2 * 1024 * 1024; // 2 MB
 
 export function isSupabaseStorageConfigured() {
   return Boolean(env.supabaseUrl && env.supabaseServiceRoleKey);
 }
 
-if (!fs.existsSync(UPLOADS_ROOT)) {
-  fs.mkdirSync(UPLOADS_ROOT, { recursive: true });
+/**
+ * Inspects file magic bytes and returns canonical { mimetype, ext } for
+ * JPEG, PNG, and WebP, or null if the signature is missing/unsupported.
+ */
+export function detectImageSignature(buffer) {
+  if (!Buffer.isBuffer(buffer) || buffer.length < 12) {
+    return null;
+  }
+
+  // JPEG: FF D8 FF
+  if (buffer[0] === 0xff && buffer[1] === 0xd8 && buffer[2] === 0xff) {
+    return { mimetype: 'image/jpeg', ext: '.jpg' };
+  }
+
+  // PNG: 89 50 4E 47 0D 0A 1A 0A
+  if (
+    buffer[0] === 0x89 &&
+    buffer[1] === 0x50 &&
+    buffer[2] === 0x4e &&
+    buffer[3] === 0x47 &&
+    buffer[4] === 0x0d &&
+    buffer[5] === 0x0a &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0x0a
+  ) {
+    return { mimetype: 'image/png', ext: '.png' };
+  }
+
+  // WebP: "RIFF" <4-byte size> "WEBP"
+  if (
+    buffer.subarray(0, 4).toString('ascii') === 'RIFF' &&
+    buffer.subarray(8, 12).toString('ascii') === 'WEBP'
+  ) {
+    return { mimetype: 'image/webp', ext: '.webp' };
+  }
+
+  return null;
 }
 
-function generateImageFilename(mimetype) {
-  const ext = ALLOWED_MIME_TO_EXT[mimetype] || '.jpg';
+function generateImageFilename(ext) {
   return `${Date.now()}-${crypto.randomBytes(12).toString('hex')}${ext}`;
 }
-
-const diskStorage = multer.diskStorage({
-  destination: (_req, _file, cb) => {
-    if (!fs.existsSync(UPLOADS_ROOT)) {
-      fs.mkdirSync(UPLOADS_ROOT, { recursive: true });
-    }
-    cb(null, UPLOADS_ROOT);
-  },
-  filename: (_req, file, cb) => {
-    cb(null, generateImageFilename(file.mimetype));
-  },
-});
 
 const memoryStorage = multer.memoryStorage();
 
@@ -57,9 +79,8 @@ function imageFileFilter(_req, file, cb) {
 }
 
 export const uploadSingleImage = (req, res, cb) => {
-  const storage = isSupabaseStorageConfigured() ? memoryStorage : diskStorage;
   return multer({
-    storage,
+    storage: memoryStorage,
     fileFilter: imageFileFilter,
     limits: {
       fileSize: MAX_FILE_SIZE_BYTES,
@@ -79,27 +100,45 @@ function getSupabaseAdmin() {
 }
 
 /**
- * Persists an uploaded image either to Supabase Storage (when configured)
- * or falls back cleanly to local /uploads/<filename>.
+ * Validates magic bytes from the in-memory buffer and persists the image
+ * either to Supabase Storage (when configured) or local /uploads/<filename>.
  */
-export async function persistUploadedImage(file, userId = 'anonymous') {
-  if (!isSupabaseStorageConfigured()) {
+export async function persistUploadedImage(file, userId = 'anonymous', options = {}) {
+  const verified = detectImageSignature(file?.buffer);
+  if (!verified) {
+    const sigErr = new Error('Invalid or unsupported image file signature. Only JPEG, PNG, and WebP are allowed.');
+    sigErr.statusCode = 400;
+    throw sigErr;
+  }
+
+  const filename = generateImageFilename(verified.ext);
+  const useSupabase = Boolean(options.supabaseClient) || isSupabaseStorageConfigured();
+
+  if (!useSupabase) {
+    await fs.promises.mkdir(UPLOADS_ROOT, { recursive: true });
+    const targetPath = path.join(UPLOADS_ROOT, filename);
+    try {
+      await fs.promises.writeFile(targetPath, file.buffer, { flag: 'wx' });
+    } catch (writeErr) {
+      await fs.promises.unlink(targetPath).catch(() => {});
+      throw writeErr;
+    }
+
     return {
       storageProvider: 'local',
-      url: `/uploads/${file.filename}`,
-      filename: file.filename,
-      mimetype: file.mimetype,
-      size: file.size,
+      url: `/uploads/${filename}`,
+      filename,
+      mimetype: verified.mimetype,
+      size: file.buffer.length,
     };
   }
 
-  const client = getSupabaseAdmin();
+  const client = options.supabaseClient || getSupabaseAdmin();
   const bucket = env.supabaseStorageBucket || 'kaafila-images';
-  const filename = generateImageFilename(file.mimetype);
   const objectPath = `${String(userId)}/${filename}`;
 
   const { error } = await client.storage.from(bucket).upload(objectPath, file.buffer, {
-    contentType: file.mimetype,
+    contentType: verified.mimetype,
     upsert: false,
   });
 
@@ -114,7 +153,7 @@ export async function persistUploadedImage(file, userId = 'anonymous') {
     storageProvider: 'supabase',
     url: pubData.publicUrl,
     filename: objectPath,
-    mimetype: file.mimetype,
-    size: file.size,
+    mimetype: verified.mimetype,
+    size: file.buffer.length,
   };
 }

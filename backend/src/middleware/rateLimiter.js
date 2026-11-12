@@ -56,3 +56,15 @@ export const passwordResetLimiter = rateLimit({
   },
 });
 
+export const uploadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  keyGenerator: (req) => (req.user?.id ? `user:${req.user.id}` : req.ip),
+  message: {
+    success: false,
+    message: 'Too many image uploads. Please try again in 15 minutes.',
+  },
+});
+
